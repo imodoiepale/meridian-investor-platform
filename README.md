@@ -1,6 +1,6 @@
 # Meridian Global Investor OS
 
-> **One AI platform to Land, Launch, and Live as a foreign direct investor in Kenya — and beyond - OTHER COUTRIES LATER ON.**
+> **One AI platform to Land, Launch, and Live as a foreign direct investor in Kenya — and beyond.**
 
 ![Build Passing](https://img.shields.io/badge/build-passing-brightgreen) ![License MIT](https://img.shields.io/badge/license-MIT-blue) ![Made with Claude](https://img.shields.io/badge/made%20with-Claude%20Sonnet%204.6-blueviolet?logo=anthropic) ![Railway](https://img.shields.io/badge/deploy-Railway-6B47ED)
 
