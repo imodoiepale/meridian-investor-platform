@@ -1,0 +1,17 @@
+.git
+.env*
+files.zip
+frontend/
+automations/
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+tests/
+docs/
+uploads/
+backend/data/
+*.zip
+.gitignore
+README.md

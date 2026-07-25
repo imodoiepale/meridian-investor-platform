@@ -1,0 +1,17 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY backend/requirements_kenya_invest.txt .
+RUN pip install --no-cache-dir -r requirements_kenya_invest.txt gunicorn
+
+COPY backend/ backend/
+COPY run_local.py .
+
+ENV QDRANT_MODE=memory
+ENV MEMORY_BACKEND=json
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:${PORT:-5001}/health')"
+
+CMD gunicorn -w 1 --threads 8 --timeout 600 -b 0.0.0.0:${PORT:-5001} 'backend.app:create_app()'

@@ -5,6 +5,8 @@ import RoadmapView from '../views/RoadmapView.vue'
 import SimulationDashboard from '../views/SimulationDashboard.vue'
 import MeridianGraphs from '../views/MiroFishGraphs.vue'
 import ConciergeView from '../views/ConciergeView.vue'
+import ProfileWizard from '../views/ProfileWizard.vue'
+import InvestorDashboard from '../views/InvestorDashboard.vue'
 
 const routes = [
   {
@@ -38,6 +40,16 @@ const routes = [
     component: MeridianGraphs
   },
   {
+    path: '/profile',
+    name: 'Profile',
+    component: ProfileWizard
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: InvestorDashboard
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: '/'
   }
@@ -56,6 +68,8 @@ router.afterEach((to) => {
     KenyaRoadmap: 'Meridian — Kenya Roadmap',
     KenyaDashboard: 'Meridian — Simulation Dashboard',
     KenyaGraphs: 'Meridian — Agent Graphs',
+    Profile: 'Meridian — Investor Profile',
+    Dashboard: 'Meridian — My Dashboard',
   }
   document.title = titles[to.name] || 'Meridian — Kenya Invest'
 })

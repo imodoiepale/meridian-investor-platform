@@ -36,6 +36,11 @@
         <span class="model-badge">Claude · agentic tools</span>
       </header>
 
+      <div v-if="profileIncomplete" class="profile-banner">
+        <span>Complete your investor profile for personalised proposals</span>
+        <router-link to="/profile" class="profile-banner-link">Set up profile →</router-link>
+      </div>
+
       <div class="messages" ref="messagesEl">
         <div v-if="messages.length === 0" class="welcome">
           <h2>Karibu! Where in the world are you investing?</h2>
@@ -49,6 +54,7 @@
               </div>
             </div>
             <div class="text" v-html="format(m.text)"></div>
+            <StageTimeline v-if="m.roadmap" :roadmap="m.roadmap" :compact="true" style="margin-top: 12px" />
           </div>
         </div>
         <div v-if="loading" class="msg assistant"><div class="bubble typing">Working — calling tools<span class="dots">…</span></div></div>
@@ -63,8 +69,10 @@
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue'
+import { ref, computed, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
 import service from '../api/index'
+import StageTimeline from '../components/StageTimeline.vue'
 
 const messages = ref([])
 const input = ref('')
@@ -73,6 +81,13 @@ const profile = ref({})
 const journey = ref([])
 const messagesEl = ref(null)
 const sessionId = ref(localStorage.getItem('meridian_session') || null)
+const router = useRouter()
+
+// Check if profile is materially incomplete
+const profileIncomplete = computed(() => {
+  const p = profile.value
+  return !p.sector || !p.nationality
+})
 
 const quickActions = [
   { label: '✈ Find flights to Kenya', prompt: 'Find me return flights from JFK to Nairobi departing in two weeks, returning a week later.' },
@@ -112,7 +127,8 @@ async function send(text) {
     localStorage.setItem('meridian_session', data.session_id)
     profile.value = data.profile || {}
     journey.value = data.journey || []
-    messages.value.push({ role: 'assistant', text: data.reply || data.error, tools: data.tool_trace || [] })
+    const roadmap = data.roadmap || null
+    messages.value.push({ role: 'assistant', text: data.reply || data.error, tools: data.tool_trace || [], roadmap })
   } catch (e) {
     messages.value.push({ role: 'assistant', text: 'Backend unreachable — is Flask running on :5001? (' + (e.message || e) + ')' })
   } finally {
@@ -191,6 +207,11 @@ function scroll() {
   .sidebar { width: auto; max-height: 34vh; border-right: none; border-top: 1px solid #1e293b; }
   .bubble { max-width: 88%; }
 }
+
+/* Profile banner */
+.profile-banner { display: flex; align-items: center; justify-content: space-between; padding: 10px 28px; background: rgba(56,189,248,0.1); border-bottom: 1px solid rgba(56,189,248,0.25); font-size: 13px; color: #7dd3fc; }
+.profile-banner-link { color: #38bdf8; text-decoration: none; font-weight: 600; }
+.profile-banner-link:hover { text-decoration: underline; }
 
 /* Accessibility — gentler equivalents, never nothing */
 @media (prefers-reduced-motion: reduce) {

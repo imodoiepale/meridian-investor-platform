@@ -7,11 +7,12 @@
         <span class="brand-sub">/ Kenya Invest</span>
       </div>
       <div class="nav-links">
+        <router-link to="/profile" class="nav-inner-link">Profile</router-link>
+        <router-link to="/dashboard" class="nav-inner-link">Dashboard</router-link>
         <router-link to="/concierge" class="nav-inner-link">Concierge</router-link>
         <router-link to="/invest" class="nav-inner-link">Onboarding</router-link>
         <router-link to="/invest/roadmap" class="nav-inner-link">Roadmap</router-link>
-        <router-link to="/invest/dashboard" class="nav-inner-link">Dashboard</router-link>
-        <router-link to="/invest/graphs" class="nav-inner-link">Graphs</router-link>
+        <router-link to="/invest/graphs" class="nav-inner-link">Simulation</router-link>
         <div class="nav-status-dot" :class="backendOk ? 'dot-live' : 'dot-off'" :title="backendOk ? 'Backend online' : 'Backend offline'"></div>
         <button class="theme-toggle" @click="toggleTheme" :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'">{{ isDark ? '☀' : '◑' }}</button>
       </div>

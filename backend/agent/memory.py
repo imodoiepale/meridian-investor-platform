@@ -61,9 +61,55 @@ class MemoryStore:
             self._write(data)
 
 
+class SupabaseMemoryStore:
+    """Reads/writes investor_sessions table in Supabase. Same interface as MemoryStore."""
+
+    def get_session(self, session_id):
+        from backend.data.supabase_client import get_client
+        db = get_client()
+        if not db:
+            return {"profile": {}, "history": [], "journey": []}
+        try:
+            res = db.table("investor_sessions").select("*").eq("session_id", session_id).execute()
+            if res.data:
+                row = res.data[0]
+                return {"profile": row.get("profile", {}), "history": [], "journey": row.get("journey", [])}
+        except Exception:
+            pass
+        return {"profile": {}, "history": [], "journey": []}
+
+    def save_session(self, session_id, session):
+        from backend.data.supabase_client import get_client
+        db = get_client()
+        if not db:
+            return
+        try:
+            db.table("investor_sessions").upsert({
+                "session_id": session_id,
+                "profile": session.get("profile", {}),
+                "journey": session.get("journey", []),
+            }, on_conflict="session_id").execute()
+        except Exception:
+            pass
+
+    def update_profile(self, session_id, fields):
+        session = self.get_session(session_id)
+        session["profile"].update({k: v for k, v in fields.items() if v is not None})
+        self.save_session(session_id, session)
+        return session["profile"]
+
+    def log_journey(self, session_id, event):
+        session = self.get_session(session_id)
+        session["journey"].append(event)
+        self.save_session(session_id, session)
+
+
 def get_store():
-    if os.environ.get("MEMORY_BACKEND") == "graphiti":
+    backend = os.environ.get("MEMORY_BACKEND", "json")
+    if backend == "graphiti":
         raise NotImplementedError("GraphitiMemoryStore: see module docstring for the drop-in seam")
+    if backend == "supabase":
+        return SupabaseMemoryStore()
     return MemoryStore()
 
 

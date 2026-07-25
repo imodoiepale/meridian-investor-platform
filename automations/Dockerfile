@@ -8,6 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies using npm ci for deterministic builds
+ENV PUPPETEER_SKIP_DOWNLOAD=1
 RUN npm ci
 
 # Copy the rest of the application code
@@ -28,4 +29,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:5000/health || exit 1
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["node", "server.mjs"]

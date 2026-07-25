@@ -60,6 +60,13 @@ TOOLS = [
             "required": ["application_type"]}
     },
     {
+        "name": "check_application_readiness",
+        "description": "Check whether the investor's profile has all required fields for a specific immigration application class. Returns which fields are filled, which are missing, and whether the application is ready to launch.",
+        "input_schema": {"type": "object", "properties": {
+            "application_type": {"type": "string", "enum": ["eta", "class-g", "class-d", "class-r", "class-n", "special-pass", "dependant-pass"]}},
+            "required": ["application_type"]}
+    },
+    {
         "name": "build_licensing_roadmap",
         "description": "Build the full business-setup roadmap for a sector + county: national registrations, sector licenses, county permits, each with fees and timelines, plus an itemized total budget.",
         "input_schema": {"type": "object", "properties": {
@@ -144,12 +151,14 @@ def execute_tool(name, args, session_id):
                          if c["class"].lower().replace(" ", "-") == app_type or c.get("automation_endpoint", "").endswith(app_type)),
                         f"/api/{app_type}")
         profile = memory.get_session(session_id).get("profile", {})
+        from backend.agent.field_map import map_profile
+        mapped = map_profile(app_type, profile, args.get("form_overrides", {}))
         payload = {
             "url": "https://fns.immigration.go.ke/account/login.html",
             "login": {"email": os.environ.get("EFNS_EMAIL", ""),
                       "idNumber": os.environ.get("EFNS_ID_NUMBER", ""),
                       "password": os.environ.get("EFNS_PASSWORD", "")},
-            "formData": {**{k: v for k, v in profile.items()}, **args.get("form_overrides", {})}
+            "formData": mapped["formData"]
         }
         if not payload["login"]["email"]:
             return {"success": False, "error": "EFNS_EMAIL / EFNS_ID_NUMBER / EFNS_PASSWORD not set in environment"}
@@ -229,6 +238,23 @@ def execute_tool(name, args, session_id):
                 "adults": adults, "children": children, "subtotal_kes": subtotal, "vat_16_kes": vat,
                 "total_kes": total, "invoice_emailed": emailed, "email": email,
                 "invoice_path": invoice}
+
+    if name == "check_application_readiness":
+        from backend.agent.field_map import map_profile
+        app_type = args["application_type"]
+        profile = memory.get_session(session_id).get("profile", {})
+        mapped = map_profile(app_type, profile)
+        missing = mapped["missing_required"]
+        return {
+            "application_type": app_type,
+            "ready": len(missing) == 0,
+            "filled_fields": {k: v for k, v in mapped["formData"].items() if v is not None},
+            "missing_fields": [
+                {"name": f, "label": f.replace("_", " ").title(), "type": "text", "required": True}
+                for f in missing
+            ],
+            "note": "Use apply_immigration with form_overrides to supply missing fields" if missing else "Profile is complete for this application type"
+        }
 
     return {"error": f"Unknown tool {name}"}
 

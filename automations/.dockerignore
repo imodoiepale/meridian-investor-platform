@@ -1,10 +1,8 @@
-node_modules
-npm-debug.log
-.env
-.env.local
+node_modules/
+.env*
+logs/
+sessions/
+*.ps1
 .git
-.gitignore
-*.png
-*.jpg
-*.bat
-README.md
+*.md
+supabase/

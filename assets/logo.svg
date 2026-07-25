@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="mGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Navy background circle -->
+  <circle cx="24" cy="24" r="24" fill="#0b1827"/>
+
+  <!--
+    Stylized "M" as a meridian arc.
+    Points (on a 48×48 grid, with comfortable padding):
+      Start bottom-left  : (8, 36)
+      Rise to left peak  : (14, 13)
+      Descend to valley  : (24, 28)
+      Rise to right peak : (34, 13)
+      Descend bottom-right: (40, 36)
+
+    Rendered as a filled closed path so the gradient fills the letter body.
+    The bottom of the path is closed with a straight line at y=36
+    to give the M a solid base.
+  -->
+  <path
+    d="M8,36 L14,13 L24,28 L34,13 L40,36 Z"
+    fill="url(#mGrad)"
+  />
+
+  <!-- Thin meridian baseline — a horizontal accent line below the M -->
+  <line
+    x1="9" y1="39.5"
+    x2="39" y2="39.5"
+    stroke="url(#lineGrad)"
+    stroke-width="1.5"
+    stroke-linecap="round"
+  />
+</svg>
