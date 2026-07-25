@@ -1,0 +1,1544 @@
+[
+  {
+    "id": "kra-pin-personal-business",
+    "no": 1,
+    "name": "KRA PIN (Personal/Business)",
+    "category": "Registration & Tax",
+    "agency": "Kenya Revenue Authority",
+    "agency_abbr": "KRA",
+    "level": "National",
+    "applies_to": "All businesses and taxable persons",
+    "notes": "Obtained via iTax; prerequisite for almost everything else",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "vat-registration",
+    "no": 2,
+    "name": "VAT Registration",
+    "category": "Registration & Tax",
+    "agency": "Kenya Revenue Authority",
+    "agency_abbr": "KRA",
+    "level": "National",
+    "applies_to": "Businesses above VAT turnover threshold",
+    "notes": "Mandatory once turnover exceeds KES 5M/yr (verify current threshold)",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "income-tax-obligation",
+    "no": 3,
+    "name": "Income Tax Obligation",
+    "category": "Registration & Tax",
+    "agency": "Kenya Revenue Authority",
+    "agency_abbr": "KRA",
+    "level": "National",
+    "applies_to": "All registered businesses",
+    "notes": "Activated on iTax at PIN registration",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "turnover-tax-tot",
+    "no": 4,
+    "name": "Turnover Tax (TOT)",
+    "category": "Registration & Tax",
+    "agency": "Kenya Revenue Authority",
+    "agency_abbr": "KRA",
+    "level": "National",
+    "applies_to": "Small businesses below VAT threshold",
+    "notes": "Simplified turnover-based tax",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "paye-employer-registration",
+    "no": 5,
+    "name": "PAYE Employer Registration",
+    "category": "Registration & Tax",
+    "agency": "Kenya Revenue Authority",
+    "agency_abbr": "KRA",
+    "level": "National",
+    "applies_to": "Any business with employees",
+    "notes": "Monthly payroll tax remittance",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "etims-registration-electronic-tax-invoice",
+    "no": 6,
+    "name": "eTIMS Registration (Electronic Tax Invoice)",
+    "category": "Registration & Tax",
+    "agency": "Kenya Revenue Authority",
+    "agency_abbr": "KRA",
+    "level": "National",
+    "applies_to": "VAT-registered and most businesses issuing invoices",
+    "notes": "Required for expense deductibility",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "excise-duty-license",
+    "no": 7,
+    "name": "Excise Duty License",
+    "category": "Registration & Tax",
+    "agency": "Kenya Revenue Authority",
+    "agency_abbr": "KRA",
+    "level": "National",
+    "applies_to": "Manufacturers/importers of excisable goods (alcohol tobacco fuel etc.)",
+    "notes": "",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "certificate-of-incorporation-business-name-registration",
+    "no": 8,
+    "name": "Certificate of Incorporation / Business Name Registration",
+    "category": "Registration & Tax",
+    "agency": "Business Registration Service",
+    "agency_abbr": "BRS",
+    "level": "National",
+    "applies_to": "All formal businesses",
+    "notes": "Via eCitizen BRS V2",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "nssf-employer-registration",
+    "no": 9,
+    "name": "NSSF Employer Registration",
+    "category": "Registration & Tax",
+    "agency": "National Social Security Fund",
+    "agency_abbr": "NSSF",
+    "level": "National",
+    "applies_to": "Any business with employees",
+    "notes": "Statutory pension contribution",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "shif-sha-registration",
+    "no": 10,
+    "name": "SHIF/SHA Registration",
+    "category": "Registration & Tax",
+    "agency": "Social Health Authority",
+    "agency_abbr": "SHA",
+    "level": "National",
+    "applies_to": "Any business with employees",
+    "notes": "Replaced NHIF Oct 2024",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "affordable-housing-levy-registration",
+    "no": 11,
+    "name": "Affordable Housing Levy Registration",
+    "category": "Registration & Tax",
+    "agency": "Kenya Revenue Authority",
+    "agency_abbr": "KRA",
+    "level": "National",
+    "applies_to": "Any business with employees",
+    "notes": "1.5% employer + employee levy",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "import-export-code",
+    "no": 12,
+    "name": "Import/Export Code",
+    "category": "Registration & Tax",
+    "agency": "KRA Customs",
+    "agency_abbr": "KRA",
+    "level": "National",
+    "applies_to": "Importers/exporters",
+    "notes": "Required to clear goods via iCMS",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "authorised-economic-operator-aeo-status",
+    "no": 13,
+    "name": "Authorised Economic Operator (AEO) Status",
+    "category": "Registration & Tax",
+    "agency": "KRA Customs",
+    "agency_abbr": "KRA",
+    "level": "National",
+    "applies_to": "High-volume traders",
+    "notes": "Fast-track customs clearance",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "customs-clearing-forwarding-agent-license",
+    "no": 14,
+    "name": "Customs Clearing & Forwarding Agent License",
+    "category": "Registration & Tax",
+    "agency": "KRA / KIFWA",
+    "agency_abbr": "KRA",
+    "level": "National",
+    "applies_to": "Clearing agents",
+    "notes": "Also requires KIFWA membership",
+    "universal": true,
+    "sectors": [
+      "logistics",
+      "retail"
+    ]
+  },
+  {
+    "id": "work-injury-benefits-act-wiba-cover",
+    "no": 15,
+    "name": "Work Injury Benefits Act (WIBA) Cover",
+    "category": "Registration & Tax",
+    "agency": "IRA-licensed insurer",
+    "agency_abbr": "IRA",
+    "level": "National",
+    "applies_to": "Any business with employees",
+    "notes": "Statutory insurance not optional",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "investment-certificate",
+    "no": 16,
+    "name": "Investment Certificate",
+    "category": "Registration & Tax",
+    "agency": "Kenya Investment Authority",
+    "agency_abbr": "KenInvest",
+    "level": "National",
+    "applies_to": "Foreign investors (USD 100k+)",
+    "notes": "Facilitates licenses and incentives",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "work-permit-classes-a-k",
+    "no": 17,
+    "name": "Work Permit (Classes A-K)",
+    "category": "Registration & Tax",
+    "agency": "Directorate of Immigration Services",
+    "agency_abbr": "DIS",
+    "level": "National",
+    "applies_to": "Foreign employees/investors/directors",
+    "notes": "Class C professionals D employees G investors",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "single-business-permit-sbp",
+    "no": 18,
+    "name": "Single Business Permit (SBP)",
+    "category": "County",
+    "agency": "County Government e.g. Nairobi City County",
+    "agency_abbr": "County",
+    "level": "County",
+    "applies_to": "Every business with physical premises",
+    "notes": "Replaced old trade licenses; renewed annually",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "fire-safety-fire-clearance-certificate",
+    "no": 19,
+    "name": "Fire Safety/Fire Clearance Certificate",
+    "category": "County",
+    "agency": "County Fire & Rescue Department",
+    "agency_abbr": "County",
+    "level": "County",
+    "applies_to": "Hotels shops warehouses high-occupancy buildings",
+    "notes": "Annual inspection required",
+    "universal": true,
+    "sectors": [
+      "hospitality",
+      "logistics",
+      "retail"
+    ]
+  },
+  {
+    "id": "public-health-business-health-certificate",
+    "no": 20,
+    "name": "Public Health/Business Health Certificate",
+    "category": "County",
+    "agency": "County Public Health Department",
+    "agency_abbr": "County",
+    "level": "County",
+    "applies_to": "Food premises hospitality manufacturing",
+    "notes": "",
+    "universal": true,
+    "sectors": [
+      "agriculture",
+      "hospitality",
+      "manufacturing",
+      "retail"
+    ]
+  },
+  {
+    "id": "food-handler-s-medical-certificate",
+    "no": 21,
+    "name": "Food Handler's Medical Certificate",
+    "category": "County",
+    "agency": "County Public Health Department",
+    "agency_abbr": "County",
+    "level": "County",
+    "applies_to": "Individual food handlers",
+    "notes": "Personal certificate not business-level",
+    "universal": true,
+    "sectors": [
+      "agriculture",
+      "health",
+      "hospitality",
+      "manufacturing",
+      "retail"
+    ]
+  },
+  {
+    "id": "outdoor-advertising-signage-license",
+    "no": 22,
+    "name": "Outdoor Advertising/Signage License",
+    "category": "County",
+    "agency": "County Government",
+    "agency_abbr": "County",
+    "level": "County",
+    "applies_to": "Businesses with billboards/signage",
+    "notes": "",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "liquor-license",
+    "no": 23,
+    "name": "Liquor License",
+    "category": "County",
+    "agency": "County Liquor Licensing Board",
+    "agency_abbr": "County",
+    "level": "County",
+    "applies_to": "Bars restaurants retailers selling alcohol",
+    "notes": "Coordinated with NACADA",
+    "universal": true,
+    "sectors": [
+      "hospitality",
+      "retail"
+    ]
+  },
+  {
+    "id": "building-development-permit",
+    "no": 24,
+    "name": "Building/Development Permit",
+    "category": "County",
+    "agency": "County Physical Planning Department",
+    "agency_abbr": "County",
+    "level": "County",
+    "applies_to": "Construction and renovation",
+    "notes": "",
+    "universal": true,
+    "sectors": [
+      "construction"
+    ]
+  },
+  {
+    "id": "change-of-user-permit",
+    "no": 25,
+    "name": "Change of User Permit",
+    "category": "County",
+    "agency": "County Physical Planning Department",
+    "agency_abbr": "County",
+    "level": "County",
+    "applies_to": "Change of land/building use",
+    "notes": "",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "land-rates-clearance-certificate",
+    "no": 26,
+    "name": "Land Rates Clearance Certificate",
+    "category": "County",
+    "agency": "County Government",
+    "agency_abbr": "County",
+    "level": "County",
+    "applies_to": "Property/land owners",
+    "notes": "Required for permits and property transactions",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "parking-loading-zone-permit",
+    "no": 27,
+    "name": "Parking/Loading Zone Permit",
+    "category": "County",
+    "agency": "County Government",
+    "agency_abbr": "County",
+    "level": "County",
+    "applies_to": "Businesses needing dedicated loading bays",
+    "notes": "",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "market-trading-space-permit",
+    "no": 28,
+    "name": "Market/Trading Space Permit",
+    "category": "County",
+    "agency": "County Government",
+    "agency_abbr": "County",
+    "level": "County",
+    "applies_to": "Market and street traders",
+    "notes": "",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "noise-control-license",
+    "no": 29,
+    "name": "Noise Control License",
+    "category": "County",
+    "agency": "NEMA / County Government",
+    "agency_abbr": "NEMA",
+    "level": "National/County",
+    "applies_to": "Entertainment venues industrial premises",
+    "notes": "",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "weights-measures-legal-metrology-license",
+    "no": 30,
+    "name": "Weights & Measures (Legal Metrology) License",
+    "category": "County",
+    "agency": "Kenya Bureau of Standards / Ministry of Trade",
+    "agency_abbr": "KEBS",
+    "level": "National",
+    "applies_to": "Traders using scales/meters/pumps",
+    "notes": "",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "commercial-banking-license",
+    "no": 31,
+    "name": "Commercial Banking License",
+    "category": "Financial Services",
+    "agency": "Central Bank of Kenya",
+    "agency_abbr": "CBK",
+    "level": "National",
+    "applies_to": "Banks",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "financial_services"
+    ]
+  },
+  {
+    "id": "microfinance-bank-license",
+    "no": 32,
+    "name": "Microfinance Bank License",
+    "category": "Financial Services",
+    "agency": "Central Bank of Kenya",
+    "agency_abbr": "CBK",
+    "level": "National",
+    "applies_to": "Deposit-taking microfinance institutions",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "financial_services"
+    ]
+  },
+  {
+    "id": "forex-bureau-license",
+    "no": 33,
+    "name": "Forex Bureau License",
+    "category": "Financial Services",
+    "agency": "Central Bank of Kenya",
+    "agency_abbr": "CBK",
+    "level": "National",
+    "applies_to": "Foreign exchange bureaus",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "financial_services"
+    ]
+  },
+  {
+    "id": "money-remittance-provider-license",
+    "no": 34,
+    "name": "Money Remittance Provider License",
+    "category": "Financial Services",
+    "agency": "Central Bank of Kenya",
+    "agency_abbr": "CBK",
+    "level": "National",
+    "applies_to": "Remittance/money transfer businesses",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "financial_services"
+    ]
+  },
+  {
+    "id": "digital-credit-provider-dcp-license",
+    "no": 35,
+    "name": "Digital Credit Provider (DCP) License",
+    "category": "Financial Services",
+    "agency": "Central Bank of Kenya",
+    "agency_abbr": "CBK",
+    "level": "National",
+    "applies_to": "Digital/mobile lending apps",
+    "notes": "Mandatory since 2022 CBK Amendment Act",
+    "universal": false,
+    "sectors": [
+      "financial_services"
+    ]
+  },
+  {
+    "id": "payment-service-provider-psp-license",
+    "no": 36,
+    "name": "Payment Service Provider (PSP) License",
+    "category": "Financial Services",
+    "agency": "Central Bank of Kenya",
+    "agency_abbr": "CBK",
+    "level": "National",
+    "applies_to": "Fintech/payment gateway operators",
+    "notes": "Under National Payment System Act",
+    "universal": false,
+    "sectors": [
+      "financial_services"
+    ]
+  },
+  {
+    "id": "deposit-taking-sacco-license",
+    "no": 37,
+    "name": "Deposit-Taking SACCO License",
+    "category": "Financial Services",
+    "agency": "SACCO Societies Regulatory Authority",
+    "agency_abbr": "SASRA",
+    "level": "National",
+    "applies_to": "Deposit-taking SACCOs",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "financial_services"
+    ]
+  },
+  {
+    "id": "insurance-company-license",
+    "no": 38,
+    "name": "Insurance Company License",
+    "category": "Financial Services",
+    "agency": "Insurance Regulatory Authority",
+    "agency_abbr": "IRA",
+    "level": "National",
+    "applies_to": "Insurance underwriters",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "financial_services"
+    ]
+  },
+  {
+    "id": "insurance-agent-broker-license",
+    "no": 39,
+    "name": "Insurance Agent/Broker License",
+    "category": "Financial Services",
+    "agency": "Insurance Regulatory Authority",
+    "agency_abbr": "IRA",
+    "level": "National",
+    "applies_to": "Insurance intermediaries",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "financial_services"
+    ]
+  },
+  {
+    "id": "capital-markets-license-stockbroker-fund-manager-investment-bank",
+    "no": 40,
+    "name": "Capital Markets License (Stockbroker/Fund Manager/Investment Bank)",
+    "category": "Financial Services",
+    "agency": "Capital Markets Authority",
+    "agency_abbr": "CMA",
+    "level": "National",
+    "applies_to": "Securities and investment firms",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "financial_services"
+    ]
+  },
+  {
+    "id": "retirement-benefits-scheme-license",
+    "no": 41,
+    "name": "Retirement Benefits Scheme License",
+    "category": "Financial Services",
+    "agency": "Retirement Benefits Authority",
+    "agency_abbr": "RBA",
+    "level": "National",
+    "applies_to": "Pension scheme administrators",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "financial_services"
+    ]
+  },
+  {
+    "id": "hire-purchase-registration",
+    "no": 42,
+    "name": "Hire Purchase Registration",
+    "category": "Financial Services",
+    "agency": "Business Registration Service",
+    "agency_abbr": "BRS",
+    "level": "National",
+    "applies_to": "Hire purchase agreements",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "financial_services"
+    ]
+  },
+  {
+    "id": "credit-reference-bureau-license",
+    "no": 43,
+    "name": "Credit Reference Bureau License",
+    "category": "Financial Services",
+    "agency": "Central Bank of Kenya",
+    "agency_abbr": "CBK",
+    "level": "National",
+    "applies_to": "Credit information providers",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "financial_services"
+    ]
+  },
+  {
+    "id": "medical-practitioner-dentist-practicing-license",
+    "no": 44,
+    "name": "Medical Practitioner/Dentist Practicing License",
+    "category": "Health & Pharma",
+    "agency": "Kenya Medical Practitioners & Dentists Council",
+    "agency_abbr": "KMPDC",
+    "level": "National",
+    "applies_to": "Doctors dentists health facilities",
+    "notes": "Also licenses private hospitals/clinics",
+    "universal": false,
+    "sectors": [
+      "health"
+    ]
+  },
+  {
+    "id": "nursing-practicing-license",
+    "no": 45,
+    "name": "Nursing Practicing License",
+    "category": "Health & Pharma",
+    "agency": "Nursing Council of Kenya",
+    "agency_abbr": "NCK",
+    "level": "National",
+    "applies_to": "Nurses and midwives",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "health"
+    ]
+  },
+  {
+    "id": "pharmacy-premises-license",
+    "no": 46,
+    "name": "Pharmacy Premises License",
+    "category": "Health & Pharma",
+    "agency": "Pharmacy and Poisons Board",
+    "agency_abbr": "PPB",
+    "level": "National",
+    "applies_to": "Pharmacies chemists drug wholesalers",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "health"
+    ]
+  },
+  {
+    "id": "drug-medicine-import-manufacturing-license",
+    "no": 47,
+    "name": "Drug/Medicine Import & Manufacturing License",
+    "category": "Health & Pharma",
+    "agency": "Pharmacy and Poisons Board",
+    "agency_abbr": "PPB",
+    "level": "National",
+    "applies_to": "Pharmaceutical importers/manufacturers",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "health"
+    ]
+  },
+  {
+    "id": "clinical-officer-practicing-license",
+    "no": 48,
+    "name": "Clinical Officer Practicing License",
+    "category": "Health & Pharma",
+    "agency": "Clinical Officers Council",
+    "agency_abbr": "COC",
+    "level": "National",
+    "applies_to": "Clinical officers",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "health"
+    ]
+  },
+  {
+    "id": "health-facility-operating-license",
+    "no": 49,
+    "name": "Health Facility Operating License",
+    "category": "Health & Pharma",
+    "agency": "Ministry of Health / County Health Department",
+    "agency_abbr": "MOH",
+    "level": "National/County",
+    "applies_to": "Hospitals clinics nursing homes",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "health"
+    ]
+  },
+  {
+    "id": "medical-laboratory-license",
+    "no": 50,
+    "name": "Medical Laboratory License",
+    "category": "Health & Pharma",
+    "agency": "Kenya Medical Laboratory Technicians & Technologists Board",
+    "agency_abbr": "KMLTTB",
+    "level": "National",
+    "applies_to": "Medical/diagnostic laboratories",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "health"
+    ]
+  },
+  {
+    "id": "food-business-operator-certificate",
+    "no": 51,
+    "name": "Food Business Operator Certificate",
+    "category": "Food & Agriculture",
+    "agency": "County Public Health Dept / KEBS",
+    "agency_abbr": "County/KEBS",
+    "level": "County/National",
+    "applies_to": "Restaurants food processors retailers",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "hospitality",
+      "manufacturing",
+      "retail"
+    ]
+  },
+  {
+    "id": "agrochemical-pesticide-registration-dealer-license",
+    "no": 52,
+    "name": "Agrochemical/Pesticide Registration & Dealer License",
+    "category": "Food & Agriculture",
+    "agency": "Pest Control Products Board",
+    "agency_abbr": "PCPB",
+    "level": "National",
+    "applies_to": "Agrochemical importers/dealers",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "hospitality",
+      "manufacturing",
+      "retail"
+    ]
+  },
+  {
+    "id": "seed-certification-variety-release",
+    "no": 53,
+    "name": "Seed Certification & Variety Release",
+    "category": "Food & Agriculture",
+    "agency": "Kenya Plant Health Inspectorate Service",
+    "agency_abbr": "KEPHIS",
+    "level": "National",
+    "applies_to": "Seed producers/dealers",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "hospitality",
+      "manufacturing",
+      "retail"
+    ]
+  },
+  {
+    "id": "phytosanitary-certificate-plant-import-export",
+    "no": 54,
+    "name": "Phytosanitary Certificate (Plant Import/Export)",
+    "category": "Food & Agriculture",
+    "agency": "Kenya Plant Health Inspectorate Service",
+    "agency_abbr": "KEPHIS",
+    "level": "National",
+    "applies_to": "Exporters/importers of plants and produce",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "hospitality",
+      "manufacturing",
+      "retail"
+    ]
+  },
+  {
+    "id": "veterinary-medicine-dealer-license",
+    "no": 55,
+    "name": "Veterinary Medicine Dealer License",
+    "category": "Food & Agriculture",
+    "agency": "Veterinary Medicines Directorate",
+    "agency_abbr": "VMD",
+    "level": "National",
+    "applies_to": "Veterinary drug importers/dealers",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "health",
+      "hospitality",
+      "manufacturing",
+      "retail"
+    ]
+  },
+  {
+    "id": "dairy-processing-trading-license",
+    "no": 56,
+    "name": "Dairy Processing/Trading License",
+    "category": "Food & Agriculture",
+    "agency": "Kenya Dairy Board",
+    "agency_abbr": "KDB",
+    "level": "National",
+    "applies_to": "Milk processors coolers traders",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "hospitality",
+      "manufacturing",
+      "retail"
+    ]
+  },
+  {
+    "id": "coffee-tea-sugar-miraa-trading-license",
+    "no": 57,
+    "name": "Coffee/Tea/Sugar/Miraa Trading License",
+    "category": "Food & Agriculture",
+    "agency": "Agriculture and Food Authority relevant directorate",
+    "agency_abbr": "AFA",
+    "level": "National",
+    "applies_to": "Crop-specific traders and processors",
+    "notes": "e.g. Coffee Directorate Tea Directorate Sugar Directorate",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "hospitality",
+      "manufacturing",
+      "retail"
+    ]
+  },
+  {
+    "id": "fisheries-fish-trading-license",
+    "no": 58,
+    "name": "Fisheries/Fish Trading License",
+    "category": "Food & Agriculture",
+    "agency": "State Department for Fisheries",
+    "agency_abbr": "Fisheries Dept",
+    "level": "National",
+    "applies_to": "Fishing fish farming fish trading",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "hospitality",
+      "manufacturing",
+      "retail"
+    ]
+  },
+  {
+    "id": "meat-abattoir-slaughterhouse-license",
+    "no": 59,
+    "name": "Meat/Abattoir/Slaughterhouse License",
+    "category": "Food & Agriculture",
+    "agency": "County Veterinary Department / Kenya Meat Commission",
+    "agency_abbr": "County/KMC",
+    "level": "County/National",
+    "applies_to": "Abattoirs butcheries",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "hospitality",
+      "manufacturing",
+      "retail"
+    ]
+  },
+  {
+    "id": "environmental-impact-assessment-eia-license",
+    "no": 60,
+    "name": "Environmental Impact Assessment (EIA) License",
+    "category": "Environment & Natural Resources",
+    "agency": "National Environment Management Authority",
+    "agency_abbr": "NEMA",
+    "level": "National",
+    "applies_to": "Manufacturing hotels fuel stations construction mining large farms",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "construction",
+      "energy",
+      "hospitality",
+      "manufacturing",
+      "mining"
+    ]
+  },
+  {
+    "id": "effluent-discharge-license",
+    "no": 61,
+    "name": "Effluent Discharge License",
+    "category": "Environment & Natural Resources",
+    "agency": "NEMA / Water Resources Authority",
+    "agency_abbr": "NEMA/WRA",
+    "level": "National",
+    "applies_to": "Industries discharging waste water",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "construction",
+      "energy",
+      "manufacturing",
+      "mining"
+    ]
+  },
+  {
+    "id": "water-abstraction-permit",
+    "no": 62,
+    "name": "Water Abstraction Permit",
+    "category": "Environment & Natural Resources",
+    "agency": "Water Resources Authority",
+    "agency_abbr": "WRA",
+    "level": "National",
+    "applies_to": "Businesses drawing water from boreholes/rivers",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "construction",
+      "energy",
+      "manufacturing",
+      "mining"
+    ]
+  },
+  {
+    "id": "waste-management-handling-license",
+    "no": 63,
+    "name": "Waste Management/Handling License",
+    "category": "Environment & Natural Resources",
+    "agency": "NEMA",
+    "agency_abbr": "NEMA",
+    "level": "National",
+    "applies_to": "Waste collectors recyclers disposal firms",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "construction",
+      "energy",
+      "manufacturing",
+      "mining"
+    ]
+  },
+  {
+    "id": "forestry-produce-charcoal-movement-permit",
+    "no": 64,
+    "name": "Forestry Produce/Charcoal Movement Permit",
+    "category": "Environment & Natural Resources",
+    "agency": "Kenya Forest Service",
+    "agency_abbr": "KFS",
+    "level": "National",
+    "applies_to": "Timber/charcoal dealers",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "construction",
+      "energy",
+      "manufacturing",
+      "mining"
+    ]
+  },
+  {
+    "id": "mining-license-mineral-right",
+    "no": 65,
+    "name": "Mining License/Mineral Right",
+    "category": "Environment & Natural Resources",
+    "agency": "State Department for Mining",
+    "agency_abbr": "Mining Dept",
+    "level": "National",
+    "applies_to": "Miners quarry operators",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "construction",
+      "energy",
+      "manufacturing",
+      "mining"
+    ]
+  },
+  {
+    "id": "quarrying-sand-harvesting-permit",
+    "no": 66,
+    "name": "Quarrying/Sand Harvesting Permit",
+    "category": "Environment & Natural Resources",
+    "agency": "County Government + NEMA",
+    "agency_abbr": "County/NEMA",
+    "level": "County/National",
+    "applies_to": "Quarry and sand harvesting operators",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "construction",
+      "energy",
+      "manufacturing",
+      "mining"
+    ]
+  },
+  {
+    "id": "national-construction-authority-contractor-registration",
+    "no": 67,
+    "name": "National Construction Authority Contractor Registration",
+    "category": "Construction & Professions",
+    "agency": "National Construction Authority",
+    "agency_abbr": "NCA",
+    "level": "National",
+    "applies_to": "Building and civil works contractors",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "construction",
+      "professional_services"
+    ]
+  },
+  {
+    "id": "architect-registration",
+    "no": 68,
+    "name": "Architect Registration",
+    "category": "Construction & Professions",
+    "agency": "Board of Registration of Architects and Quantity Surveyors",
+    "agency_abbr": "BORAQS",
+    "level": "National",
+    "applies_to": "Architects quantity surveyors",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "construction",
+      "professional_services"
+    ]
+  },
+  {
+    "id": "engineer-practicing-license",
+    "no": 69,
+    "name": "Engineer Practicing License",
+    "category": "Construction & Professions",
+    "agency": "Engineers Board of Kenya",
+    "agency_abbr": "EBK",
+    "level": "National",
+    "applies_to": "Consulting/registered engineers",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "construction",
+      "professional_services"
+    ]
+  },
+  {
+    "id": "land-surveyor-license",
+    "no": 70,
+    "name": "Land Surveyor License",
+    "category": "Construction & Professions",
+    "agency": "Land Surveyors Board",
+    "agency_abbr": "LSB",
+    "level": "National",
+    "applies_to": "Licensed surveyors",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "construction",
+      "professional_services"
+    ]
+  },
+  {
+    "id": "estate-agent-license",
+    "no": 71,
+    "name": "Estate Agent License",
+    "category": "Construction & Professions",
+    "agency": "Estate Agents Registration Board",
+    "agency_abbr": "EARB",
+    "level": "National",
+    "applies_to": "Real estate agents/firms",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "construction",
+      "professional_services"
+    ]
+  },
+  {
+    "id": "public-service-vehicle-psv-license",
+    "no": 72,
+    "name": "Public Service Vehicle (PSV) License",
+    "category": "Transport",
+    "agency": "National Transport and Safety Authority",
+    "agency_abbr": "NTSA",
+    "level": "National",
+    "applies_to": "Matatus buses taxis ride-hailing vehicles",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "logistics"
+    ]
+  },
+  {
+    "id": "driving-school-license",
+    "no": 73,
+    "name": "Driving School License",
+    "category": "Transport",
+    "agency": "National Transport and Safety Authority",
+    "agency_abbr": "NTSA",
+    "level": "National",
+    "applies_to": "Driving schools",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "education",
+      "logistics"
+    ]
+  },
+  {
+    "id": "motor-vehicle-inspection-certificate",
+    "no": 74,
+    "name": "Motor Vehicle Inspection Certificate",
+    "category": "Transport",
+    "agency": "National Transport and Safety Authority",
+    "agency_abbr": "NTSA",
+    "level": "National",
+    "applies_to": "Commercial/PSV vehicles",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "logistics"
+    ]
+  },
+  {
+    "id": "boda-boda-operator-sacco-registration",
+    "no": 75,
+    "name": "Boda Boda Operator/Sacco Registration",
+    "category": "Transport",
+    "agency": "County Government + NTSA",
+    "agency_abbr": "County/NTSA",
+    "level": "County/National",
+    "applies_to": "Motorcycle taxi operators",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "financial_services",
+      "logistics"
+    ]
+  },
+  {
+    "id": "air-operator-certificate-aoc",
+    "no": 76,
+    "name": "Air Operator Certificate (AOC)",
+    "category": "Transport",
+    "agency": "Kenya Civil Aviation Authority",
+    "agency_abbr": "KCAA",
+    "level": "National",
+    "applies_to": "Airlines charter operators",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "logistics"
+    ]
+  },
+  {
+    "id": "maritime-shipping-operator-license",
+    "no": 77,
+    "name": "Maritime/Shipping Operator License",
+    "category": "Transport",
+    "agency": "Kenya Maritime Authority",
+    "agency_abbr": "KMA",
+    "level": "National",
+    "applies_to": "Shipping lines marine operators",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "logistics"
+    ]
+  },
+  {
+    "id": "telecommunications-network-operator-license",
+    "no": 78,
+    "name": "Telecommunications Network Operator License",
+    "category": "Communications & ICT",
+    "agency": "Communications Authority of Kenya",
+    "agency_abbr": "CA",
+    "level": "National",
+    "applies_to": "Telcos ISPs",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "ict",
+      "media"
+    ]
+  },
+  {
+    "id": "postal-courier-service-license",
+    "no": 79,
+    "name": "Postal/Courier Service License",
+    "category": "Communications & ICT",
+    "agency": "Communications Authority of Kenya",
+    "agency_abbr": "CA",
+    "level": "National",
+    "applies_to": "Courier and postal companies",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "ict",
+      "media"
+    ]
+  },
+  {
+    "id": "broadcasting-license-tv-radio",
+    "no": 80,
+    "name": "Broadcasting License (TV/Radio)",
+    "category": "Communications & ICT",
+    "agency": "Communications Authority of Kenya",
+    "agency_abbr": "CA",
+    "level": "National",
+    "applies_to": "Broadcasters",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "ict",
+      "media"
+    ]
+  },
+  {
+    "id": "data-controller-processor-registration",
+    "no": 81,
+    "name": "Data Controller/Processor Registration",
+    "category": "Communications & ICT",
+    "agency": "Office of the Data Protection Commissioner",
+    "agency_abbr": "ODPC",
+    "level": "National",
+    "applies_to": "Businesses processing personal data",
+    "notes": "Mandatory under Data Protection Act 2019",
+    "universal": false,
+    "sectors": [
+      "ict",
+      "media"
+    ]
+  },
+  {
+    "id": "type-approval-for-telecom-equipment",
+    "no": 82,
+    "name": "Type Approval for Telecom Equipment",
+    "category": "Communications & ICT",
+    "agency": "Communications Authority of Kenya",
+    "agency_abbr": "CA",
+    "level": "National",
+    "applies_to": "Importers/dealers of telecom/ICT equipment",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "ict",
+      "media"
+    ]
+  },
+  {
+    "id": "petroleum-retail-fuel-station-license",
+    "no": 83,
+    "name": "Petroleum Retail (Fuel Station) License",
+    "category": "Energy & Petroleum",
+    "agency": "Energy and Petroleum Regulatory Authority",
+    "agency_abbr": "EPRA",
+    "level": "National",
+    "applies_to": "Fuel stations",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "energy",
+      "mining"
+    ]
+  },
+  {
+    "id": "lpg-cooking-gas-dealer-license",
+    "no": 84,
+    "name": "LPG (Cooking Gas) Dealer License",
+    "category": "Energy & Petroleum",
+    "agency": "Energy and Petroleum Regulatory Authority",
+    "agency_abbr": "EPRA",
+    "level": "National",
+    "applies_to": "Gas refillers/dealers",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "energy"
+    ]
+  },
+  {
+    "id": "electric-power-generation-distribution-license",
+    "no": 85,
+    "name": "Electric Power Generation/Distribution License",
+    "category": "Energy & Petroleum",
+    "agency": "Energy and Petroleum Regulatory Authority",
+    "agency_abbr": "EPRA",
+    "level": "National",
+    "applies_to": "Power producers/distributors",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "energy"
+    ]
+  },
+  {
+    "id": "solar-renewable-energy-installer-license",
+    "no": 86,
+    "name": "Solar/Renewable Energy Installer License",
+    "category": "Energy & Petroleum",
+    "agency": "Energy and Petroleum Regulatory Authority",
+    "agency_abbr": "EPRA",
+    "level": "National",
+    "applies_to": "Solar installers/vendors",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "energy"
+    ]
+  },
+  {
+    "id": "hotel-restaurant-classification-license",
+    "no": 87,
+    "name": "Hotel/Restaurant Classification & License",
+    "category": "Tourism & Hospitality",
+    "agency": "Tourism Regulatory Authority",
+    "agency_abbr": "TRA",
+    "level": "National",
+    "applies_to": "Hotels restaurants lodges",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "hospitality"
+    ]
+  },
+  {
+    "id": "tour-operator-travel-agency-license",
+    "no": 88,
+    "name": "Tour Operator/Travel Agency License",
+    "category": "Tourism & Hospitality",
+    "agency": "Tourism Regulatory Authority",
+    "agency_abbr": "TRA",
+    "level": "National",
+    "applies_to": "Tour and travel companies",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "hospitality"
+    ]
+  },
+  {
+    "id": "tour-guide-license",
+    "no": 89,
+    "name": "Tour Guide License",
+    "category": "Tourism & Hospitality",
+    "agency": "Tourism Regulatory Authority",
+    "agency_abbr": "TRA",
+    "level": "National",
+    "applies_to": "Individual tour guides",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "hospitality"
+    ]
+  },
+  {
+    "id": "private-security-firm-license",
+    "no": 90,
+    "name": "Private Security Firm License",
+    "category": "Security & Safety",
+    "agency": "Private Security Regulatory Authority",
+    "agency_abbr": "PSRA",
+    "level": "National",
+    "applies_to": "Private security companies",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "construction",
+      "hospitality",
+      "logistics",
+      "manufacturing"
+    ]
+  },
+  {
+    "id": "firearm-dealer-certificate",
+    "no": 91,
+    "name": "Firearm Dealer Certificate",
+    "category": "Security & Safety",
+    "agency": "Kenya National Firearms Licensing Board",
+    "agency_abbr": "FLB",
+    "level": "National",
+    "applies_to": "Firearm dealers",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "construction",
+      "hospitality",
+      "logistics",
+      "manufacturing"
+    ]
+  },
+  {
+    "id": "betting-gaming-lottery-license",
+    "no": 92,
+    "name": "Betting/Gaming/Lottery License",
+    "category": "Gaming & Media",
+    "agency": "Betting Control and Licensing Board",
+    "agency_abbr": "BCLB",
+    "level": "National",
+    "applies_to": "Betting casino lottery operators",
+    "notes": "Verify current agency name before use; sector oversight has been under review",
+    "universal": false,
+    "sectors": [
+      "media"
+    ]
+  },
+  {
+    "id": "film-content-production-distribution-license",
+    "no": 93,
+    "name": "Film/Content Production & Distribution License",
+    "category": "Gaming & Media",
+    "agency": "Kenya Film Classification Board",
+    "agency_abbr": "KFCB",
+    "level": "National",
+    "applies_to": "Film producers distributors cinemas",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "media"
+    ]
+  },
+  {
+    "id": "copyright-collective-management-organisation-license",
+    "no": 94,
+    "name": "Copyright Collective Management Organisation License",
+    "category": "Gaming & Media",
+    "agency": "Kenya Copyright Board",
+    "agency_abbr": "KECOBO",
+    "level": "National",
+    "applies_to": "Music/content royalty collection societies",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "media"
+    ]
+  },
+  {
+    "id": "trademark-patent-industrial-design-registration",
+    "no": 95,
+    "name": "Trademark/Patent/Industrial Design Registration",
+    "category": "Intellectual Property",
+    "agency": "Kenya Industrial Property Institute",
+    "agency_abbr": "KIPI",
+    "level": "National",
+    "applies_to": "Businesses protecting brands/inventions",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "ict",
+      "manufacturing",
+      "media"
+    ]
+  },
+  {
+    "id": "employment-recruitment-agency-license",
+    "no": 96,
+    "name": "Employment/Recruitment Agency License",
+    "category": "Labour & Employment",
+    "agency": "National Employment Authority",
+    "agency_abbr": "NEA",
+    "level": "National",
+    "applies_to": "Recruitment and labour agencies",
+    "notes": "",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "nita-training-levy-registration",
+    "no": 97,
+    "name": "NITA Training Levy Registration",
+    "category": "Labour & Employment",
+    "agency": "National Industrial Training Authority",
+    "agency_abbr": "NITA",
+    "level": "National",
+    "applies_to": "Employers of 1+ staff",
+    "notes": "",
+    "universal": true,
+    "sectors": []
+  },
+  {
+    "id": "ngo-registration-certificate",
+    "no": 98,
+    "name": "NGO Registration Certificate",
+    "category": "Non-Profit",
+    "agency": "NGO Coordination Board",
+    "agency_abbr": "NGOB",
+    "level": "National",
+    "applies_to": "Non-governmental organizations",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "education"
+    ]
+  },
+  {
+    "id": "kebs-standardization-mark-diamond-mark",
+    "no": 99,
+    "name": "KEBS Standardization Mark/Diamond Mark",
+    "category": "Standards & Quality",
+    "agency": "Kenya Bureau of Standards",
+    "agency_abbr": "KEBS",
+    "level": "National",
+    "applies_to": "Manufacturers/importers of regulated products",
+    "notes": "",
+    "universal": false,
+    "sectors": [
+      "agriculture",
+      "health",
+      "manufacturing",
+      "retail"
+    ]
+  },
+  {
+    "id": "kenya-trade-network-single-window-registration",
+    "no": 100,
+    "name": "Kenya Trade Network (Single Window) Registration",
+    "category": "Trade",
+    "agency": "Kenya Trade Network Agency",
+    "agency_abbr": "KenTrade",
+    "level": "National",
+    "applies_to": "Importers/exporters",
+    "notes": "Access to National Electronic Single Window System",
+    "universal": false,
+    "sectors": [
+      "logistics",
+      "manufacturing",
+      "retail"
+    ]
+  }
+]

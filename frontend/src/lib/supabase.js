@@ -28,6 +28,34 @@ export async function signOut() {
   try { localStorage.removeItem('meridian_session') } catch {}
 }
 
+export async function signInWithGoogle(nextPath = '/dashboard') {
+  if (!supabase) throw new Error('Auth not configured')
+  const redirectTo = window.location.origin + nextPath
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo, queryParams: { access_type: 'offline', prompt: 'select_account' } },
+  })
+  if (error) throw error
+  return data
+}
+
+export async function signInWithPassword(email, password) {
+  if (!supabase) throw new Error('Auth not configured')
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+  if (error) throw error
+  return data
+}
+
+export async function signUpWithPassword(email, password, fullName = '') {
+  if (!supabase) throw new Error('Auth not configured')
+  const { data, error } = await supabase.auth.signUp({
+    email, password,
+    options: { data: fullName ? { full_name: fullName } : undefined },
+  })
+  if (error) throw error
+  return data
+}
+
 // When the user signs in, prefer the Supabase user id as the backend session key
 // so profile/journey data survives across browsers and devices.
 if (supabase) {

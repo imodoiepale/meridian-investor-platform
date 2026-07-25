@@ -1,7 +1,7 @@
 import { ref, watchEffect } from 'vue'
 
 const STORAGE_KEY = 'meridian-theme'
-const isDark = ref(localStorage.getItem(STORAGE_KEY) !== 'light')
+const isDark = ref(localStorage.getItem(STORAGE_KEY) === 'dark')
 
 watchEffect(() => {
   const theme = isDark.value ? 'dark' : 'light'

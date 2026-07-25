@@ -5,10 +5,11 @@
 - read_passport(): Claude vision (replaces MiMo-V2-Omni).
 """
 import base64
+import hashlib
 import json
 import os
 import re
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 import anthropic
 
@@ -80,7 +81,36 @@ class ClaudeResearchAgent:
                 pass
         return {"raw": text}
 
+    @staticmethod
+    def _hash_key(kind, params):
+        payload = json.dumps({"kind": kind, "params": params}, sort_keys=True, default=str)
+        return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
     def _cache_lookup(self, sector, county, nationality):
+        params = {"sector": sector, "county": county, "nationality": nationality}
+        key = self._hash_key("seed_pack", params)
+        # Supabase-backed research_cache (shared across users, TTL enforced by expires_at)
+        try:
+            from backend.data.supabase_client import get_client
+            sb = get_client()
+            if sb is not None:
+                resp = (sb.table("research_cache")
+                        .select("results,hit_count,expires_at")
+                        .eq("query_hash", key)
+                        .limit(1).execute())
+                rows = resp.data or []
+                if rows:
+                    row = rows[0]
+                    expires = row.get("expires_at")
+                    if not expires or datetime.fromisoformat(str(expires).replace("Z", "+00:00")) > datetime.now(timezone.utc):
+                        sb.table("research_cache").update({
+                            "hit_count": (row.get("hit_count") or 0) + 1,
+                            "last_hit_at": datetime.now(timezone.utc).isoformat(),
+                        }).eq("query_hash", key).execute()
+                        return row.get("results")
+        except Exception:
+            pass
+        # Fallback: local Qdrant (best-effort)
         try:
             from backend.vector_db.qdrant_client import vector_db
             hits = vector_db.search(query=f"seed pack {sector} {county} {nationality}",
@@ -93,6 +123,23 @@ class ClaudeResearchAgent:
         return None
 
     def _cache_store(self, seed, sector, county, nationality):
+        params = {"sector": sector, "county": county, "nationality": nationality}
+        key = self._hash_key("seed_pack", params)
+        try:
+            from backend.data.supabase_client import get_client
+            sb = get_client()
+            if sb is not None:
+                engine = (seed.get("meta") or {}).get("engine", "claude-web-search")
+                sb.table("research_cache").upsert({
+                    "query_hash": key,
+                    "kind": "seed_pack",
+                    "query_params": params,
+                    "results": seed,
+                    "engine": engine,
+                    "expires_at": (datetime.now(timezone.utc) + timedelta(days=30)).isoformat(),
+                }, on_conflict="query_hash").execute()
+        except Exception:
+            pass
         try:
             from backend.vector_db.qdrant_client import vector_db
             vector_db.store(data=seed, collection="regulations", sector=sector,

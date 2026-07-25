@@ -70,3 +70,10 @@ Thumbs.db
 # ============================================================
 .claude/worktrees/
 .claude/settings.local.json
+
+# ============================================================
+# Vendored clones — reference material carrying its own git history.
+# Re-fetch with:
+#   git clone https://github.com/anthropics/skills vendor/anthropic-skills
+# ============================================================
+vendor/

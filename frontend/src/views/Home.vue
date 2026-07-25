@@ -225,6 +225,36 @@
 
       </div>
     </section>
+
+    <!-- ── Services grid: live gov-portal automations ── -->
+    <section class="services-section">
+      <div class="services-inner">
+        <div class="services-header">
+          <div class="services-eyebrow">◇ LIVE AUTOMATIONS</div>
+          <h2 class="services-title">Every Kenya agency, one platform.</h2>
+          <p class="services-sub">
+            Every card below is a live Playwright-driven browser that fills the real portal form
+            — from your investor profile — while you watch.
+          </p>
+        </div>
+        <div class="services-grid">
+          <div
+            v-for="svc in services"
+            :key="svc.key"
+            class="service-card"
+            :class="{ 'svc-primary': svc.primary }"
+          >
+            <div class="svc-head">
+              <span class="svc-icon">{{ svc.icon }}</span>
+              <span class="svc-tag" v-if="svc.tag">{{ svc.tag }}</span>
+            </div>
+            <div class="svc-name">{{ svc.name }}</div>
+            <div class="svc-desc">{{ svc.desc }}</div>
+            <div class="svc-agency">{{ svc.agency }}</div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -293,6 +323,17 @@ const tickerAgencies = [
   'Nairobi City County', 'KEBS', 'Capital Markets Authority', 'CBK',
   'National Land Commission', 'NEMA', 'Energy & Petroleum Regulatory Authority',
   'Communications Authority', 'Tourism Regulatory Authority', 'PPB Kenya',
+]
+
+const services = [
+  { key: 'eta',    icon: '✈',  name: 'eTA Visitor Auth',        desc: 'Electronic travel authorisation, one-shot online submit.',                      agency: 'Immigration · eTA portal',              tag: 'LIVE' },
+  { key: 'classg', icon: '◈',  name: 'Class G Investor Permit', desc: 'Full 40-field investor permit form filed on eFNS while you watch.',            agency: 'Immigration · eFNS',                    tag: 'LIVE', primary: true },
+  { key: 'brs',    icon: '◆',  name: 'Company Registration',    desc: 'BRS company registration retrieval + status.',                                 agency: 'BRS · eCitizen' },
+  { key: 'kra',    icon: '§',  name: 'KRA PIN & Nil Return',    desc: 'iTax new-PIN application and annual nil-return filing for foreign investors.', agency: 'Kenya Revenue Authority',               tag: 'NEW', primary: true },
+  { key: 'nssf',   icon: '◐',  name: 'NSSF Employer',           desc: 'Employer NSSF registration for hires.',                                        agency: 'National Social Security Fund' },
+  { key: 'sha',    icon: '◑',  name: 'SHA Employer',            desc: 'Social Health Authority employer enrolment.',                                  agency: 'Social Health Authority' },
+  { key: 'kws',    icon: '◭',  name: 'National Park Booking',   desc: 'Book KWS parks, VAT-inclusive invoice emailed to you.',                        agency: 'Kenya Wildlife Service' },
+  { key: 'agents', icon: '⌘',  name: 'Vetted Agents Marketplace',desc: 'Immigration, licensing, legal & HR pros — hire vs self-serve.',               agency: 'Meridian · curated' },
 ]
 
 const steps = [
@@ -528,5 +569,86 @@ const startFlow = () => {
   .stat-c { min-width: 45%; }
   .float-tags { display: none; }
   .hero-sector-line { flex-wrap: wrap; justify-content: center; }
+}
+
+/* ── Services grid ── */
+.services-section {
+  padding: 80px 40px 100px;
+  background: linear-gradient(180deg, transparent, rgba(232,80,10,0.03));
+  border-top: 1px solid var(--border);
+}
+.services-inner { max-width: 1200px; margin: 0 auto; }
+.services-header { text-align: center; margin-bottom: 44px; }
+.services-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  color: #E8500A;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.services-title {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+.services-sub {
+  max-width: 620px;
+  margin: 0 auto;
+  color: var(--muted, #94a3b8);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+.service-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 20px;
+  transition: border-color 200ms, transform 200ms, background 200ms;
+  animation: msg-in 200ms ease-out both;
+}
+.service-card:hover {
+  border-color: rgba(232, 80, 10, 0.5);
+  transform: translateY(-2px);
+  background: rgba(15, 23, 42, 0.85);
+}
+.svc-primary {
+  border-color: rgba(232, 80, 10, 0.4);
+  background: linear-gradient(155deg, rgba(232,80,10,0.10), rgba(15,23,42,0.75));
+}
+.svc-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.svc-icon { font-size: 22px; color: #E8500A; }
+.svc-tag {
+  font-size: 0.62rem;
+  letter-spacing: 1.4px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(52, 211, 153, 0.15);
+  color: #34d399;
+}
+.svc-name { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.svc-desc { font-size: 0.85rem; color: var(--muted, #94a3b8); line-height: 1.55; margin-bottom: 10px; }
+.svc-agency {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .service-card { animation: none; transition: none; }
+}
+@media (max-width: 720px) {
+  .services-section { padding: 56px 20px 72px; }
 }
 </style>

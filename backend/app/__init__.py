@@ -77,6 +77,8 @@ def create_app(config_class=Config):
     app.register_blueprint(flights_bp)
     from backend.routes.agent_chat import agent_bp
     app.register_blueprint(agent_bp)
+    from backend.routes.licences import licences_bp
+    app.register_blueprint(licences_bp)
     
     # 健康检查
     @app.route('/health')

@@ -1,0 +1,1002 @@
+[
+  {
+    "No": "1",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "KRA PIN (Personal/Business)",
+    "Issuing Agency": "Kenya Revenue Authority",
+    "Agency Abbreviation": "KRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "All businesses and taxable persons",
+    "Notes": "Obtained via iTax; prerequisite for almost everything else"
+  },
+  {
+    "No": "2",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "VAT Registration",
+    "Issuing Agency": "Kenya Revenue Authority",
+    "Agency Abbreviation": "KRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Businesses above VAT turnover threshold",
+    "Notes": "Mandatory once turnover exceeds KES 5M/yr (verify current threshold)"
+  },
+  {
+    "No": "3",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "Income Tax Obligation",
+    "Issuing Agency": "Kenya Revenue Authority",
+    "Agency Abbreviation": "KRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "All registered businesses",
+    "Notes": "Activated on iTax at PIN registration"
+  },
+  {
+    "No": "4",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "Turnover Tax (TOT)",
+    "Issuing Agency": "Kenya Revenue Authority",
+    "Agency Abbreviation": "KRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Small businesses below VAT threshold",
+    "Notes": "Simplified turnover-based tax"
+  },
+  {
+    "No": "5",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "PAYE Employer Registration",
+    "Issuing Agency": "Kenya Revenue Authority",
+    "Agency Abbreviation": "KRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Any business with employees",
+    "Notes": "Monthly payroll tax remittance"
+  },
+  {
+    "No": "6",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "eTIMS Registration (Electronic Tax Invoice)",
+    "Issuing Agency": "Kenya Revenue Authority",
+    "Agency Abbreviation": "KRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "VAT-registered and most businesses issuing invoices",
+    "Notes": "Required for expense deductibility"
+  },
+  {
+    "No": "7",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "Excise Duty License",
+    "Issuing Agency": "Kenya Revenue Authority",
+    "Agency Abbreviation": "KRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Manufacturers/importers of excisable goods (alcohol tobacco fuel etc.)",
+    "Notes": ""
+  },
+  {
+    "No": "8",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "Certificate of Incorporation / Business Name Registration",
+    "Issuing Agency": "Business Registration Service",
+    "Agency Abbreviation": "BRS",
+    "Level": "National",
+    "Who Needs It / Applies To": "All formal businesses",
+    "Notes": "Via eCitizen BRS V2"
+  },
+  {
+    "No": "9",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "NSSF Employer Registration",
+    "Issuing Agency": "National Social Security Fund",
+    "Agency Abbreviation": "NSSF",
+    "Level": "National",
+    "Who Needs It / Applies To": "Any business with employees",
+    "Notes": "Statutory pension contribution"
+  },
+  {
+    "No": "10",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "SHIF/SHA Registration",
+    "Issuing Agency": "Social Health Authority",
+    "Agency Abbreviation": "SHA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Any business with employees",
+    "Notes": "Replaced NHIF Oct 2024"
+  },
+  {
+    "No": "11",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "Affordable Housing Levy Registration",
+    "Issuing Agency": "Kenya Revenue Authority",
+    "Agency Abbreviation": "KRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Any business with employees",
+    "Notes": "1.5% employer + employee levy"
+  },
+  {
+    "No": "12",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "Import/Export Code",
+    "Issuing Agency": "KRA Customs",
+    "Agency Abbreviation": "KRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Importers/exporters",
+    "Notes": "Required to clear goods via iCMS"
+  },
+  {
+    "No": "13",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "Authorised Economic Operator (AEO) Status",
+    "Issuing Agency": "KRA Customs",
+    "Agency Abbreviation": "KRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "High-volume traders",
+    "Notes": "Fast-track customs clearance"
+  },
+  {
+    "No": "14",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "Customs Clearing & Forwarding Agent License",
+    "Issuing Agency": "KRA / KIFWA",
+    "Agency Abbreviation": "KRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Clearing agents",
+    "Notes": "Also requires KIFWA membership"
+  },
+  {
+    "No": "15",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "Work Injury Benefits Act (WIBA) Cover",
+    "Issuing Agency": "IRA-licensed insurer",
+    "Agency Abbreviation": "IRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Any business with employees",
+    "Notes": "Statutory insurance not optional"
+  },
+  {
+    "No": "16",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "Investment Certificate",
+    "Issuing Agency": "Kenya Investment Authority",
+    "Agency Abbreviation": "KenInvest",
+    "Level": "National",
+    "Who Needs It / Applies To": "Foreign investors (USD 100k+)",
+    "Notes": "Facilitates licenses and incentives"
+  },
+  {
+    "No": "17",
+    "Category": "Registration & Tax",
+    "License/Permit/Certificate Name": "Work Permit (Classes A-K)",
+    "Issuing Agency": "Directorate of Immigration Services",
+    "Agency Abbreviation": "DIS",
+    "Level": "National",
+    "Who Needs It / Applies To": "Foreign employees/investors/directors",
+    "Notes": "Class C professionals D employees G investors"
+  },
+  {
+    "No": "18",
+    "Category": "County",
+    "License/Permit/Certificate Name": "Single Business Permit (SBP)",
+    "Issuing Agency": "County Government e.g. Nairobi City County",
+    "Agency Abbreviation": "County",
+    "Level": "County",
+    "Who Needs It / Applies To": "Every business with physical premises",
+    "Notes": "Replaced old trade licenses; renewed annually"
+  },
+  {
+    "No": "19",
+    "Category": "County",
+    "License/Permit/Certificate Name": "Fire Safety/Fire Clearance Certificate",
+    "Issuing Agency": "County Fire & Rescue Department",
+    "Agency Abbreviation": "County",
+    "Level": "County",
+    "Who Needs It / Applies To": "Hotels shops warehouses high-occupancy buildings",
+    "Notes": "Annual inspection required"
+  },
+  {
+    "No": "20",
+    "Category": "County",
+    "License/Permit/Certificate Name": "Public Health/Business Health Certificate",
+    "Issuing Agency": "County Public Health Department",
+    "Agency Abbreviation": "County",
+    "Level": "County",
+    "Who Needs It / Applies To": "Food premises hospitality manufacturing",
+    "Notes": ""
+  },
+  {
+    "No": "21",
+    "Category": "County",
+    "License/Permit/Certificate Name": "Food Handler's Medical Certificate",
+    "Issuing Agency": "County Public Health Department",
+    "Agency Abbreviation": "County",
+    "Level": "County",
+    "Who Needs It / Applies To": "Individual food handlers",
+    "Notes": "Personal certificate not business-level"
+  },
+  {
+    "No": "22",
+    "Category": "County",
+    "License/Permit/Certificate Name": "Outdoor Advertising/Signage License",
+    "Issuing Agency": "County Government",
+    "Agency Abbreviation": "County",
+    "Level": "County",
+    "Who Needs It / Applies To": "Businesses with billboards/signage",
+    "Notes": ""
+  },
+  {
+    "No": "23",
+    "Category": "County",
+    "License/Permit/Certificate Name": "Liquor License",
+    "Issuing Agency": "County Liquor Licensing Board",
+    "Agency Abbreviation": "County",
+    "Level": "County",
+    "Who Needs It / Applies To": "Bars restaurants retailers selling alcohol",
+    "Notes": "Coordinated with NACADA"
+  },
+  {
+    "No": "24",
+    "Category": "County",
+    "License/Permit/Certificate Name": "Building/Development Permit",
+    "Issuing Agency": "County Physical Planning Department",
+    "Agency Abbreviation": "County",
+    "Level": "County",
+    "Who Needs It / Applies To": "Construction and renovation",
+    "Notes": ""
+  },
+  {
+    "No": "25",
+    "Category": "County",
+    "License/Permit/Certificate Name": "Change of User Permit",
+    "Issuing Agency": "County Physical Planning Department",
+    "Agency Abbreviation": "County",
+    "Level": "County",
+    "Who Needs It / Applies To": "Change of land/building use",
+    "Notes": ""
+  },
+  {
+    "No": "26",
+    "Category": "County",
+    "License/Permit/Certificate Name": "Land Rates Clearance Certificate",
+    "Issuing Agency": "County Government",
+    "Agency Abbreviation": "County",
+    "Level": "County",
+    "Who Needs It / Applies To": "Property/land owners",
+    "Notes": "Required for permits and property transactions"
+  },
+  {
+    "No": "27",
+    "Category": "County",
+    "License/Permit/Certificate Name": "Parking/Loading Zone Permit",
+    "Issuing Agency": "County Government",
+    "Agency Abbreviation": "County",
+    "Level": "County",
+    "Who Needs It / Applies To": "Businesses needing dedicated loading bays",
+    "Notes": ""
+  },
+  {
+    "No": "28",
+    "Category": "County",
+    "License/Permit/Certificate Name": "Market/Trading Space Permit",
+    "Issuing Agency": "County Government",
+    "Agency Abbreviation": "County",
+    "Level": "County",
+    "Who Needs It / Applies To": "Market and street traders",
+    "Notes": ""
+  },
+  {
+    "No": "29",
+    "Category": "County",
+    "License/Permit/Certificate Name": "Noise Control License",
+    "Issuing Agency": "NEMA / County Government",
+    "Agency Abbreviation": "NEMA",
+    "Level": "National/County",
+    "Who Needs It / Applies To": "Entertainment venues industrial premises",
+    "Notes": ""
+  },
+  {
+    "No": "30",
+    "Category": "County",
+    "License/Permit/Certificate Name": "Weights & Measures (Legal Metrology) License",
+    "Issuing Agency": "Kenya Bureau of Standards / Ministry of Trade",
+    "Agency Abbreviation": "KEBS",
+    "Level": "National",
+    "Who Needs It / Applies To": "Traders using scales/meters/pumps",
+    "Notes": ""
+  },
+  {
+    "No": "31",
+    "Category": "Financial Services",
+    "License/Permit/Certificate Name": "Commercial Banking License",
+    "Issuing Agency": "Central Bank of Kenya",
+    "Agency Abbreviation": "CBK",
+    "Level": "National",
+    "Who Needs It / Applies To": "Banks",
+    "Notes": ""
+  },
+  {
+    "No": "32",
+    "Category": "Financial Services",
+    "License/Permit/Certificate Name": "Microfinance Bank License",
+    "Issuing Agency": "Central Bank of Kenya",
+    "Agency Abbreviation": "CBK",
+    "Level": "National",
+    "Who Needs It / Applies To": "Deposit-taking microfinance institutions",
+    "Notes": ""
+  },
+  {
+    "No": "33",
+    "Category": "Financial Services",
+    "License/Permit/Certificate Name": "Forex Bureau License",
+    "Issuing Agency": "Central Bank of Kenya",
+    "Agency Abbreviation": "CBK",
+    "Level": "National",
+    "Who Needs It / Applies To": "Foreign exchange bureaus",
+    "Notes": ""
+  },
+  {
+    "No": "34",
+    "Category": "Financial Services",
+    "License/Permit/Certificate Name": "Money Remittance Provider License",
+    "Issuing Agency": "Central Bank of Kenya",
+    "Agency Abbreviation": "CBK",
+    "Level": "National",
+    "Who Needs It / Applies To": "Remittance/money transfer businesses",
+    "Notes": ""
+  },
+  {
+    "No": "35",
+    "Category": "Financial Services",
+    "License/Permit/Certificate Name": "Digital Credit Provider (DCP) License",
+    "Issuing Agency": "Central Bank of Kenya",
+    "Agency Abbreviation": "CBK",
+    "Level": "National",
+    "Who Needs It / Applies To": "Digital/mobile lending apps",
+    "Notes": "Mandatory since 2022 CBK Amendment Act"
+  },
+  {
+    "No": "36",
+    "Category": "Financial Services",
+    "License/Permit/Certificate Name": "Payment Service Provider (PSP) License",
+    "Issuing Agency": "Central Bank of Kenya",
+    "Agency Abbreviation": "CBK",
+    "Level": "National",
+    "Who Needs It / Applies To": "Fintech/payment gateway operators",
+    "Notes": "Under National Payment System Act"
+  },
+  {
+    "No": "37",
+    "Category": "Financial Services",
+    "License/Permit/Certificate Name": "Deposit-Taking SACCO License",
+    "Issuing Agency": "SACCO Societies Regulatory Authority",
+    "Agency Abbreviation": "SASRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Deposit-taking SACCOs",
+    "Notes": ""
+  },
+  {
+    "No": "38",
+    "Category": "Financial Services",
+    "License/Permit/Certificate Name": "Insurance Company License",
+    "Issuing Agency": "Insurance Regulatory Authority",
+    "Agency Abbreviation": "IRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Insurance underwriters",
+    "Notes": ""
+  },
+  {
+    "No": "39",
+    "Category": "Financial Services",
+    "License/Permit/Certificate Name": "Insurance Agent/Broker License",
+    "Issuing Agency": "Insurance Regulatory Authority",
+    "Agency Abbreviation": "IRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Insurance intermediaries",
+    "Notes": ""
+  },
+  {
+    "No": "40",
+    "Category": "Financial Services",
+    "License/Permit/Certificate Name": "Capital Markets License (Stockbroker/Fund Manager/Investment Bank)",
+    "Issuing Agency": "Capital Markets Authority",
+    "Agency Abbreviation": "CMA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Securities and investment firms",
+    "Notes": ""
+  },
+  {
+    "No": "41",
+    "Category": "Financial Services",
+    "License/Permit/Certificate Name": "Retirement Benefits Scheme License",
+    "Issuing Agency": "Retirement Benefits Authority",
+    "Agency Abbreviation": "RBA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Pension scheme administrators",
+    "Notes": ""
+  },
+  {
+    "No": "42",
+    "Category": "Financial Services",
+    "License/Permit/Certificate Name": "Hire Purchase Registration",
+    "Issuing Agency": "Business Registration Service",
+    "Agency Abbreviation": "BRS",
+    "Level": "National",
+    "Who Needs It / Applies To": "Hire purchase agreements",
+    "Notes": ""
+  },
+  {
+    "No": "43",
+    "Category": "Financial Services",
+    "License/Permit/Certificate Name": "Credit Reference Bureau License",
+    "Issuing Agency": "Central Bank of Kenya",
+    "Agency Abbreviation": "CBK",
+    "Level": "National",
+    "Who Needs It / Applies To": "Credit information providers",
+    "Notes": ""
+  },
+  {
+    "No": "44",
+    "Category": "Health & Pharma",
+    "License/Permit/Certificate Name": "Medical Practitioner/Dentist Practicing License",
+    "Issuing Agency": "Kenya Medical Practitioners & Dentists Council",
+    "Agency Abbreviation": "KMPDC",
+    "Level": "National",
+    "Who Needs It / Applies To": "Doctors dentists health facilities",
+    "Notes": "Also licenses private hospitals/clinics"
+  },
+  {
+    "No": "45",
+    "Category": "Health & Pharma",
+    "License/Permit/Certificate Name": "Nursing Practicing License",
+    "Issuing Agency": "Nursing Council of Kenya",
+    "Agency Abbreviation": "NCK",
+    "Level": "National",
+    "Who Needs It / Applies To": "Nurses and midwives",
+    "Notes": ""
+  },
+  {
+    "No": "46",
+    "Category": "Health & Pharma",
+    "License/Permit/Certificate Name": "Pharmacy Premises License",
+    "Issuing Agency": "Pharmacy and Poisons Board",
+    "Agency Abbreviation": "PPB",
+    "Level": "National",
+    "Who Needs It / Applies To": "Pharmacies chemists drug wholesalers",
+    "Notes": ""
+  },
+  {
+    "No": "47",
+    "Category": "Health & Pharma",
+    "License/Permit/Certificate Name": "Drug/Medicine Import & Manufacturing License",
+    "Issuing Agency": "Pharmacy and Poisons Board",
+    "Agency Abbreviation": "PPB",
+    "Level": "National",
+    "Who Needs It / Applies To": "Pharmaceutical importers/manufacturers",
+    "Notes": ""
+  },
+  {
+    "No": "48",
+    "Category": "Health & Pharma",
+    "License/Permit/Certificate Name": "Clinical Officer Practicing License",
+    "Issuing Agency": "Clinical Officers Council",
+    "Agency Abbreviation": "COC",
+    "Level": "National",
+    "Who Needs It / Applies To": "Clinical officers",
+    "Notes": ""
+  },
+  {
+    "No": "49",
+    "Category": "Health & Pharma",
+    "License/Permit/Certificate Name": "Health Facility Operating License",
+    "Issuing Agency": "Ministry of Health / County Health Department",
+    "Agency Abbreviation": "MOH",
+    "Level": "National/County",
+    "Who Needs It / Applies To": "Hospitals clinics nursing homes",
+    "Notes": ""
+  },
+  {
+    "No": "50",
+    "Category": "Health & Pharma",
+    "License/Permit/Certificate Name": "Medical Laboratory License",
+    "Issuing Agency": "Kenya Medical Laboratory Technicians & Technologists Board",
+    "Agency Abbreviation": "KMLTTB",
+    "Level": "National",
+    "Who Needs It / Applies To": "Medical/diagnostic laboratories",
+    "Notes": ""
+  },
+  {
+    "No": "51",
+    "Category": "Food & Agriculture",
+    "License/Permit/Certificate Name": "Food Business Operator Certificate",
+    "Issuing Agency": "County Public Health Dept / KEBS",
+    "Agency Abbreviation": "County/KEBS",
+    "Level": "County/National",
+    "Who Needs It / Applies To": "Restaurants food processors retailers",
+    "Notes": ""
+  },
+  {
+    "No": "52",
+    "Category": "Food & Agriculture",
+    "License/Permit/Certificate Name": "Agrochemical/Pesticide Registration & Dealer License",
+    "Issuing Agency": "Pest Control Products Board",
+    "Agency Abbreviation": "PCPB",
+    "Level": "National",
+    "Who Needs It / Applies To": "Agrochemical importers/dealers",
+    "Notes": ""
+  },
+  {
+    "No": "53",
+    "Category": "Food & Agriculture",
+    "License/Permit/Certificate Name": "Seed Certification & Variety Release",
+    "Issuing Agency": "Kenya Plant Health Inspectorate Service",
+    "Agency Abbreviation": "KEPHIS",
+    "Level": "National",
+    "Who Needs It / Applies To": "Seed producers/dealers",
+    "Notes": ""
+  },
+  {
+    "No": "54",
+    "Category": "Food & Agriculture",
+    "License/Permit/Certificate Name": "Phytosanitary Certificate (Plant Import/Export)",
+    "Issuing Agency": "Kenya Plant Health Inspectorate Service",
+    "Agency Abbreviation": "KEPHIS",
+    "Level": "National",
+    "Who Needs It / Applies To": "Exporters/importers of plants and produce",
+    "Notes": ""
+  },
+  {
+    "No": "55",
+    "Category": "Food & Agriculture",
+    "License/Permit/Certificate Name": "Veterinary Medicine Dealer License",
+    "Issuing Agency": "Veterinary Medicines Directorate",
+    "Agency Abbreviation": "VMD",
+    "Level": "National",
+    "Who Needs It / Applies To": "Veterinary drug importers/dealers",
+    "Notes": ""
+  },
+  {
+    "No": "56",
+    "Category": "Food & Agriculture",
+    "License/Permit/Certificate Name": "Dairy Processing/Trading License",
+    "Issuing Agency": "Kenya Dairy Board",
+    "Agency Abbreviation": "KDB",
+    "Level": "National",
+    "Who Needs It / Applies To": "Milk processors coolers traders",
+    "Notes": ""
+  },
+  {
+    "No": "57",
+    "Category": "Food & Agriculture",
+    "License/Permit/Certificate Name": "Coffee/Tea/Sugar/Miraa Trading License",
+    "Issuing Agency": "Agriculture and Food Authority relevant directorate",
+    "Agency Abbreviation": "AFA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Crop-specific traders and processors",
+    "Notes": "e.g. Coffee Directorate Tea Directorate Sugar Directorate"
+  },
+  {
+    "No": "58",
+    "Category": "Food & Agriculture",
+    "License/Permit/Certificate Name": "Fisheries/Fish Trading License",
+    "Issuing Agency": "State Department for Fisheries",
+    "Agency Abbreviation": "Fisheries Dept",
+    "Level": "National",
+    "Who Needs It / Applies To": "Fishing fish farming fish trading",
+    "Notes": ""
+  },
+  {
+    "No": "59",
+    "Category": "Food & Agriculture",
+    "License/Permit/Certificate Name": "Meat/Abattoir/Slaughterhouse License",
+    "Issuing Agency": "County Veterinary Department / Kenya Meat Commission",
+    "Agency Abbreviation": "County/KMC",
+    "Level": "County/National",
+    "Who Needs It / Applies To": "Abattoirs butcheries",
+    "Notes": ""
+  },
+  {
+    "No": "60",
+    "Category": "Environment & Natural Resources",
+    "License/Permit/Certificate Name": "Environmental Impact Assessment (EIA) License",
+    "Issuing Agency": "National Environment Management Authority",
+    "Agency Abbreviation": "NEMA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Manufacturing hotels fuel stations construction mining large farms",
+    "Notes": ""
+  },
+  {
+    "No": "61",
+    "Category": "Environment & Natural Resources",
+    "License/Permit/Certificate Name": "Effluent Discharge License",
+    "Issuing Agency": "NEMA / Water Resources Authority",
+    "Agency Abbreviation": "NEMA/WRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Industries discharging waste water",
+    "Notes": ""
+  },
+  {
+    "No": "62",
+    "Category": "Environment & Natural Resources",
+    "License/Permit/Certificate Name": "Water Abstraction Permit",
+    "Issuing Agency": "Water Resources Authority",
+    "Agency Abbreviation": "WRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Businesses drawing water from boreholes/rivers",
+    "Notes": ""
+  },
+  {
+    "No": "63",
+    "Category": "Environment & Natural Resources",
+    "License/Permit/Certificate Name": "Waste Management/Handling License",
+    "Issuing Agency": "NEMA",
+    "Agency Abbreviation": "NEMA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Waste collectors recyclers disposal firms",
+    "Notes": ""
+  },
+  {
+    "No": "64",
+    "Category": "Environment & Natural Resources",
+    "License/Permit/Certificate Name": "Forestry Produce/Charcoal Movement Permit",
+    "Issuing Agency": "Kenya Forest Service",
+    "Agency Abbreviation": "KFS",
+    "Level": "National",
+    "Who Needs It / Applies To": "Timber/charcoal dealers",
+    "Notes": ""
+  },
+  {
+    "No": "65",
+    "Category": "Environment & Natural Resources",
+    "License/Permit/Certificate Name": "Mining License/Mineral Right",
+    "Issuing Agency": "State Department for Mining",
+    "Agency Abbreviation": "Mining Dept",
+    "Level": "National",
+    "Who Needs It / Applies To": "Miners quarry operators",
+    "Notes": ""
+  },
+  {
+    "No": "66",
+    "Category": "Environment & Natural Resources",
+    "License/Permit/Certificate Name": "Quarrying/Sand Harvesting Permit",
+    "Issuing Agency": "County Government + NEMA",
+    "Agency Abbreviation": "County/NEMA",
+    "Level": "County/National",
+    "Who Needs It / Applies To": "Quarry and sand harvesting operators",
+    "Notes": ""
+  },
+  {
+    "No": "67",
+    "Category": "Construction & Professions",
+    "License/Permit/Certificate Name": "National Construction Authority Contractor Registration",
+    "Issuing Agency": "National Construction Authority",
+    "Agency Abbreviation": "NCA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Building and civil works contractors",
+    "Notes": ""
+  },
+  {
+    "No": "68",
+    "Category": "Construction & Professions",
+    "License/Permit/Certificate Name": "Architect Registration",
+    "Issuing Agency": "Board of Registration of Architects and Quantity Surveyors",
+    "Agency Abbreviation": "BORAQS",
+    "Level": "National",
+    "Who Needs It / Applies To": "Architects quantity surveyors",
+    "Notes": ""
+  },
+  {
+    "No": "69",
+    "Category": "Construction & Professions",
+    "License/Permit/Certificate Name": "Engineer Practicing License",
+    "Issuing Agency": "Engineers Board of Kenya",
+    "Agency Abbreviation": "EBK",
+    "Level": "National",
+    "Who Needs It / Applies To": "Consulting/registered engineers",
+    "Notes": ""
+  },
+  {
+    "No": "70",
+    "Category": "Construction & Professions",
+    "License/Permit/Certificate Name": "Land Surveyor License",
+    "Issuing Agency": "Land Surveyors Board",
+    "Agency Abbreviation": "LSB",
+    "Level": "National",
+    "Who Needs It / Applies To": "Licensed surveyors",
+    "Notes": ""
+  },
+  {
+    "No": "71",
+    "Category": "Construction & Professions",
+    "License/Permit/Certificate Name": "Estate Agent License",
+    "Issuing Agency": "Estate Agents Registration Board",
+    "Agency Abbreviation": "EARB",
+    "Level": "National",
+    "Who Needs It / Applies To": "Real estate agents/firms",
+    "Notes": ""
+  },
+  {
+    "No": "72",
+    "Category": "Transport",
+    "License/Permit/Certificate Name": "Public Service Vehicle (PSV) License",
+    "Issuing Agency": "National Transport and Safety Authority",
+    "Agency Abbreviation": "NTSA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Matatus buses taxis ride-hailing vehicles",
+    "Notes": ""
+  },
+  {
+    "No": "73",
+    "Category": "Transport",
+    "License/Permit/Certificate Name": "Driving School License",
+    "Issuing Agency": "National Transport and Safety Authority",
+    "Agency Abbreviation": "NTSA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Driving schools",
+    "Notes": ""
+  },
+  {
+    "No": "74",
+    "Category": "Transport",
+    "License/Permit/Certificate Name": "Motor Vehicle Inspection Certificate",
+    "Issuing Agency": "National Transport and Safety Authority",
+    "Agency Abbreviation": "NTSA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Commercial/PSV vehicles",
+    "Notes": ""
+  },
+  {
+    "No": "75",
+    "Category": "Transport",
+    "License/Permit/Certificate Name": "Boda Boda Operator/Sacco Registration",
+    "Issuing Agency": "County Government + NTSA",
+    "Agency Abbreviation": "County/NTSA",
+    "Level": "County/National",
+    "Who Needs It / Applies To": "Motorcycle taxi operators",
+    "Notes": ""
+  },
+  {
+    "No": "76",
+    "Category": "Transport",
+    "License/Permit/Certificate Name": "Air Operator Certificate (AOC)",
+    "Issuing Agency": "Kenya Civil Aviation Authority",
+    "Agency Abbreviation": "KCAA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Airlines charter operators",
+    "Notes": ""
+  },
+  {
+    "No": "77",
+    "Category": "Transport",
+    "License/Permit/Certificate Name": "Maritime/Shipping Operator License",
+    "Issuing Agency": "Kenya Maritime Authority",
+    "Agency Abbreviation": "KMA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Shipping lines marine operators",
+    "Notes": ""
+  },
+  {
+    "No": "78",
+    "Category": "Communications & ICT",
+    "License/Permit/Certificate Name": "Telecommunications Network Operator License",
+    "Issuing Agency": "Communications Authority of Kenya",
+    "Agency Abbreviation": "CA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Telcos ISPs",
+    "Notes": ""
+  },
+  {
+    "No": "79",
+    "Category": "Communications & ICT",
+    "License/Permit/Certificate Name": "Postal/Courier Service License",
+    "Issuing Agency": "Communications Authority of Kenya",
+    "Agency Abbreviation": "CA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Courier and postal companies",
+    "Notes": ""
+  },
+  {
+    "No": "80",
+    "Category": "Communications & ICT",
+    "License/Permit/Certificate Name": "Broadcasting License (TV/Radio)",
+    "Issuing Agency": "Communications Authority of Kenya",
+    "Agency Abbreviation": "CA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Broadcasters",
+    "Notes": ""
+  },
+  {
+    "No": "81",
+    "Category": "Communications & ICT",
+    "License/Permit/Certificate Name": "Data Controller/Processor Registration",
+    "Issuing Agency": "Office of the Data Protection Commissioner",
+    "Agency Abbreviation": "ODPC",
+    "Level": "National",
+    "Who Needs It / Applies To": "Businesses processing personal data",
+    "Notes": "Mandatory under Data Protection Act 2019"
+  },
+  {
+    "No": "82",
+    "Category": "Communications & ICT",
+    "License/Permit/Certificate Name": "Type Approval for Telecom Equipment",
+    "Issuing Agency": "Communications Authority of Kenya",
+    "Agency Abbreviation": "CA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Importers/dealers of telecom/ICT equipment",
+    "Notes": ""
+  },
+  {
+    "No": "83",
+    "Category": "Energy & Petroleum",
+    "License/Permit/Certificate Name": "Petroleum Retail (Fuel Station) License",
+    "Issuing Agency": "Energy and Petroleum Regulatory Authority",
+    "Agency Abbreviation": "EPRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Fuel stations",
+    "Notes": ""
+  },
+  {
+    "No": "84",
+    "Category": "Energy & Petroleum",
+    "License/Permit/Certificate Name": "LPG (Cooking Gas) Dealer License",
+    "Issuing Agency": "Energy and Petroleum Regulatory Authority",
+    "Agency Abbreviation": "EPRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Gas refillers/dealers",
+    "Notes": ""
+  },
+  {
+    "No": "85",
+    "Category": "Energy & Petroleum",
+    "License/Permit/Certificate Name": "Electric Power Generation/Distribution License",
+    "Issuing Agency": "Energy and Petroleum Regulatory Authority",
+    "Agency Abbreviation": "EPRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Power producers/distributors",
+    "Notes": ""
+  },
+  {
+    "No": "86",
+    "Category": "Energy & Petroleum",
+    "License/Permit/Certificate Name": "Solar/Renewable Energy Installer License",
+    "Issuing Agency": "Energy and Petroleum Regulatory Authority",
+    "Agency Abbreviation": "EPRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Solar installers/vendors",
+    "Notes": ""
+  },
+  {
+    "No": "87",
+    "Category": "Tourism & Hospitality",
+    "License/Permit/Certificate Name": "Hotel/Restaurant Classification & License",
+    "Issuing Agency": "Tourism Regulatory Authority",
+    "Agency Abbreviation": "TRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Hotels restaurants lodges",
+    "Notes": ""
+  },
+  {
+    "No": "88",
+    "Category": "Tourism & Hospitality",
+    "License/Permit/Certificate Name": "Tour Operator/Travel Agency License",
+    "Issuing Agency": "Tourism Regulatory Authority",
+    "Agency Abbreviation": "TRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Tour and travel companies",
+    "Notes": ""
+  },
+  {
+    "No": "89",
+    "Category": "Tourism & Hospitality",
+    "License/Permit/Certificate Name": "Tour Guide License",
+    "Issuing Agency": "Tourism Regulatory Authority",
+    "Agency Abbreviation": "TRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Individual tour guides",
+    "Notes": ""
+  },
+  {
+    "No": "90",
+    "Category": "Security & Safety",
+    "License/Permit/Certificate Name": "Private Security Firm License",
+    "Issuing Agency": "Private Security Regulatory Authority",
+    "Agency Abbreviation": "PSRA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Private security companies",
+    "Notes": ""
+  },
+  {
+    "No": "91",
+    "Category": "Security & Safety",
+    "License/Permit/Certificate Name": "Firearm Dealer Certificate",
+    "Issuing Agency": "Kenya National Firearms Licensing Board",
+    "Agency Abbreviation": "FLB",
+    "Level": "National",
+    "Who Needs It / Applies To": "Firearm dealers",
+    "Notes": ""
+  },
+  {
+    "No": "92",
+    "Category": "Gaming & Media",
+    "License/Permit/Certificate Name": "Betting/Gaming/Lottery License",
+    "Issuing Agency": "Betting Control and Licensing Board",
+    "Agency Abbreviation": "BCLB",
+    "Level": "National",
+    "Who Needs It / Applies To": "Betting casino lottery operators",
+    "Notes": "Verify current agency name before use; sector oversight has been under review"
+  },
+  {
+    "No": "93",
+    "Category": "Gaming & Media",
+    "License/Permit/Certificate Name": "Film/Content Production & Distribution License",
+    "Issuing Agency": "Kenya Film Classification Board",
+    "Agency Abbreviation": "KFCB",
+    "Level": "National",
+    "Who Needs It / Applies To": "Film producers distributors cinemas",
+    "Notes": ""
+  },
+  {
+    "No": "94",
+    "Category": "Gaming & Media",
+    "License/Permit/Certificate Name": "Copyright Collective Management Organisation License",
+    "Issuing Agency": "Kenya Copyright Board",
+    "Agency Abbreviation": "KECOBO",
+    "Level": "National",
+    "Who Needs It / Applies To": "Music/content royalty collection societies",
+    "Notes": ""
+  },
+  {
+    "No": "95",
+    "Category": "Intellectual Property",
+    "License/Permit/Certificate Name": "Trademark/Patent/Industrial Design Registration",
+    "Issuing Agency": "Kenya Industrial Property Institute",
+    "Agency Abbreviation": "KIPI",
+    "Level": "National",
+    "Who Needs It / Applies To": "Businesses protecting brands/inventions",
+    "Notes": ""
+  },
+  {
+    "No": "96",
+    "Category": "Labour & Employment",
+    "License/Permit/Certificate Name": "Employment/Recruitment Agency License",
+    "Issuing Agency": "National Employment Authority",
+    "Agency Abbreviation": "NEA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Recruitment and labour agencies",
+    "Notes": ""
+  },
+  {
+    "No": "97",
+    "Category": "Labour & Employment",
+    "License/Permit/Certificate Name": "NITA Training Levy Registration",
+    "Issuing Agency": "National Industrial Training Authority",
+    "Agency Abbreviation": "NITA",
+    "Level": "National",
+    "Who Needs It / Applies To": "Employers of 1+ staff",
+    "Notes": ""
+  },
+  {
+    "No": "98",
+    "Category": "Non-Profit",
+    "License/Permit/Certificate Name": "NGO Registration Certificate",
+    "Issuing Agency": "NGO Coordination Board",
+    "Agency Abbreviation": "NGOB",
+    "Level": "National",
+    "Who Needs It / Applies To": "Non-governmental organizations",
+    "Notes": ""
+  },
+  {
+    "No": "99",
+    "Category": "Standards & Quality",
+    "License/Permit/Certificate Name": "KEBS Standardization Mark/Diamond Mark",
+    "Issuing Agency": "Kenya Bureau of Standards",
+    "Agency Abbreviation": "KEBS",
+    "Level": "National",
+    "Who Needs It / Applies To": "Manufacturers/importers of regulated products",
+    "Notes": ""
+  },
+  {
+    "No": "100",
+    "Category": "Trade",
+    "License/Permit/Certificate Name": "Kenya Trade Network (Single Window) Registration",
+    "Issuing Agency": "Kenya Trade Network Agency",
+    "Agency Abbreviation": "KenTrade",
+    "Level": "National",
+    "Who Needs It / Applies To": "Importers/exporters",
+    "Notes": "Access to National Electronic Single Window System"
+  }
+]

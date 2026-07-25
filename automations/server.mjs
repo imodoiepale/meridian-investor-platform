@@ -24,6 +24,7 @@ import { runEtaKenyaAutomation, getJobProgress, getLatestJobId, getAllJobs, stop
 import { runBrsAutomation } from './scripts/brs.js';
 import { registerNssf } from './scripts/nssf.mjs';
 import { registerSha } from './scripts/sha.mjs';
+import { registerKraPin, fileNilReturn as fileKraNilReturn, checkKraCredentials } from './scripts/kra.mjs';
 
 
 
@@ -1059,6 +1060,80 @@ app.post('/api/sha', async (req, res) => {
         if (!res.headersSent) {
             res.status(500).json({ success: false, error: error.message });
         }
+    }
+});
+
+// ═════════ KRA (Kenya Revenue Authority) endpoints ═════════
+app.post('/api/kra/register-pin', async (req, res) => {
+    try {
+        console.log('📥 Received KRA PIN registration request');
+        const profile = req.body?.profile || req.body;
+        if (!profile?.firstName || !profile?.lastName) {
+            return res.status(400).json({
+                success: false,
+                error: 'profile.firstName and profile.lastName are required'
+            });
+        }
+        const jobId = Date.now().toString() + Math.random().toString(36).substring(7);
+        res.json({
+            success: true,
+            message: 'KRA PIN registration started. Browser will open shortly.',
+            jobId,
+            timestamp: new Date().toISOString(),
+        });
+        registerKraPin(profile)
+            .then(result => console.log('✅ KRA PIN completed:', result?.pin || result?.success))
+            .catch(err => console.error('❌ KRA PIN failed:', err.message));
+    } catch (error) {
+        console.error('❌ KRA server error:', error);
+        if (!res.headersSent) res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.post('/api/kra/file-nil-return', async (req, res) => {
+    try {
+        console.log('📥 Received KRA nil-return request');
+        const { pin, password, kind = 'paye', company_name = '', returnPeriodYear } = req.body || {};
+        if (!pin || !password) {
+            return res.status(400).json({ success: false, error: 'pin and password are required' });
+        }
+        const jobId = Date.now().toString() + Math.random().toString(36).substring(7);
+        res.json({
+            success: true,
+            message: `KRA ${kind.toUpperCase()} nil-return filing started.`,
+            jobId,
+            kind,
+            timestamp: new Date().toISOString(),
+        });
+        fileKraNilReturn({ pin, password, kind, company_name, returnPeriodYear }, { jobId })
+            .then(result => console.log(`✅ KRA ${kind} nil-return completed:`, result?.acknowledgement || result?.success))
+            .catch(err => console.error(`❌ KRA ${kind} nil-return failed:`, err.message));
+    } catch (error) {
+        console.error('❌ KRA nil-return error:', error);
+        if (!res.headersSent) res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.post('/api/kra/check-credentials', async (req, res) => {
+    try {
+        console.log('📥 Received KRA credential-check request');
+        const { pin, password, company_name = '' } = req.body || {};
+        if (!pin || !password) {
+            return res.status(400).json({ success: false, error: 'pin and password are required' });
+        }
+        const jobId = Date.now().toString() + Math.random().toString(36).substring(7);
+        res.json({
+            success: true,
+            message: 'KRA credential check started. Browser will open shortly.',
+            jobId,
+            timestamp: new Date().toISOString(),
+        });
+        checkKraCredentials({ pin, password, company_name }, { jobId })
+            .then(result => console.log(`✅ KRA credential check: ${result.status}`))
+            .catch(err => console.error('❌ KRA credential check failed:', err.message));
+    } catch (error) {
+        console.error('❌ KRA credential check error:', error);
+        if (!res.headersSent) res.status(500).json({ success: false, error: error.message });
     }
 });
 

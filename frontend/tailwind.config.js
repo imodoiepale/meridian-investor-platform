@@ -8,16 +8,20 @@ export default {
     extend: {
       colors: {
         meridian: {
-          orange: '#E8500A',
-          'orange-dark': '#c43e09',
-          black: '#000',
+          blue: '#1D4ED8',
+          'blue-dark': '#1739B8',
+          'blue-light': '#3B82F6',
+          navy: '#0A1E3D',
+          'navy-deep': '#04101F',
+          black: '#0F172A',
           white: '#fff',
-          surface: '#f5f5f5',
-          border: '#e0e0e0',
+          surface: '#F7F9FC',
+          border: '#E2E8F0',
         }
       },
       fontFamily: {
-        mono: ['JetBrains Mono', 'Space Grotesk', 'monospace'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       animation: {
         'gradient-x': 'gradient-x 4s ease infinite',

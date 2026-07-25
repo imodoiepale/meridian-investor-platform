@@ -1,17 +1,5 @@
 <template>
   <div class="ki-page">
-    <nav class="ki-nav">
-      <router-link to="/" class="ki-nav-brand">
-        <span class="ki-nav-mark">◈</span> MERIDIAN <span class="ki-nav-sub">/ Kenya Invest</span>
-      </router-link>
-      <div class="ki-nav-links">
-        <router-link to="/invest" class="ki-nav-link">Onboarding</router-link>
-        <router-link to="/invest/roadmap" class="ki-nav-link">Roadmap</router-link>
-        <router-link to="/invest/dashboard" class="ki-nav-link">Dashboard</router-link>
-        <router-link to="/invest/graphs" class="ki-nav-link">Agent Graphs</router-link>
-        <button class="theme-toggle" @click="toggleTheme">{{ isDark ? '☀' : '◑' }}</button>
-      </div>
-    </nav>
   <div class="graphs-page">
     <div class="page-header">
       <div>

@@ -82,10 +82,25 @@ TOOLS = [
     },
     {
         "name": "run_registration_automation",
-        "description": "Launch live browser automation for statutory registrations: 'brs' (company registration retrieval), 'nssf' (NSSF registration), 'sha' (SHA employer registration).",
+        "description": (
+            "Launch live browser automation for statutory registrations: "
+            "'brs' (company registration retrieval), 'nssf' (NSSF registration), "
+            "'sha' (SHA employer registration), 'kra_pin' (KRA/iTax new PIN application), "
+            "'kra_check_credentials' (login-only: verifies iTax PIN + password + returns status "
+            "Valid|Invalid|Locked|PasswordExpired), 'kra_nil_return' (files a KRA nil return; use "
+            "payload.kind = 'paye' | 'vat' | 'income_tax' — defaults to 'paye')."
+        ),
         "input_schema": {"type": "object", "properties": {
-            "registration": {"type": "string", "enum": ["brs", "nssf", "sha"]},
-            "payload": {"type": "object", "description": "Registration-specific fields"}},
+            "registration": {"type": "string", "enum": [
+                "brs", "nssf", "sha",
+                "kra_pin", "kra_check_credentials", "kra_nil_return"
+            ]},
+            "payload": {"type": "object", "description": (
+                "Registration-specific fields. "
+                "kra_pin: {firstName, lastName, taxpayerType, dateOfBirth, nationality, idType, idNumber, email, phone}. "
+                "kra_check_credentials: {pin, password, company_name?}. "
+                "kra_nil_return: {pin, password, kind: 'paye'|'vat'|'income_tax', company_name?, returnPeriodYear?}."
+            )}},
             "required": ["registration"]}
     },
     {
@@ -201,8 +216,33 @@ def execute_tool(name, args, session_id):
 
     if name == "run_registration_automation":
         reg = args["registration"]
-        result = _post_automation(f"/api/{reg}", args.get("payload", {}))
-        memory.log_journey(session_id, {"step": f"registration_{reg}", "at": datetime.now().isoformat()})
+        endpoint = {
+            "kra_pin": "/api/kra/register-pin",
+            "kra_check_credentials": "/api/kra/check-credentials",
+            "kra_nil_return": "/api/kra/file-nil-return",
+        }.get(reg, f"/api/{reg}")
+        payload = args.get("payload", {})
+        if reg == "kra_pin":
+            profile = memory.get_session(session_id).get("profile", {})
+            merged = {
+                "taxpayerType": "Non-Resident Individual",
+                "firstName": (profile.get("full_name", "").split(" ")[0]) if profile.get("full_name") else "",
+                "lastName":  (profile.get("full_name", "").split(" ")[-1]) if profile.get("full_name") else "",
+                "nationality": profile.get("nationality", ""),
+                "idType": "Passport",
+                "idNumber": profile.get("passport_no", ""),
+                "email": profile.get("email", ""),
+                "phone": profile.get("phone", ""),
+                "city": profile.get("county", "Nairobi"),
+                "county": profile.get("county", "Nairobi"),
+                **payload,
+            }
+            payload = {"profile": merged}
+        elif reg == "kra_nil_return":
+            payload = {"kind": "paye", **payload}
+        result = _post_automation(endpoint, payload)
+        memory.log_journey(session_id, {"step": f"registration_{reg}", "at": datetime.now().isoformat(),
+                                        "job_id": result.get("jobId")})
         return result
 
     if name == "get_hiring_pack":

@@ -1,13 +1,5 @@
 <template>
   <div class="wizard-page">
-    <!-- Translucent header -->
-    <header class="wizard-header">
-      <div class="header-brand">
-        <span class="brand-mark">◈</span> MERIDIAN
-      </div>
-      <span class="header-subtitle">Investor Profile Setup</span>
-    </header>
-
     <div class="wizard-body">
       <!-- Progress bar -->
       <div class="progress-track">

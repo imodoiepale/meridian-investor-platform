@@ -1,37 +1,62 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import InvestorOnboarding from '../views/InvestorOnboarding.vue'
-import RoadmapView from '../views/RoadmapView.vue'
-import SimulationDashboard from '../views/SimulationDashboard.vue'
-import MeridianGraphs from '../views/MiroFishGraphs.vue'
-import ConciergeView from '../views/ConciergeView.vue'
-import ProfileWizard from '../views/ProfileWizard.vue'
-import InvestorDashboard from '../views/InvestorDashboard.vue'
+import PublicLayout from '../layouts/PublicLayout.vue'
+import DashboardLayout from '../layouts/DashboardLayout.vue'
+import Landing from '../views/Landing.vue'
 import LoginView from '../views/LoginView.vue'
 import { supabase, supabaseEnabled, getSession } from '../lib/supabase'
 
+// Marketing + app views are lazy-loaded so the landing page ships the smallest
+// possible first paint.
 const routes = [
-  { path: '/', name: 'Home', component: Home },
-  { path: '/login', name: 'Login', component: LoginView },
-  { path: '/concierge', name: 'Concierge', component: ConciergeView },
-  { path: '/invest', name: 'KenyaInvest', component: InvestorOnboarding },
-  { path: '/invest/roadmap', name: 'KenyaRoadmap', component: RoadmapView },
-  { path: '/invest/dashboard', name: 'KenyaDashboard', component: SimulationDashboard },
-  { path: '/invest/graphs', name: 'KenyaGraphs', component: MeridianGraphs },
-  { path: '/profile', name: 'Profile', component: ProfileWizard, meta: { requiresAuth: true } },
-  { path: '/dashboard', name: 'Dashboard', component: InvestorDashboard, meta: { requiresAuth: true } },
-  { path: '/:pathMatch(.*)*', redirect: '/' }
+  {
+    path: '/',
+    component: PublicLayout,
+    children: [
+      { path: '', name: 'Landing', component: Landing, meta: { heroNav: true, title: 'Global Investor OS' } },
+      { path: 'about', name: 'About', component: () => import('../views/marketing/AboutView.vue'), meta: { title: 'About' } },
+      { path: 'pricing', name: 'Pricing', component: () => import('../views/marketing/PricingView.vue'), meta: { title: 'Pricing' } },
+      { path: 'help', name: 'Help', component: () => import('../views/marketing/HelpView.vue'), meta: { title: 'Help center' } },
+    ],
+  },
+
+  { path: '/login', name: 'Login', component: LoginView, meta: { title: 'Sign in' } },
+
+  {
+    path: '/',
+    component: DashboardLayout,
+    meta: { requiresAuth: true },
+    children: [
+      { path: 'dashboard', name: 'Dashboard', component: () => import('../views/InvestorDashboard.vue'), meta: { title: 'Market entry command center' } },
+      { path: 'profile', name: 'Profile', component: () => import('../views/ProfileWizard.vue'), meta: { title: 'My profile' } },
+      { path: 'concierge', name: 'Concierge', component: () => import('../views/ConciergeView.vue'), meta: { title: 'Investor concierge' } },
+      { path: 'licences', name: 'Licences', component: () => import('../views/LicenceExplorer.vue'), meta: { title: 'Licence explorer' } },
+      { path: 'applications', name: 'Applications', component: () => import('../views/ApplicationsView.vue'), meta: { title: 'Applications' } },
+      { path: 'experts', name: 'Experts', component: () => import('../views/ExpertsView.vue'), meta: { title: 'Trusted local experts' } },
+      { path: 'documents', name: 'Documents', component: () => import('../views/DocumentsView.vue'), meta: { title: 'Documents' } },
+      { path: 'invest/roadmap', name: 'Roadmap', component: () => import('../views/RoadmapView.vue'), meta: { title: 'Your roadmap' } },
+      { path: 'invest/graphs', name: 'MarketInsights', component: () => import('../views/MiroFishGraphs.vue'), meta: { title: 'Market insights' } },
+      { path: 'invest', name: 'Onboarding', component: () => import('../views/InvestorOnboarding.vue'), meta: { title: 'Simulation studio' } },
+      { path: 'invest/dashboard', name: 'Simulation', component: () => import('../views/SimulationDashboard.vue'), meta: { title: 'Simulation report' } },
+    ],
+  },
+
+  { path: '/:pathMatch(.*)*', redirect: '/' },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) return savedPosition
+    if (to.hash) return { el: to.hash, behavior: 'smooth', top: 80 }
+    return { top: 0 }
+  },
 })
 
 router.beforeEach(async (to) => {
-  if (!to.meta?.requiresAuth) return true
-  // If Supabase auth isn't configured, allow through (guest mode) — banner
-  // in views prompts the user to configure. This keeps local dev unblocked.
+  if (!to.matched.some((r) => r.meta?.requiresAuth)) return true
+  // Guest mode: when Supabase isn't configured we let everything through so
+  // local dev and the demo walkthrough stay unblocked.
   if (!supabaseEnabled) return true
   const session = await getSession()
   if (session) return true
@@ -39,23 +64,13 @@ router.beforeEach(async (to) => {
 })
 
 router.afterEach((to) => {
-  const titles = {
-    Home: 'Meridian — Kenya Invest',
-    Login: 'Meridian — Sign in',
-    Concierge: 'Meridian — Investor Concierge',
-    KenyaInvest: 'Meridian — Investor Onboarding',
-    KenyaRoadmap: 'Meridian — Kenya Roadmap',
-    KenyaDashboard: 'Meridian — Simulation Dashboard',
-    KenyaGraphs: 'Meridian — Agent Graphs',
-    Profile: 'Meridian — Investor Profile',
-    Dashboard: 'Meridian — My Dashboard',
-  }
-  document.title = titles[to.name] || 'Meridian — Kenya Invest'
+  const title = to.meta?.title
+  document.title = title ? `Meridian — ${title}` : 'Meridian — Global Investor OS'
 })
 
 if (supabase) {
   supabase.auth.onAuthStateChange((event) => {
-    if (event === 'SIGNED_OUT') router.push({ name: 'Home' })
+    if (event === 'SIGNED_OUT') router.push({ name: 'Landing' })
   })
 }
 

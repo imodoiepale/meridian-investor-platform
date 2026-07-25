@@ -134,9 +134,24 @@
       "automation_endpoint": "/api/brs"
     },
     "kra_pin": {
-      "agency": "Kenya Revenue Authority",
+      "agency": "Kenya Revenue Authority (iTax)",
       "fee_kes": 0,
-      "days": "1"
+      "days": "1",
+      "portal": "https://itax.kra.go.ke/KRA-Portal/",
+      "automation_endpoint": "/api/kra/register-pin",
+      "requirements": [
+        "Passport bio page (foreigners) or National ID (residents)",
+        "Email address (for iTax credentials)",
+        "Kenyan phone number"
+      ]
+    },
+    "kra_nil_return": {
+      "agency": "Kenya Revenue Authority (iTax)",
+      "fee_kes": 0,
+      "days": "1",
+      "portal": "https://itax.kra.go.ke/KRA-Portal/",
+      "automation_endpoint": "/api/kra/file-nil-return",
+      "note": "Annual nil return for individuals with a PIN but no income in the year"
     },
     "nssf_employer": {
       "agency": "National Social Security Fund",

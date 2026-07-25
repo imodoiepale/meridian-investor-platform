@@ -1,21 +1,6 @@
 <template>
   <div class="onboarding-page">
 
-    <!-- Navbar -->
-    <nav class="ki-nav">
-      <router-link to="/" class="ki-nav-brand">
-        <span class="ki-mark">◈</span> MERIDIAN
-        <span class="ki-sub">/ Kenya Invest</span>
-      </router-link>
-      <div class="ki-nav-links">
-        <router-link to="/invest" class="ki-nav-link">Onboarding</router-link>
-        <router-link to="/invest/roadmap" class="ki-nav-link">Roadmap</router-link>
-        <router-link to="/invest/dashboard" class="ki-nav-link">Dashboard</router-link>
-        <router-link to="/invest/graphs" class="ki-nav-link">Agent Graphs</router-link>
-        <button class="theme-toggle" @click="toggleTheme">{{ isDark ? '☀' : '◑' }}</button>
-      </div>
-    </nav>
-
     <!-- Live roadmap builder (replaces loader during research) -->
     <LiveRoadmapBuilder
       :visible="researchLoading"

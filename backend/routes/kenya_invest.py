@@ -4,6 +4,7 @@ import threading
 import os
 from datetime import datetime
 from backend.research_agent.claude_researcher import research_agent
+from backend.routes.licences import resolve_for_sector
 from backend.vector_db.qdrant_client import vector_db
 
 ki_bp = Blueprint('kenya_invest', __name__, url_prefix='/api/invest')
@@ -455,6 +456,40 @@ def build_roadmap():
         }
         base_phases[3]["nodes"].append(node)
 
+    # ── Inject sector-specific licences from the catalog ───────────────────
+    # Universal permits (registration, tax, county) are already covered by the
+    # static phases above, so only the industry-tagged ones are added here.
+    sector = data.get('sector') or seed_pack.get('sector') or ''
+    seen_names = {
+        n["name"].lower()
+        for p in base_phases
+        for n in p.get("nodes", [])
+    }
+    sector_licences = [
+        lic for lic in resolve_for_sector(sector)
+        if not lic["universal"] and lic["name"].lower() not in seen_names
+    ] if sector else []
+
+    for lic in sector_licences:
+        risk_b = agency_risk_map.get(lic["agency"].lower())
+        base_phases[3]["nodes"].append({
+            "id": f"LIC_{lic['no']:03d}",
+            "name": lic["name"],
+            "agency": lic["agency"],
+            "agency_short": lic["agency_abbr"] or lic["agency"].split()[0],
+            "cost_kes": 0,
+            "timeline_days": 21,
+            "critical_path": False,
+            "documents": ["Application form", "Certificate of Incorporation", "KRA PIN"],
+            "tip": lic["notes"] or f"Applies to: {lic['applies_to']}",
+            "prerequisites": ["KRA_PIN"],
+            "level": lic["level"],
+            "category": lic["category"],
+            "licence_id": lic["id"],
+            "risk": risk_b is not None,
+            "risk_detail": risk_b.get('recommendation', '') if risk_b else ''
+        })
+
     # ── Compute totals ──────────────────────────────────────────────────────
     total_days = sum(p["estimated_days"] for p in base_phases)
     total_cost = sum(
@@ -470,7 +505,9 @@ def build_roadmap():
             "total_cost_kes": total_cost,
             "dropout_risk_pct": bottleneck.get('abandonment_risk_pct', 0),
             "confidence": seed_pack.get('seed_meta', {}).get('confidence_score', 0.85),
-            "agencies_count": len(required_agencies),
+            "sector": sector,
+            "sector_licences_count": len(sector_licences),
+            "agencies_count": len(required_agencies) + len({l["agency"] for l in sector_licences}),
             "critical_path_nodes": [
                 n["id"]
                 for p in base_phases
