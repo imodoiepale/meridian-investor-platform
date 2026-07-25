@@ -1,0 +1,437 @@
+{
+  "country": "Kenya",
+  "iso2": "KE",
+  "currency": "KES",
+  "fx_usd_kes": 129,
+  "airports": [
+    {
+      "iata": "NBO",
+      "name": "Jomo Kenyatta International, Nairobi"
+    },
+    {
+      "iata": "MBA",
+      "name": "Moi International, Mombasa"
+    }
+  ],
+  "entry": {
+    "eta": {
+      "name": "Electronic Travel Authorisation (eTA)",
+      "portal": "https://www.etakenya.go.ke",
+      "fee_usd": 32.5,
+      "processing_days": "3",
+      "validity_days": 90,
+      "automation_endpoint": "/api/permit/eta-kenya"
+    }
+  },
+  "immigration_classes": [
+    {
+      "class": "eTA",
+      "name": "Visitor / Prospecting",
+      "for": "Short scouting trips, meetings, due diligence",
+      "fee_usd": 32.5,
+      "validity": "90 days",
+      "processing": "3 days",
+      "requirements": [
+        "Passport valid 6+ months",
+        "Return ticket",
+        "Accommodation details"
+      ],
+      "automation_endpoint": "/api/permit/eta-kenya"
+    },
+    {
+      "class": "G",
+      "name": "Class G \u2014 Trade, Business or Consultancy",
+      "for": "Investors starting or running their own business/consultancy",
+      "fee_kes": 200000,
+      "processing_fee_kes": 10000,
+      "validity": "2 years, renewable",
+      "processing": "4-8 weeks",
+      "min_capital_usd": 100000,
+      "requirements": [
+        "Registered Kenyan company (BRS)",
+        "Proof of capital (USD 100k recommended)",
+        "Business plan",
+        "KRA PIN",
+        "Clean police clearance"
+      ],
+      "automation_endpoint": "/api/permit/class-g"
+    },
+    {
+      "class": "D",
+      "name": "Class D \u2014 Employment",
+      "for": "Foreigners employed by a Kenyan entity with skills unavailable locally",
+      "fee_kes": 200000,
+      "processing_fee_kes": 10000,
+      "validity": "2 years",
+      "processing": "6-10 weeks",
+      "requirements": [
+        "Employment contract",
+        "Employer sponsorship",
+        "Academic certificates",
+        "Understudy plan"
+      ],
+      "automation_endpoint": "/api/permit/class-d"
+    },
+    {
+      "class": "R",
+      "name": "Class R \u2014 EAC Nationals",
+      "for": "East African Community citizens working in Kenya",
+      "fee_kes": 0,
+      "processing_fee_kes": 10000,
+      "validity": "2 years",
+      "processing": "2-4 weeks",
+      "requirements": [
+        "EAC passport",
+        "Employment or business proof"
+      ],
+      "automation_endpoint": "/api/permit/class-r"
+    },
+    {
+      "class": "N",
+      "name": "Class N",
+      "for": "Specific approved undertakings",
+      "fee_kes": 100000,
+      "processing_fee_kes": 10000,
+      "validity": "1-2 years",
+      "processing": "4-8 weeks",
+      "requirements": [
+        "Approval documentation"
+      ],
+      "automation_endpoint": "/api/permit/class-n"
+    },
+    {
+      "class": "SP",
+      "name": "Special Pass",
+      "for": "Short-term work (up to 6 months) while permit processes",
+      "fee_kes": 30000,
+      "validity": "6 months",
+      "processing": "1-2 weeks",
+      "requirements": [
+        "Justification letter",
+        "Passport bio page"
+      ],
+      "automation_endpoint": "/api/permit/special-pass"
+    },
+    {
+      "class": "DP",
+      "name": "Dependant Pass",
+      "for": "Spouse/children of permit holders",
+      "fee_kes": 10000,
+      "validity": "Tied to principal permit",
+      "processing": "2-4 weeks",
+      "requirements": [
+        "Marriage/birth certificates",
+        "Principal's permit"
+      ],
+      "automation_endpoint": "/api/permit/dependant-pass"
+    }
+  ],
+  "business_setup": {
+    "company_registration": {
+      "agency": "Business Registration Service (BRS/eCitizen)",
+      "fee_kes": 10650,
+      "days": "3-7",
+      "automation_endpoint": "/api/brs"
+    },
+    "kra_pin": {
+      "agency": "Kenya Revenue Authority",
+      "fee_kes": 0,
+      "days": "1"
+    },
+    "nssf_employer": {
+      "agency": "National Social Security Fund",
+      "fee_kes": 0,
+      "days": "1-3",
+      "automation_endpoint": "/api/nssf"
+    },
+    "sha_employer": {
+      "agency": "Social Health Authority",
+      "fee_kes": 0,
+      "days": "1-3",
+      "automation_endpoint": "/api/sha"
+    },
+    "county_business_permit": {
+      "agency": "County Government (varies)",
+      "fee_kes_range": [
+        5000,
+        100000
+      ],
+      "days": "1-14"
+    }
+  },
+  "industry_licenses": {
+    "agritech": [
+      {
+        "license": "Horticulture export license (HCD/AFA)",
+        "fee_kes": 5000,
+        "days": "14"
+      },
+      {
+        "license": "KEPHIS phytosanitary certification",
+        "fee_kes": 3000,
+        "days": "7"
+      },
+      {
+        "license": "Pest Control Products Board (if inputs)",
+        "fee_kes": 15000,
+        "days": "30"
+      }
+    ],
+    "fintech": [
+      {
+        "license": "CBK Payment Service Provider license",
+        "fee_kes": 200000,
+        "days": "90-180"
+      },
+      {
+        "license": "Data Protection registration (ODPC)",
+        "fee_kes": 25000,
+        "days": "14"
+      },
+      {
+        "license": "AML/CFT compliance registration (FRC)",
+        "fee_kes": 0,
+        "days": "14"
+      }
+    ],
+    "manufacturing": [
+      {
+        "license": "KEBS product certification (per product)",
+        "fee_kes": 25000,
+        "days": "30"
+      },
+      {
+        "license": "NEMA Environmental Impact Assessment",
+        "fee_kes": 50000,
+        "days": "45-90"
+      },
+      {
+        "license": "DOSH workplace registration",
+        "fee_kes": 5000,
+        "days": "14"
+      },
+      {
+        "license": "County single business permit (industrial)",
+        "fee_kes": 50000,
+        "days": "7"
+      }
+    ],
+    "tourism": [
+      {
+        "license": "Tourism Regulatory Authority license",
+        "fee_kes": 30000,
+        "days": "21"
+      },
+      {
+        "license": "County tourism permit",
+        "fee_kes": 10000,
+        "days": "7"
+      },
+      {
+        "license": "KWS concession (if in-park operations)",
+        "fee_kes": 100000,
+        "days": "60"
+      }
+    ],
+    "healthcare": [
+      {
+        "license": "Kenya Medical Practitioners Council facility license",
+        "fee_kes": 60000,
+        "days": "60"
+      },
+      {
+        "license": "Pharmacy and Poisons Board (if pharma)",
+        "fee_kes": 50000,
+        "days": "45"
+      },
+      {
+        "license": "SHA empanelment",
+        "fee_kes": 0,
+        "days": "30"
+      }
+    ],
+    "retail": [
+      {
+        "license": "County single business permit",
+        "fee_kes": 15000,
+        "days": "3"
+      },
+      {
+        "license": "Fire safety certificate",
+        "fee_kes": 3000,
+        "days": "7"
+      },
+      {
+        "license": "Food handling (if food)",
+        "fee_kes": 1000,
+        "days": "3"
+      }
+    ],
+    "construction": [
+      {
+        "license": "NCA contractor registration",
+        "fee_kes": 20000,
+        "days": "30"
+      },
+      {
+        "license": "NEMA EIA per project",
+        "fee_kes": 50000,
+        "days": "45-90"
+      },
+      {
+        "license": "County development approvals",
+        "fee_kes_range": [
+          20000,
+          200000
+        ],
+        "days": "30-90"
+      }
+    ]
+  },
+  "county_notes": {
+    "Nairobi": {
+      "permit_multiplier": 1.5,
+      "note": "Highest fees, largest market, Nairobi County e-permits via NairobiPay"
+    },
+    "Mombasa": {
+      "permit_multiplier": 1.2,
+      "note": "Port access; logistics and tourism friendly"
+    },
+    "Kiambu": {
+      "permit_multiplier": 1.0,
+      "note": "Peri-urban manufacturing and agri belt, cheaper land"
+    },
+    "Nakuru": {
+      "permit_multiplier": 0.9,
+      "note": "Agri-processing hub, new city status"
+    },
+    "Machakos": {
+      "permit_multiplier": 0.8,
+      "note": "SEZ proximity (Athi River), industrial incentives"
+    },
+    "Kisumu": {
+      "permit_multiplier": 0.8,
+      "note": "Lake economy, western Kenya gateway"
+    }
+  },
+  "market_gaps": {
+    "agritech": "Post-harvest losses run 30-40%; cold-chain, storage-as-a-service and export aggregation are underserved outside Nairobi. Best counties: Nakuru, Kiambu, Meru.",
+    "fintech": "SME credit gap est. USD 19B; embedded finance for agriculture and logistics under-penetrated. Nairobi dominant but licensing is national.",
+    "manufacturing": "Import substitution demand in packaging, construction materials, agro-processing. Athi River (Machakos) SEZ offers tax holidays.",
+    "tourism": "High-end eco-lodges and domestic-tourism digital packages underserved; coastal circuit (Mombasa/Kilifi) recovering faster than supply.",
+    "healthcare": "Diagnostics and specialist outpatient chains scarce outside Nairobi; SHA reforms opening insured patient volumes in secondary counties.",
+    "retail": "Tier-2 county formal retail penetration <30%; last-mile distribution and franchise models have open runway in Nakuru, Eldoret, Kisumu."
+  },
+  "hiring": {
+    "statutory": [
+      "NSSF employer registration",
+      "SHA employer registration",
+      "PAYE via KRA",
+      "NITA levy"
+    ],
+    "salary_bands_kes": {
+      "software_engineer": [
+        150000,
+        450000
+      ],
+      "operations_manager": [
+        120000,
+        300000
+      ],
+      "sales_executive": [
+        60000,
+        150000
+      ],
+      "accountant": [
+        80000,
+        200000
+      ],
+      "farm_manager": [
+        70000,
+        180000
+      ],
+      "customer_support": [
+        45000,
+        90000
+      ]
+    }
+  },
+  "agents_marketplace": [
+    {
+      "name": "Wanjiku & Co. Immigration Consultants",
+      "specialty": "Work permits (Class D/G), citizenship",
+      "location": "Nairobi CBD",
+      "contact": "info@wanjikuimmigration.co.ke",
+      "rating": 4.8,
+      "fee_note": "From KES 50,000 per permit"
+    },
+    {
+      "name": "Pwani Business Advisory",
+      "specialty": "Company registration, county licensing",
+      "location": "Mombasa",
+      "contact": "hello@pwaniadvisory.co.ke",
+      "rating": 4.6,
+      "fee_note": "From KES 25,000"
+    },
+    {
+      "name": "Savannah Legal LLP",
+      "specialty": "FDI structuring, sector licenses (CBK, NEMA)",
+      "location": "Westlands, Nairobi",
+      "contact": "fdi@savannahlegal.co.ke",
+      "rating": 4.9,
+      "fee_note": "Hourly, from KES 15,000"
+    },
+    {
+      "name": "TalentKe HR Partners",
+      "specialty": "Recruitment, payroll, statutory compliance",
+      "location": "Nairobi",
+      "contact": "grow@talentke.co.ke",
+      "rating": 4.7,
+      "fee_note": "8-12% of annual salary"
+    }
+  ],
+  "parks": [
+    {
+      "name": "Nairobi National Park",
+      "price_adult_kes": 1000,
+      "price_child_kes": 500,
+      "highlights": "Lions, rhinos, giraffes against a city skyline; only capital-city national park on earth",
+      "best_for": "Half-day trips from Nairobi"
+    },
+    {
+      "name": "Amboseli National Park",
+      "price_adult_kes": 1200,
+      "price_child_kes": 600,
+      "highlights": "Big elephant herds beneath Mount Kilimanjaro",
+      "best_for": "Photography, 2-3 day safaris"
+    },
+    {
+      "name": "Tsavo East National Park",
+      "price_adult_kes": 800,
+      "price_child_kes": 400,
+      "highlights": "Red elephants, vast wilderness, Galana River",
+      "best_for": "Classic road safari between Nairobi and the coast"
+    },
+    {
+      "name": "Lake Nakuru National Park",
+      "price_adult_kes": 1000,
+      "price_child_kes": 500,
+      "highlights": "Flamingos, rhino sanctuary, acacia forests",
+      "best_for": "Rift Valley day trips"
+    },
+    {
+      "name": "Mombasa Marine Park",
+      "price_adult_kes": 500,
+      "price_child_kes": 250,
+      "highlights": "Coral gardens, snorkelling, dhow trips",
+      "best_for": "Coastal add-on"
+    },
+    {
+      "name": "Hell's Gate National Park",
+      "price_adult_kes": 600,
+      "price_child_kes": 300,
+      "highlights": "Cycling among wildlife, gorges, geothermal spa",
+      "best_for": "Adventure day trips, Naivasha"
+    }
+  ]
+}

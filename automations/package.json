@@ -1,0 +1,50 @@
+{
+  "name": "imm-automation-agent",
+  "version": "2.0.0",
+  "description": "Automation Agent for Kenya Immigration permit applications. Listens for jobs via Supabase Realtime and runs Playwright automations on a local Windows PC.",
+  "type": "module",
+  "main": "src/worker/index.mjs",
+  "scripts": {
+    "start": "node src/worker/index.mjs",
+    "dev": "node src/worker/index.mjs",
+    "server": "node server.mjs",
+    "worker": "node src/worker/index.mjs",
+    "test": "node test-server.mjs",
+    "pm2:start": "pm2 start ecosystem.config.cjs",
+    "pm2:stop": "pm2 stop ecosystem.config.cjs",
+    "pm2:restart": "pm2 restart ecosystem.config.cjs",
+    "pm2:delete": "pm2 delete ecosystem.config.cjs",
+    "pm2:status": "pm2 status",
+    "pm2:logs": "pm2 logs automation-agent",
+    "pm2:save": "pm2 save",
+    "pm2:startup": "pm2 startup",
+    "pm2:monit": "pm2 monit",
+    "service:install": "powershell -ExecutionPolicy Bypass -File scripts/install-service.ps1",
+    "service:update": "powershell -ExecutionPolicy Bypass -File scripts/update-service.ps1",
+    "service:uninstall": "powershell -ExecutionPolicy Bypass -File scripts/uninstall-service.ps1"
+  },
+  "keywords": [
+    "immigration",
+    "kenya",
+    "permit",
+    "automation",
+    "playwright",
+    "agent",
+    "worker"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^1.9.0",
+    "@supabase/supabase-js": "^2.106.2",
+    "exceljs": "^4.4.0",
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "playwright": "^1.54.1",
+    "puppeteer": "^24.37.2",
+    "supabase": "^2.102.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

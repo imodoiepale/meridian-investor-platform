@@ -1,0 +1,397 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.app{display:grid;grid-template-columns:196px 1fr;font-family:var(--font-sans);background:var(--color-background-tertiary);font-size:13px;color:var(--color-text-primary)}
+
+.sidebar{background:var(--color-background-primary);border-right:0.5px solid var(--color-border-tertiary);padding:16px 0;display:flex;flex-direction:column}
+.logo{font-size:17px;font-weight:500;padding:0 16px 20px;letter-spacing:-.3px}
+.logo-accent{color:#185FA5}
+.ns{font-size:10px;color:var(--color-text-tertiary);padding:10px 16px 4px;letter-spacing:.06em}
+.ni{display:flex;align-items:center;gap:8px;padding:7px 16px;font-size:12px;cursor:pointer;color:var(--color-text-secondary);border-left:2px solid transparent;transition:all .12s}
+.ni:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.ni.on{color:var(--color-text-primary);font-weight:500;background:var(--color-background-secondary);border-left-color:#378ADD}
+.ndot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.nd-b{background:#378ADD}.nd-g{background:#639922}.nd-r{background:#E24B4A}.nd-a{background:#BA7517}.nd-p{background:#534AB7}.nd-gr{background:#888780}
+.score-badge{margin:auto 12px 14px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px;font-size:11px;display:flex;align-items:center;gap:7px;border:0.5px solid var(--color-border-tertiary)}
+
+.main{background:var(--color-background-tertiary);overflow:auto}
+.topbar{background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);padding:0 20px;height:48px;display:flex;align-items:center;justify-content:space-between}
+.page-title{font-size:15px;font-weight:500}
+.inv-pill{display:flex;align-items:center;gap:8px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:20px;padding:5px 12px 5px 6px;font-size:12px}
+.av{width:26px;height:26px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#0C447C}
+
+.view{display:none;padding:20px}.view.on{display:block}
+
+/* STAT CARDS */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.scard{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px}
+.sn{font-size:22px;font-weight:500;line-height:1.1}
+.sl{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.ss{font-size:10px;font-weight:500;margin-top:4px}
+.sc-b{color:#185FA5}.sc-r{color:#A32D2D}.sc-a{color:#854F0B}.sc-g{color:#3B6D11}
+
+/* CARDS */
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:12px}
+.ch{font-size:12px;font-weight:500;margin-bottom:10px}
+.prog-wrap{background:var(--color-background-secondary);border-radius:3px;height:6px;margin:5px 0 12px}
+.prog-fill{height:6px;border-radius:3px;background:#378ADD;width:25%}
+.phase-chips{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.pc{border-radius:6px;padding:7px 9px;font-size:11px;border:0.5px solid}
+.pc-g{background:#EAF3DE;border-color:#C0DD97}.pc-a{background:#FAEEDA;border-color:#FAC775}.pc-gr{background:var(--color-background-secondary);border-color:var(--color-border-tertiary)}
+.pc-t{font-weight:500;font-size:11px;margin-bottom:1px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.arow{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer;transition:background .1s}
+.arow:last-child{border-bottom:none}
+.arow:hover{background:var(--color-background-secondary);margin:0 -8px;padding:6px 8px;border-radius:5px}
+.pill{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:500}
+.p-g{background:#EAF3DE;color:#3B6D11}.p-a{background:#FAEEDA;color:#854F0B}.p-r{background:#FCEBEB;color:#A32D2D}.p-q{background:var(--color-background-secondary);color:var(--color-text-secondary)}.p-b{background:#E6F1FB;color:#185FA5}
+.al{border-radius:7px;padding:9px 11px;margin-bottom:7px;border-left:3px solid;font-size:11px}
+.al-a{background:#FAEEDA;border-color:#BA7517}.al-r{background:#FCEBEB;border-color:#E24B4A}
+.al-t{font-weight:500;margin-bottom:2px}
+.exp-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:11px}
+.exp-row:last-child{border-bottom:none}
+.eb{flex:1;background:var(--color-background-secondary);border-radius:2px;height:4px}
+.ef{height:4px;border-radius:2px}
+.ef-r{background:#E24B4A}.ef-a{background:#BA7517}.ef-g{background:#639922}
+.btn{padding:6px 14px;border-radius:var(--border-radius-md);font-size:11px;cursor:pointer;font-weight:500;border:0.5px solid}
+.btn-b{background:#E6F1FB;color:#185FA5;border-color:#B5D4F4}
+.btn-o{background:transparent;color:var(--color-text-secondary);border-color:var(--color-border-secondary)}
+
+/* ── ROADMAP ── */
+.rm-view{padding:0}
+.rm-sticky{background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);padding:10px 20px;display:flex;align-items:center;justify-content:space-between}
+.cost-strip{display:flex;gap:16px}
+.cs-item{font-size:11px}
+.cs-lbl{color:var(--color-text-tertiary);font-size:9px;letter-spacing:.05em;margin-bottom:1px}
+.cs-val{font-weight:500;font-size:13px}
+.rm-filters{display:flex;gap:5px}
+.rf{padding:4px 10px;border-radius:5px;font-size:10px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-secondary)}
+.rf.on{background:#E6F1FB;color:#185FA5;border-color:#B5D4F4;font-weight:500}
+.rm-body{padding:20px}
+
+/* Phase header — roadmap.sh yellow style */
+.ph{background:#f5c842;border-radius:var(--border-radius-md);padding:11px 16px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.ph-title{font-size:13px;font-weight:500;color:#1a1300}
+.ph-sub{font-size:10px;color:rgba(26,19,0,.55);margin-top:1px}
+.ph-cost{font-size:13px;font-weight:500;color:#1a1300;text-align:right}
+.ph-days{font-size:10px;color:rgba(26,19,0,.55)}
+.ph-green{background:#C0DD97}
+.ph-green .ph-title,.ph-green .ph-cost{color:#173404}
+.ph-green .ph-sub,.ph-green .ph-days{color:rgba(23,52,4,.55)}
+
+/* Warning strip */
+.warn-strip{background:#FCEBEB;border-left:3px solid #E24B4A;border-radius:0 6px 6px 0;padding:9px 12px;margin-bottom:12px;font-size:11px;color:#791F1F}
+.warn-strip strong{color:#A32D2D}
+
+/* Phase separator line */
+.vsep{width:0.5px;background:var(--color-border-secondary);height:14px;margin:0 auto 0 28px}
+
+/* NODES */
+.node-grid{display:flex;flex-direction:column;gap:7px;margin-bottom:6px}
+.nrow{display:flex;gap:8px}
+.node{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-left:3px solid;border-radius:var(--border-radius-md);padding:9px 11px;cursor:pointer;flex:1;min-width:0;transition:border-color .12s,background .12s}
+.node:hover{border-color:#378ADD;background:var(--color-background-secondary)}
+.node-done{border-left-color:#639922;background:#EAF3DE}
+.node-done:hover{background:#C0DD97}
+.node-prog{border-left-color:#BA7517}
+.node-block{border-left-color:#E24B4A;border:1.5px dashed #E24B4A}
+.node-crit{border-left-color:#E24B4A;box-shadow:0 0 0 2px rgba(226,75,74,.15)}
+.node-q{border-left-color:var(--color-border-secondary);opacity:.75}
+.nt{display:flex;align-items:center;gap:5px;margin-bottom:4px}
+.ndl{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.step-tag{font-size:9px;color:var(--color-text-tertiary)}
+.crit-tag{font-size:9px;background:#FCEBEB;color:#A32D2D;padding:1px 5px;border-radius:3px;font-weight:500}
+.ntitle{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;line-height:1.35}
+.nmeta{display:flex;justify-content:space-between;align-items:center}
+.nfee{font-size:11px;font-weight:500;color:#854F0B}
+.ntime{font-size:10px;color:var(--color-text-tertiary)}
+.ndep{font-size:9px;color:var(--color-text-tertiary);margin-top:3px}
+.ndep em{color:#A32D2D;font-style:normal}
+.phase-total{text-align:right;font-size:11px;color:var(--color-text-secondary);padding:5px 6px;background:var(--color-background-secondary);border-radius:5px;margin-bottom:16px}
+.phase-total strong{color:#854F0B}
+
+/* SIDE PANEL */
+.sp-wrap{background:var(--color-background-tertiary);padding:0}
+.sph{background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start}
+.sph-title{font-size:14px;font-weight:500}
+.sph-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.sph-close{background:none;border:none;font-size:18px;cursor:pointer;color:var(--color-text-secondary);line-height:1}
+.spb{padding:14px 16px}
+.sp-sec{border-top:0.5px solid var(--color-border-tertiary);padding-top:12px;margin-top:12px}
+.sp-sec-h{font-size:10px;color:var(--color-text-tertiary);letter-spacing:.08em;margin-bottom:8px}
+.sp-kv{display:flex;justify-content:space-between;padding:4px 0;font-size:11px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.sp-kv:last-child{border-bottom:none}
+.sp-k{color:var(--color-text-secondary);flex:0 0 120px}
+.sp-v{color:var(--color-text-primary);text-align:right;font-size:11px}
+.sp-doc{padding:3px 0;font-size:11px;color:var(--color-text-secondary)}
+.sp-note{background:var(--color-background-secondary);border-radius:6px;padding:9px;font-size:11px;color:var(--color-text-secondary);line-height:1.65;margin:6px 0}
+.sp-warn{background:#FCEBEB;border-radius:6px;padding:9px;font-size:11px;color:#791F1F;margin:6px 0}
+.sp-footer{padding:12px 16px;border-top:0.5px solid var(--color-border-tertiary);display:flex;gap:8px}
+</style>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="logo"><span class="logo-accent">M</span>eridian</div>
+  <div class="ns">OVERVIEW</div>
+  <div class="ni on" onclick="sv('dash',this)"><div class="ndot nd-b"></div>Dashboard</div>
+  <div class="ni" onclick="sv('rm',this)"><div class="ndot nd-a"></div>Roadmap</div>
+  <div class="ni"><div class="ndot nd-p"></div>Agency graph</div>
+  <div class="ns">COMPLIANCE</div>
+  <div class="ni"><div class="ndot nd-b"></div>Applications</div>
+  <div class="ni"><div class="ndot nd-g"></div>Documents</div>
+  <div class="ni"><div class="ndot nd-r"></div>Expiry tracker</div>
+  <div class="ni"><div class="ndot nd-gr"></div>Payments</div>
+  <div class="ns">SUPPORT</div>
+  <div class="ni"><div class="ndot nd-p"></div>Facilitator</div>
+  <div class="ni"><div class="ndot nd-b"></div>Bank account</div>
+  <div class="ni"><div class="ndot nd-gr"></div>Ask Meridian</div>
+  <div style="flex:1"></div>
+  <div class="score-badge"><div class="ndot nd-g" style="width:8px;height:8px"></div><div><div style="font-size:10px;color:var(--color-text-tertiary)">Compliance score</div><div style="font-weight:500;color:#3B6D11;font-size:13px">87 / 100</div></div></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+<div class="topbar">
+  <div class="page-title" id="page-title">Dashboard</div>
+  <div class="inv-pill"><div class="av">CW</div><span>Chen Wei — Electronics MFG, Nairobi</span></div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="v-dash" class="view on">
+  <div class="stats">
+    <div class="scard"><div class="sn sc-b">Day 23</div><div class="sl">of ~90 estimated</div><div class="ss sc-g">25% complete</div></div>
+    <div class="scard"><div class="sn">8 / 12</div><div class="sl">applications submitted</div><div class="ss sc-a">2 need action</div></div>
+    <div class="scard"><div class="sn sc-r">KES 655K</div><div class="sl">total estimated fees</div><div class="ss" style="color:var(--color-text-tertiary)">KES 220K paid so far</div></div>
+    <div class="scard"><div class="sn sc-a">28%</div><div class="sl">abandonment risk</div><div class="ss sc-r">trigger: NEMA delay</div></div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><div class="ch">Overall journey progress</div><div style="font-size:11px;color:var(--color-text-tertiary)">Day 23 of 90 · 25%</div></div>
+    <div class="prog-wrap"><div class="prog-fill"></div></div>
+    <div class="phase-chips">
+      <div class="pc pc-g"><div class="pc-t" style="color:#3B6D11">Registration</div><div style="font-size:10px;color:#3B6D11">Done · Days 1-5</div></div>
+      <div class="pc pc-a"><div class="pc-t" style="color:#854F0B">Immigration</div><div style="font-size:10px;color:#854F0B">Week 4 of 8</div></div>
+      <div class="pc pc-a"><div class="pc-t" style="color:#854F0B">Licensing</div><div style="font-size:10px;color:#854F0B">In progress</div></div>
+      <div class="pc pc-gr"><div class="pc-t" style="color:var(--color-text-secondary)">Operations</div><div style="font-size:10px;color:var(--color-text-tertiary)">Not started</div></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="ch">Agency status</div>
+      <div class="arow" onclick="op('keninvest')"><span>KenInvest</span><span class="pill p-g">Complete</span></div>
+      <div class="arow" onclick="op('brs')"><span>BRS — Company reg</span><span class="pill p-g">Complete</span></div>
+      <div class="arow" onclick="op('kra')"><span>KRA — PIN + VAT</span><span class="pill p-g">Complete</span></div>
+      <div class="arow" onclick="op('imm')"><span>Immigration — Class G</span><span class="pill p-a">Week 4/8</span></div>
+      <div class="arow" onclick="op('nema')"><span>NEMA — EIA</span><span class="pill p-a">Week 3/13</span></div>
+      <div class="arow" onclick="op('kebs')"><span>KEBS — Diamond Mark</span><span class="pill p-r">Action needed</span></div>
+      <div class="arow" onclick="op('county')"><span>Nairobi County</span><span class="pill p-b">Inspection Day 28</span></div>
+      <div class="arow"><span>DOSHS + NSSF + SHIF</span><span class="pill p-q">Queued</span></div>
+    </div>
+    <div class="card">
+      <div class="ch">Next actions required</div>
+      <div class="al al-a"><div class="al-t" style="color:#854F0B">Upload factory lease — KEBS</div><div style="color:var(--color-text-secondary)">Required to proceed with Diamond Mark. Due today.</div></div>
+      <div class="al al-a"><div class="al-t" style="color:#854F0B">Pay county license — KES 50,000</div><div style="color:var(--color-text-secondary)">Nairobi County SBP. Due Friday. Paybill: 891300.</div></div>
+      <div class="al al-r"><div class="al-t" style="color:#A32D2D">Work permit delay alert</div><div style="color:var(--color-text-secondary)">Week 4 of 8. Facilitator Jane Wambui escalated. 4 more weeks expected.</div></div>
+      <div style="display:flex;gap:8px;margin-top:10px"><button class="btn btn-b" style="flex:1">Upload document</button><button class="btn btn-o" style="flex:1">Pay fee</button></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ch">Document expiry tracker</div>
+    <div class="exp-row"><span style="flex:0 0 170px">Work permit (Class G)</span><div class="eb"><div class="ef ef-r" style="width:4%"></div></div><span style="font-weight:500;color:#A32D2D;min-width:60px;text-align:right">7 days</span></div>
+    <div class="exp-row"><span style="flex:0 0 170px">Business permit (Nairobi)</span><div class="eb"><div class="ef ef-a" style="width:30%"></div></div><span style="font-weight:500;color:#854F0B;min-width:60px;text-align:right">28 days</span></div>
+    <div class="exp-row"><span style="flex:0 0 170px">Tax compliance cert</span><div class="eb"><div class="ef ef-g" style="width:72%"></div></div><span style="font-weight:500;color:#3B6D11;min-width:60px;text-align:right">69 days</span></div>
+    <div class="exp-row"><span style="flex:0 0 170px">Certificate of Incorporation</span><div class="eb"><div class="ef ef-g" style="width:100%"></div></div><span style="font-weight:500;color:#3B6D11;min-width:60px;text-align:right">No expiry</span></div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div id="v-rm" class="view rm-view">
+  <div class="rm-sticky">
+    <div class="cost-strip">
+      <div class="cs-item"><div class="cs-lbl">TOTAL FEES</div><div class="cs-val" style="color:#854F0B">KES 655,950</div></div>
+      <div style="width:0.5px;background:var(--color-border-tertiary)"></div>
+      <div class="cs-item"><div class="cs-lbl">PAID</div><div class="cs-val" style="color:#3B6D11">KES 220,000</div></div>
+      <div style="width:0.5px;background:var(--color-border-tertiary)"></div>
+      <div class="cs-item"><div class="cs-lbl">REMAINING</div><div class="cs-val" style="color:#A32D2D">KES 435,950</div></div>
+      <div style="width:0.5px;background:var(--color-border-tertiary)"></div>
+      <div class="cs-item"><div class="cs-lbl">CRITICAL PATH</div><div class="cs-val" style="color:#A32D2D">Immigration + NEMA</div></div>
+    </div>
+    <div class="rm-filters">
+      <div class="rf on">All</div><div class="rf">Critical</div><div class="rf">Pending</div><div class="rf">Done</div>
+    </div>
+  </div>
+
+  <div class="rm-body">
+
+    <!-- PHASE 0 -->
+    <div class="ph"><div><div class="ph-title">Phase 0 — Pre-arrival preparation</div><div class="ph-sub">Do at home BEFORE flying · weeks before arrival</div></div><div><div class="ph-cost">~KES 13,000</div><div class="ph-days">home country</div></div></div>
+    <div class="node-grid">
+      <div class="nrow">
+        <div class="node node-done" onclick="op('police')"><div class="nt"><div class="ndl" style="background:#639922"></div><span class="step-tag">Step 0.1</span></div><div class="ntitle">Police clearance certificate (home country)</div><div class="nmeta"><span class="nfee" style="color:#3B6D11">KES 0</span><span class="ntime">From home country · notarised</span></div></div>
+        <div class="node node-done" onclick="op('medical')"><div class="nt"><div class="ndl" style="background:#639922"></div><span class="step-tag">Step 0.2</span></div><div class="ntitle">Medical examination — accredited doctor</div><div class="nmeta"><span class="nfee" style="color:#3B6D11">~KES 8,000</span><span class="ntime">Required for work permit</span></div></div>
+        <div class="node node-done" onclick="op('notary')"><div class="nt"><div class="ndl" style="background:#639922"></div><span class="step-tag">Step 0.3</span></div><div class="ntitle">Notarise docs + bank statements</div><div class="nmeta"><span class="nfee" style="color:#3B6D11">~KES 5,000</span><span class="ntime">Investment proof for Immigration</span></div></div>
+      </div>
+    </div>
+    <div class="phase-total">Phase 0 subtotal: <strong>~KES 13,000</strong></div>
+    <div class="vsep"></div>
+
+    <!-- PHASE 1 -->
+    <div class="ph"><div><div class="ph-title">Phase 1 — Pre-registration (online, do from abroad)</div><div class="ph-sub">Days 1–7 · can do before arriving in Kenya</div></div><div><div class="ph-cost">KES 5,100</div><div class="ph-days">Days 1-7</div></div></div>
+    <div class="node-grid">
+      <div class="nrow">
+        <div class="node node-done" onclick="op('keninvest')"><div class="nt"><div class="ndl" style="background:#639922"></div><span class="step-tag">Step 1.1</span></div><div class="ntitle">KenInvest — pre-register investor profile</div><div class="nmeta"><span class="nfee" style="color:#3B6D11">KES 0</span><span class="ntime">Day 1 · online · instant</span></div></div>
+        <div class="node node-done" onclick="op('name')"><div class="nt"><div class="ndl" style="background:#639922"></div><span class="step-tag">Step 1.2</span></div><div class="ntitle">BRS — Reserve company name</div><div class="nmeta"><span class="nfee" style="color:#3B6D11">KES 100</span><span class="ntime">Day 1 · instant online</span></div></div>
+        <div class="node node-done" onclick="op('kipi')"><div class="nt"><div class="ndl" style="background:#639922"></div><span class="step-tag">Step 1.3 ↗</span></div><div class="ntitle">KIPI — Trademark (start now, 18 months)</div><div class="nmeta"><span class="nfee" style="color:#3B6D11">KES 5,000</span><span class="ntime">Background process</span></div></div>
+      </div>
+    </div>
+    <div class="phase-total">Phase 1 subtotal: <strong>KES 5,100</strong></div>
+    <div class="vsep"></div>
+
+    <!-- PHASE 2 -->
+    <div class="ph"><div><div class="ph-title">Phase 2 — Company registration</div><div class="ph-sub">Days 8–14 · Requires: name reservation done</div></div><div><div class="ph-cost">KES 10,950</div><div class="ph-days">Days 8-14</div></div></div>
+    <div class="node-grid">
+      <div class="nrow">
+        <div class="node node-done" onclick="op('brs')" style="flex:2"><div class="nt"><div class="ndl" style="background:#639922"></div><span class="step-tag">Step 2.1</span></div><div class="ntitle">BRS — Company registration (CR1, MOA, AOA)</div><div class="nmeta"><span class="nfee" style="color:#3B6D11">KES 10,950</span><span class="ntime">Days 8-11 · 3-5 days</span></div><div class="ndep">Requires: name reservation ✓</div></div>
+        <div class="node node-done" onclick="op('kra')"><div class="nt"><div class="ndl" style="background:#639922"></div><span class="step-tag">Step 2.2</span></div><div class="ntitle">KRA — Company PIN + VAT + PAYE</div><div class="nmeta"><span class="nfee" style="color:#3B6D11">KES 0</span><span class="ntime">Day 11 · same day</span></div><div class="ndep">Requires: company certificate ✓</div></div>
+      </div>
+      <div class="nrow">
+        <div class="node node-done" onclick="op('bank')"><div class="nt"><div class="ndl" style="background:#639922"></div><span class="step-tag">Step 2.3 ↗</span></div><div class="ntitle">Corporate + USD bank account (start now)</div><div class="nmeta"><span class="nfee" style="color:#3B6D11">KES 0</span><span class="ntime">Day 12 · parallel track</span></div><div class="ndep">Requires: company cert + KRA PIN ✓</div></div>
+        <div class="node node-done" onclick="op('ecitizen')"><div class="nt"><div class="ndl" style="background:#639922"></div><span class="step-tag">Step 2.4</span></div><div class="ntitle">eCitizen — portal account + profile setup</div><div class="nmeta"><span class="nfee" style="color:#3B6D11">KES 0</span><span class="ntime">Day 12 · instant</span></div></div>
+      </div>
+    </div>
+    <div class="phase-total">Phase 2 subtotal: <strong>KES 10,950</strong></div>
+    <div class="vsep"></div>
+
+    <!-- PHASE 3 — CRITICAL -->
+    <div class="warn-strip"><strong>Start Immigration immediately after Phase 2.</strong> This takes 8-14 weeks regardless. Do not delay. Everything else runs in parallel but immigration is your longest bottleneck.</div>
+    <div class="ph" style="border:1.5px solid rgba(226,75,74,.4)"><div><div class="ph-title">Phase 3 — Immigration ⚠ CRITICAL PATH</div><div class="ph-sub">Days 14–70+ · Longest phase · Start immediately after company reg</div></div><div><div class="ph-cost" style="color:#A32D2D">KES 440,000</div><div class="ph-days">8-14 weeks realistic</div></div></div>
+    <div class="node-grid">
+      <div class="nrow">
+        <div class="node node-crit" onclick="op('imm')" style="flex:2"><div class="nt"><div class="ndl" style="background:#E24B4A"></div><span class="step-tag">Step 3.1</span><span class="crit-tag">CRITICAL</span></div><div class="ntitle">Immigration — Class G Work Permit (Form 17)</div><div class="nmeta"><span class="nfee">KES 220,000 / year</span><span class="ntime">Days 14-70 · 8-14 weeks realistic</span></div><div class="ndep">Requires: company cert ✓ · KRA PIN ✓ · investment proof · police clearance ✓ · medical cert ✓</div></div>
+        <div class="node node-prog" onclick="op('dep')"><div class="nt"><div class="ndl" style="background:#BA7517"></div><span class="step-tag">Step 3.2</span></div><div class="ntitle">Dependent passes × 2 (simultaneous)</div><div class="nmeta"><span class="nfee">KES 220,000 / year</span><span class="ntime">Parallel to Step 3.1</span></div></div>
+      </div>
+    </div>
+    <div class="phase-total">Phase 3 subtotal: <strong>KES 440,000</strong></div>
+    <div class="vsep"></div>
+
+    <!-- PHASE 4 -->
+    <div class="ph"><div><div class="ph-title">Phase 4 — Location & county licenses (parallel with Phase 3)</div><div class="ph-sub">Days 15–35 · Run while immigration processes</div></div><div><div class="ph-cost">KES 55,000</div><div class="ph-days">Days 15-35</div></div></div>
+    <div class="node-grid">
+      <div class="nrow">
+        <div class="node node-prog" onclick="op('county')"><div class="nt"><div class="ndl" style="background:#BA7517"></div><span class="step-tag">Step 4.1</span></div><div class="ntitle">Nairobi County — Single Business Permit</div><div class="nmeta"><span class="nfee">KES 50,000</span><span class="ntime">Day 15 · 14-21 days · Paybill 891300</span></div><div class="ndep">Requires: company cert ✓ · physical address confirmed</div></div>
+        <div class="node node-prog" onclick="op('fire')"><div class="nt"><div class="ndl" style="background:#BA7517"></div><span class="step-tag">Step 4.2</span></div><div class="ntitle">Fire Safety Certificate — book inspection</div><div class="nmeta"><span class="nfee">KES 5,000</span><span class="ntime">Day 20 · Inspection Day 28</span></div><div class="ndep">Requires: physical premises confirmed</div></div>
+      </div>
+    </div>
+    <div class="phase-total">Phase 4 subtotal: <strong>KES 55,000</strong></div>
+    <div class="vsep"></div>
+
+    <!-- PHASE 5 — NEMA CRITICAL -->
+    <div class="warn-strip"><strong>NEMA EIA takes 90-180 days and will block factory opening.</strong> Start as soon as premises are confirmed. This is your second critical bottleneck.</div>
+    <div class="ph" style="border:1.5px solid rgba(226,75,74,.3)"><div><div class="ph-title">Phase 5 — Environment & standards ⚠ CRITICAL</div><div class="ph-sub">Days 20–120 · NEMA is bottleneck #2 · 90-180 days realistic</div></div><div><div class="ph-cost" style="color:#A32D2D">KES 122,000</div><div class="ph-days">90-120 days</div></div></div>
+    <div class="node-grid">
+      <div class="nrow">
+        <div class="node node-crit" onclick="op('nema')" style="flex:2"><div class="nt"><div class="ndl" style="background:#E24B4A"></div><span class="step-tag">Step 5.1</span><span class="crit-tag">CRITICAL</span></div><div class="ntitle">NEMA — Environmental Impact Assessment license</div><div class="nmeta"><span class="nfee">KES 100,000+</span><span class="ntime">Day 20 · 90-180 days realistic</span></div><div class="ndep">Requires: premises confirmed · factory plans ready</div></div>
+        <div class="node node-q" onclick="op('wra')"><div class="nt"><div class="ndl" style="background:#888780"></div><span class="step-tag">Step 5.2</span></div><div class="ntitle">WRA — Water use permit</div><div class="nmeta"><span class="nfee">KES 5,000</span><span class="ntime">After NEMA started</span></div></div>
+      </div>
+      <div class="nrow">
+        <div class="node node-block" onclick="op('kebs')"><div class="nt"><div class="ndl" style="background:#E24B4A"></div><span class="step-tag">Step 5.3</span><span class="crit-tag">BLOCKED</span></div><div class="ntitle">KEBS — Diamond Mark of Quality</div><div class="nmeta"><span class="nfee">KES 15,000</span><span class="ntime">Day 20 · 60 days</span></div><div class="ndep"><em>Upload factory lease — action needed today</em></div></div>
+        <div class="node node-q" onclick="op('doshs')"><div class="nt"><div class="ndl" style="background:#888780"></div><span class="step-tag">Step 5.4</span></div><div class="ntitle">DOSHS — Workplace registration</div><div class="nmeta"><span class="nfee">KES 2,000</span><span class="ntime">After premises confirmed</span></div></div>
+      </div>
+    </div>
+    <div class="phase-total">Phase 5 subtotal: <strong>KES 122,000</strong></div>
+    <div class="vsep"></div>
+
+    <!-- PHASE 6 -->
+    <div class="ph"><div><div class="ph-title">Phase 6 — Labour & employees</div><div class="ph-sub">Days 60–75 · Once work permit nearing approval</div></div><div><div class="ph-cost">KES 0</div><div class="ph-days">Days 60-75</div></div></div>
+    <div class="node-grid">
+      <div class="nrow">
+        <div class="node node-q" onclick="op('nssf')"><div class="nt"><div class="ndl" style="background:#888780"></div><span class="step-tag">Step 6.1</span></div><div class="ntitle">NSSF — Employer + 40 employee registrations</div><div class="nmeta"><span class="nfee">KES 0</span><span class="ntime">Queued</span></div></div>
+        <div class="node node-q" onclick="op('shif')"><div class="nt"><div class="ndl" style="background:#888780"></div><span class="step-tag">Step 6.2</span></div><div class="ntitle">SHIF — Employer + employee registrations</div><div class="nmeta"><span class="nfee">KES 0</span><span class="ntime">Queued</span></div></div>
+        <div class="node node-q"><div class="nt"><div class="ndl" style="background:#888780"></div><span class="step-tag">Step 6.3</span></div><div class="ntitle">Employment contracts × 40 (auto-generated)</div><div class="nmeta"><span class="nfee">KES 0</span><span class="ntime">Auto-generated by Meridian</span></div></div>
+      </div>
+    </div>
+    <div class="phase-total">Phase 6 subtotal: <strong>KES 0</strong></div>
+    <div class="vsep"></div>
+
+    <!-- PHASE 7 -->
+    <div class="ph"><div><div class="ph-title">Phase 7 — Trade & imports</div><div class="ph-sub">Days 65–80 · Before first shipment</div></div><div><div class="ph-cost">KES 8,000</div><div class="ph-days">Days 65-80</div></div></div>
+    <div class="node-grid">
+      <div class="nrow">
+        <div class="node node-q" onclick="op('kentrade')"><div class="nt"><div class="ndl" style="background:#888780"></div><span class="step-tag">Step 7.1</span></div><div class="ntitle">KenTrade — Single window import clearance</div><div class="nmeta"><span class="nfee">KES 3,000</span><span class="ntime">Day 65</span></div></div>
+        <div class="node node-q" onclick="op('customs')"><div class="nt"><div class="ndl" style="background:#888780"></div><span class="step-tag">Step 7.2</span></div><div class="ntitle">KRA Customs — Import declaration registration</div><div class="nmeta"><span class="nfee">KES 5,000</span><span class="ntime">Day 66</span></div></div>
+      </div>
+    </div>
+    <div class="phase-total">Phase 7 subtotal: <strong>KES 8,000</strong></div>
+    <div class="vsep"></div>
+
+    <!-- OPERATIONAL -->
+    <div class="ph ph-green"><div><div class="ph-title">Fully operational</div><div class="ph-sub">All licenses obtained · ready to manufacture and import</div></div><div><div class="ph-cost">Day 90 target</div><div class="ph-days">Grand total: KES 655,950</div></div></div>
+
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- SIDE PANEL (below the app, in normal flow) -->
+<div id="spanel" class="sp-wrap" style="display:none;border-top:0.5px solid var(--color-border-tertiary)">
+  <div class="sph">
+    <div><div class="sph-title" id="sp-t"></div><div class="sph-sub" id="sp-s"></div></div>
+    <button class="sph-close" onclick="cp()">×</button>
+  </div>
+  <div class="spb" id="sp-b"></div>
+  <div class="sp-footer">
+    <button class="btn btn-b" style="flex:1" id="sp-ab">Start this step →</button>
+    <button class="btn btn-o">Download docs</button>
+  </div>
+</div>
+
+<script>
+const PD = {
+  brs:{t:'BRS — Business Registration Service',s:'Step 2.1 · Phase 2 — Company Registration',status:'Complete',sc:'p-g',what:'The BRS handles all company formations in Kenya. You file CR1 (registration form), Memorandum of Association, and Articles of Association. Meridian auto-fills all three forms from your investor profile.',cost:[['Name reservation','KES 100','Paid ✓'],['Company registration','KES 10,950','Paid ✓'],['Official paybill','206206 (eCitizen)','']],timeline:[['Official SLA','3 days'],['Realistic median','5 days'],['Worst case (portal)','10 days']],deps:['Name reservation ✓','Passport copies ✓'],docs:['CR1 form (auto-filled)','Memorandum of Association','Articles of Association','Board Resolution (directors)','Share allocation document'],note:'Low corruption risk (0.12). Mostly online. Submit early in the week. Portal slow on Fridays.',contact:'Sheria House, Nairobi CBD\necitizen.go.ke/brs',ab:'View documents'},
+  imm:{t:'Immigration Dept. — Class G Work Permit',s:'Step 3.1 · Phase 3 — Immigration ⚠ CRITICAL',status:'In progress — Week 4/8',sc:'p-a',what:'Required for any foreign investor working in Kenya. Apply immediately after company registration — this is your longest bottleneck at 8-14 weeks realistic. Form 17 must be filed with employer justification letter.',cost:[['Class G permit','KES 220,000/yr','Pending'],['Dependent pass × 2','KES 220,000/yr total','Pending'],['Alien card (after approval)','KES 5,000','Queued']],timeline:[['Official SLA','4 weeks'],['Realistic median','8-10 weeks'],['Worst case','14+ weeks (extra docs)']],deps:['Company registration ✓','KRA PIN ✓','Investment proof (bank statements) ✓','Police clearance ✓','Medical certificate ✓'],docs:['Form 17 (work permit) — auto-filled','Employer justification letter','Proof of investment letter','Certified passport copies'],note:'HIGHEST RISK AGENCY (0.38). Extra document requests in 34% of cases. Facilitator Jane Wambui follows up weekly. Escalate to KenInvest if delay exceeds 10 weeks.',contact:'Nyayo House, Nairobi CBD\nwww.immigration.go.ke',ab:'Follow up status'},
+  nema:{t:'NEMA — National Environment Management Authority',s:'Step 5.1 · Phase 5 — Environment ⚠ CRITICAL',status:'In progress — Week 3/13',sc:'p-a',what:'NEMA requires an Environmental Impact Assessment for manufacturing. This is your second critical bottleneck. The EIA involves an environmental study, management plan, and public participation report. Do not delay starting this.',cost:[['EIA license fee','KES 100,000','Pending'],['EIA consultant (third party)','KES 150,000–500,000','Ongoing'],['Environmental audit (annual)','KES 20,000','Recurring']],timeline:[['Official SLA','90 days'],['Realistic median','120 days'],['Worst case','180 days']],deps:['Physical premises confirmed ✓','Factory floor plans submitted ✓','EIA consultant appointed ✓'],docs:['EIA project brief (auto-generated)','Environmental management plan','Waste management plan','Public participation report'],note:'HIGHEST CORRUPTION RISK (0.42). Extra doc requests in 38% of cases. Always get written confirmation of all requests. Facilitator attends every inspection. Report any unofficial payment requests immediately.',contact:'NEMA House, Upper Hill, Nairobi\nwww.nema.go.ke',ab:'View EIA status'},
+  kebs:{t:'KEBS — Kenya Bureau of Standards',s:'Step 5.3 · Phase 5 — Standards',status:'BLOCKED — upload factory lease',sc:'p-r',what:'KEBS certifies manufactured products with the Diamond Mark of Quality. You cannot legally sell manufactured goods in Kenya without this. Currently blocked because your factory lease has not been uploaded.',cost:[['Registration fee','KES 5,000','Pending'],['Diamond Mark application','KES 15,000','Pending'],['Factory inspection fee','KES 30,000','Pending'],['Product testing (lab)','Varies by product','Pending']],timeline:[['Official SLA','60 days'],['After lease upload','Can restart immediately'],['Factory inspection slot','Next week (reserved)']],deps:['Factory address confirmed ✓','Factory lease uploaded — ACTION NEEDED ⚠'],docs:['KEBS registration form (ready)','Product specifications (ready)','Factory inspection request (ready)'],note:'Upload your factory lease today to unblock this step. Facilitator has already contacted KEBS and has an inspection slot reserved for next week.',contact:'Off Mombasa Road, Nairobi\nwww.kebs.org',ab:'Upload factory lease now'},
+  county:{t:'Nairobi County — Single Business Permit',s:'Step 4.1 · Phase 4 — County Licensing',status:'In progress — Inspection Day 28',sc:'p-b',what:'All businesses in Nairobi County require an annual Single Business Permit. Covers your core operations. Fire certificate is a separate application processed simultaneously.',cost:[['Single Business Permit','KES 50,000','Pending — due Friday'],['Fire safety certificate','KES 5,000','Pending'],['Official paybill','891300','Nairobi County']],timeline:[['Official SLA','14 days'],['Realistic median','21 days'],['Fire inspection booked','Day 28 (this Friday)']],deps:['Company registration ✓','KRA PIN ✓','Physical address confirmed ✓'],docs:['SBP application (auto-filled)','Fire inspection request (submitted)'],note:'Moderate corruption risk (0.31). Fee mismatch requests in 18% of cases. Always pay via official paybill 891300 only. Never pay cash.',contact:'Nairobi City County, City Hall\ncounty.nairobi.go.ke · Paybill: 891300',ab:'Pay KES 50,000 now'},
+  kra:{t:'KRA — Kenya Revenue Authority',s:'Step 2.2 · Phase 2 — Tax Registration',status:'Complete',sc:'p-g',what:'KRA handles all tax registrations. Company PIN, VAT (if turnover >KES 5M), and PAYE for employees. All done online via iTax. Meridian auto-fills everything.',cost:[['Company PIN','KES 0 (free)','Complete ✓'],['VAT registration','KES 0 (free)','Complete ✓'],['PAYE registration','KES 0 (free)','Complete ✓']],timeline:[['All registrations','Same day online']],deps:['Company certificate ✓'],docs:['KRA PIN certificate','VAT registration form','PAYE employer registration'],note:'Lowest risk agency (0.08). Fully digital. All registrations free.',contact:'Times Tower, Nairobi\nitax.kra.go.ke',ab:'View tax compliance'},
+  keninvest:{t:'KenInvest — Kenya Investment Authority',s:'Step 1.1 · Phase 1 — Pre-registration',status:'Complete',sc:'p-g',what:'KenInvest is the government investment facilitation body. Pre-registering enables fast-track coordination across all agencies. Required for all foreign investors above USD 100K.',cost:[['Investment certificate','KES 0','Complete ✓'],['KenInvest facilitation','KES 0','Ongoing service']],timeline:[['Pre-registration','Instant online'],['Investment certificate','3-5 business days']],deps:['Passport ✓'],docs:['Investment certificate application (auto-filled)','Business plan summary'],note:'Low risk, high value. Your KenInvest investment certificate enables priority processing at Immigration and other agencies.',contact:'Milimani Road, Nairobi\nwww.investmentkenya.com',ab:'View certificate'},
+  bank:{t:'Standard Chartered — Corporate + USD Accounts',s:'Step 2.3 · Phase 2 — Banking (parallel track)',status:'Complete — accounts active',sc:'p-g',what:'Recommended for electronics manufacturers due to excellent forex and trade finance services. KYC pack auto-assembled by Meridian. Board resolution auto-generated.',cost:[['Account opening','KES 0 (free)','Complete ✓'],['Monthly maintenance','KES 1,500/month','Ongoing'],['USD account','KES 0','Active ✓']],timeline:[['Application submitted','Day 12'],['Account activated','Day 18']],deps:['Company certificate ✓','KRA PIN ✓'],docs:['Board resolution for account (auto-generated)','KYC questionnaire (pre-filled)','Source of funds declaration'],note:'Bank account active. USD account needed for electronics component imports from China.',contact:'Standard Chartered, Chiromo Road\nwww.sc.com/ke',ab:'View account details'},
+};
+
+function sv(id,el){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
+  document.getElementById('v-'+id).classList.add('on');
+  el.classList.add('on');
+  document.getElementById('page-title').textContent = id==='dash'?'Dashboard':'Roadmap';
+  cp();
+}
+
+function op(id){
+  const p=PD[id]; if(!p)return;
+  document.getElementById('sp-t').textContent=p.t;
+  document.getElementById('sp-s').textContent=p.s;
+  document.getElementById('sp-ab').textContent=p.ab+' →';
+  const sc={[`p-g`]:'color:#3B6D11',[`p-a`]:'color:#854F0B',[`p-r`]:'color:#A32D2D',[`p-b`]:'color:#185FA5'};
+  let h=`<div class="pill ${p.sc}" style="${sc[p.sc]||''};display:inline-block;margin-bottom:10px">${p.status}</div>`;
+  h+=`<div class="sp-note">${p.what}</div>`;
+  h+=`<div class="sp-sec"><div class="sp-sec-h">COST BREAKDOWN</div>`;
+  p.cost.forEach(([k,v,s])=>{const c=s.includes('✓')?'color:#3B6D11':s.includes('NEEDED')||s.includes('due')?'color:#A32D2D':'color:var(--color-text-secondary)';h+=`<div class="sp-kv"><span class="sp-k">${k}</span><span class="sp-v">${v} <span style="${c};font-size:10px">${s}</span></span></div>`;});
+  h+=`</div><div class="sp-sec"><div class="sp-sec-h">TIMELINE</div>`;
+  p.timeline.forEach(([k,v])=>{h+=`<div class="sp-kv"><span class="sp-k">${k}</span><span class="sp-v">${v}</span></div>`;});
+  h+=`</div><div class="sp-sec"><div class="sp-sec-h">DEPENDENCIES</div>`;
+  p.deps.forEach(d=>{const ok=d.includes('✓');h+=`<div class="sp-doc" style="color:${ok?'#3B6D11':'#A32D2D'}">${ok?'✓':'✗'} ${d}</div>`;});
+  h+=`</div><div class="sp-sec"><div class="sp-sec-h">DOCUMENTS MERIDIAN GENERATES</div>`;
+  p.docs.forEach(d=>{h+=`<div class="sp-doc">✓ ${d}</div>`;});
+  h+=`</div><div class="sp-sec"><div class="sp-sec-h">WHAT TO EXPECT</div><div class="sp-note">${p.note}</div></div>`;
+  h+=`<div class="sp-sec"><div class="sp-sec-h">CONTACT</div><div class="sp-note" style="white-space:pre-line;font-family:var(--font-mono);font-size:11px">${p.contact}</div></div>`;
+  document.getElementById('sp-b').innerHTML=h;
+  document.getElementById('spanel').style.display='block';
+}
+
+function cp(){document.getElementById('spanel').style.display='none';}
+</script>

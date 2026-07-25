@@ -1,0 +1,183 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.app{display:grid;grid-template-columns:200px 1fr;min-height:700px;font-family:var(--font-sans);background:var(--color-background-tertiary)}
+.sidebar{background:var(--color-background-primary);border-right:0.5px solid var(--color-border-tertiary);padding:16px 0;display:flex;flex-direction:column}
+.logo{font-size:17px;font-weight:500;padding:0 16px 20px;color:var(--color-text-primary);letter-spacing:-.3px}
+.logo span{color:#185FA5}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 16px;font-size:13px;cursor:pointer;color:var(--color-text-secondary);border-radius:0;transition:background .1s}
+.nav-item:hover{background:var(--color-background-secondary)}
+.nav-item.active{color:var(--color-text-primary);font-weight:500;background:var(--color-background-secondary)}
+.nav-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.nd-blue{background:#378ADD}.nd-amber{background:#EF9F27}.nd-red{background:#E24B4A}.nd-green{background:#639922}.nd-gray{background:#888780}.nd-purple{background:#7F77DD}
+.nav-section{font-size:10px;color:var(--color-text-tertiary);padding:12px 16px 4px;letter-spacing:.08em}
+.main{padding:20px;overflow:auto}
+.top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.page-title{font-size:16px;font-weight:500}
+.investor-pill{display:flex;align-items:center;gap:8px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:20px;padding:5px 12px 5px 8px;font-size:12px}
+.avatar{width:24px;height:24px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#0C447C}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.stat-card{background:var(--color-background-secondary);border-radius:8px;padding:12px 14px}
+.stat-n{font-size:22px;font-weight:500;line-height:1.1}
+.stat-l{font-size:11px;color:var(--color-text-secondary);margin-top:3px}
+.stat-sub{font-size:10px;margin-top:2px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:14px}
+.card-h{font-size:13px;font-weight:500;margin-bottom:10px;color:var(--color-text-primary)}
+.progress-outer{background:var(--color-background-secondary);border-radius:4px;height:6px;margin-bottom:12px}
+.progress-fill{height:6px;border-radius:4px;background:#378ADD;width:48%}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.agency-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px}
+.agency-row:last-child{border-bottom:none}
+.status-pill{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:500}
+.sp-done{background:#EAF3DE;color:#27500A}
+.sp-pend{background:#FAEEDA;color:#633806}
+.sp-act{background:#FCEBEB;color:#791F1F}
+.sp-wait{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.alert-box{background:#FAEEDA;border-left:3px solid #BA7517;border-radius:0 6px 6px 0;padding:8px 10px;font-size:11px;color:#633806;margin-bottom:8px}
+.alert-title{font-weight:500;margin-bottom:2px}
+.exp-item{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px}
+.exp-item:last-child{border-bottom:none}
+.exp-bar-wrap{flex:1;margin:0 10px;background:var(--color-background-secondary);border-radius:3px;height:4px}
+.exp-bar{height:4px;border-radius:3px}
+.exp-r{background:#E24B4A}.exp-a{background:#EF9F27}.exp-g{background:#639922}
+.days-badge{font-size:10px;font-weight:500;min-width:36px;text-align:right}
+.days-r{color:#A32D2D}.days-a{color:#854F0B}.days-g{color:#3B6D11}
+</style>
+
+<div class="app">
+  <div class="sidebar">
+    <div class="logo">Meri<span>dian</span></div>
+    <div class="nav-section">Overview</div>
+    <div class="nav-item active"><div class="nav-dot nd-blue"></div>Dashboard</div>
+    <div class="nav-item"><div class="nav-dot nd-gray"></div>My journey</div>
+    <div class="nav-item"><div class="nav-dot nd-purple"></div>Agency graph</div>
+    <div class="nav-item"><div class="nav-dot nd-amber"></div>Roadmap</div>
+    <div class="nav-section">Compliance</div>
+    <div class="nav-item"><div class="nav-dot nd-blue"></div>Applications</div>
+    <div class="nav-item"><div class="nav-dot nd-green"></div>Documents</div>
+    <div class="nav-item"><div class="nav-dot nd-red"></div>Expiry tracker</div>
+    <div class="nav-item"><div class="nav-dot nd-gray"></div>Payments</div>
+    <div class="nav-section">Support</div>
+    <div class="nav-item"><div class="nav-dot nd-purple"></div>Facilitator</div>
+    <div class="nav-item"><div class="nav-dot nd-blue"></div>Bank account</div>
+    <div class="nav-item"><div class="nav-dot nd-gray"></div>Ask Meridian</div>
+    <div style="flex:1"></div>
+    <div class="nav-item" style="font-size:11px;color:var(--color-text-tertiary)"><div class="nav-dot" style="background:#639922"></div>Compliance: 87/100</div>
+  </div>
+
+  <div class="main">
+    <div class="top-bar">
+      <div class="page-title">Dashboard</div>
+      <div class="investor-pill">
+        <div class="avatar">CW</div>
+        <span>Chen Wei — Electronics MFG, Nairobi</span>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-n" style="color:#185FA5">Day 23</div>
+        <div class="stat-l">of ~90 estimated</div>
+        <div class="stat-sub" style="color:#3B6D11">25% complete</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-n">8 / 12</div>
+        <div class="stat-l">applications submitted</div>
+        <div class="stat-sub" style="color:#854F0B">2 need action</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-n" style="color:#E24B4A">KES 655K</div>
+        <div class="stat-l">total estimated fees</div>
+        <div class="stat-sub">KES 220K paid so far</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-n" style="color:#3B6D11">28%</div>
+        <div class="stat-l">abandonment risk</div>
+        <div class="stat-sub" style="color:#854F0B">trigger: NEMA delay</div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:14px;margin-bottom:12px">
+      <div class="card-h">Overall journey progress</div>
+      <div class="progress-label"><span>Day 23 of 90</span><span>25%</span></div>
+      <div class="progress-outer"><div class="progress-fill"></div></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px">
+        <div style="background:#EAF3DE;border-radius:6px;padding:7px 8px;font-size:11px">
+          <div style="font-weight:500;color:#3B6D11;margin-bottom:2px">Registration</div>
+          <div style="color:#27500A">Done · Days 1-5</div>
+        </div>
+        <div style="background:#FAEEDA;border-radius:6px;padding:7px 8px;font-size:11px">
+          <div style="font-weight:500;color:#854F0B;margin-bottom:2px">Immigration</div>
+          <div style="color:#633806">Week 4 of 8</div>
+        </div>
+        <div style="background:#FAEEDA;border-radius:6px;padding:7px 8px;font-size:11px">
+          <div style="font-weight:500;color:#854F0B;margin-bottom:2px">Licensing</div>
+          <div style="color:#633806">In progress</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:6px;padding:7px 8px;font-size:11px">
+          <div style="font-weight:500;color:var(--color-text-secondary);margin-bottom:2px">Operations</div>
+          <div style="color:var(--color-text-tertiary)">Not started</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-h">Agency status</div>
+        <div class="agency-row"><span>KenInvest</span><span class="status-pill sp-done">Complete</span></div>
+        <div class="agency-row"><span>BRS — Company reg</span><span class="status-pill sp-done">Complete</span></div>
+        <div class="agency-row"><span>KRA — PIN + VAT</span><span class="status-pill sp-done">Complete</span></div>
+        <div class="agency-row"><span>Immigration — Class G</span><span class="status-pill sp-pend">Week 4/8</span></div>
+        <div class="agency-row"><span>NEMA — EIA</span><span class="status-pill sp-pend">Week 3/13</span></div>
+        <div class="agency-row"><span>KEBS — Diamond Mark</span><span class="status-pill sp-act">Action needed</span></div>
+        <div class="agency-row"><span>Nairobi County</span><span class="status-pill sp-pend">Inspection Day 28</span></div>
+        <div class="agency-row"><span>DOSHS + NSSF + SHIF</span><span class="status-pill sp-wait">Queued</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-h">Next actions required</div>
+        <div class="alert-box">
+          <div class="alert-title">Upload factory lease — KEBS</div>
+          <div>Required to proceed with Diamond Mark application. Due today.</div>
+        </div>
+        <div class="alert-box">
+          <div class="alert-title">Pay county license fee — KES 50,000</div>
+          <div>Nairobi County SBP. Due Friday. Paybill: 891300.</div>
+        </div>
+        <div class="alert-box" style="background:#FCEBEB;border-color:#E24B4A;color:#501313">
+          <div class="alert-title" style="color:#A32D2D">Work permit delay alert</div>
+          <div>Immigration processing at week 4. Facilitator Jane Wambui has escalated. Expected: 4 more weeks.</div>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <button style="flex:1;padding:7px;background:var(--color-background-info);border:none;border-radius:6px;font-size:11px;color:var(--color-text-info);cursor:pointer;font-weight:500">Upload document</button>
+          <button style="flex:1;padding:7px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:6px;font-size:11px;color:var(--color-text-secondary);cursor:pointer">Pay fee</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h">Document expiry tracker</div>
+      <div class="exp-item">
+        <span style="font-size:11px;min-width:160px">Work permit (Class G)</span>
+        <div class="exp-bar-wrap"><div class="exp-bar exp-r" style="width:5%"></div></div>
+        <span class="days-badge days-r">7 days</span>
+      </div>
+      <div class="exp-item">
+        <span style="font-size:11px;min-width:160px">Business permit (Nairobi)</span>
+        <div class="exp-bar-wrap"><div class="exp-bar exp-a" style="width:30%"></div></div>
+        <span class="days-badge days-a">28 days</span>
+      </div>
+      <div class="exp-item">
+        <span style="font-size:11px;min-width:160px">Tax compliance cert</span>
+        <div class="exp-bar-wrap"><div class="exp-bar exp-g" style="width:72%"></div></div>
+        <span class="days-badge days-g">69 days</span>
+      </div>
+      <div class="exp-item">
+        <span style="font-size:11px;min-width:160px">Certificate of Incorporation</span>
+        <div class="exp-bar-wrap"><div class="exp-bar exp-g" style="width:100%"></div></div>
+        <span class="days-badge days-g">No expiry</span>
+      </div>
+    </div>
+  </div>
+</div>

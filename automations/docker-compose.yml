@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  api-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: imm-api-server
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - HEADLESS=true
+      - AUTO_CLOSE=true
+      - SLOW_MO=100
+      - NODE_ENV=production
+    restart: always
+
+  # Note: Frontend service is currently disabled as it expects a separate build/codebase
+  # frontend:
+  #   build:
+  #     context: ./frontend # Adjust if frontend code is added
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - NEXT_PUBLIC_API_URL=http://localhost:5000
+  #   depends_on:
+  #     - api-server
+  #   restart: always

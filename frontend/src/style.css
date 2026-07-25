@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Kenya Invest page wrapper reset ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Kenya Invest pages — inherits MiroFish global white theme from App.vue */
