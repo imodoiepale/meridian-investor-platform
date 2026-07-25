@@ -38,9 +38,13 @@ def save_profile():
     """Save investor profile fields directly (from ProfileWizard)."""
     data = request.json or {}
     session_id = data.get('session_id') or str(uuid.uuid4())
-    fields = {k: v for k, v in data.items() if k != 'session_id'}
+    # Accept either flat fields or {"profile": {...}} — flatten in either case.
+    fields = data.get('profile') if isinstance(data.get('profile'), dict) else {
+        k: v for k, v in data.items() if k != 'session_id'
+    }
     from backend.agent.memory import memory
     profile = memory.update_profile(session_id, fields)
+    memory.log_journey(session_id, {"step": "profile_updated", "fields": list(fields.keys())})
     return jsonify({"session_id": session_id, "profile": profile, "saved": True})
 
 

@@ -13,6 +13,8 @@
         <router-link to="/invest" class="nav-inner-link">Onboarding</router-link>
         <router-link to="/invest/roadmap" class="nav-inner-link">Roadmap</router-link>
         <router-link to="/invest/graphs" class="nav-inner-link">Simulation</router-link>
+        <router-link v-if="!authUser" to="/login" class="nav-inner-link nav-cta">Sign in</router-link>
+        <button v-else class="nav-inner-link nav-cta" @click="handleSignOut">Sign out</button>
         <div class="nav-status-dot" :class="backendOk ? 'dot-live' : 'dot-off'" :title="backendOk ? 'Backend online' : 'Backend offline'"></div>
         <button class="theme-toggle" @click="toggleTheme" :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'">{{ isDark ? '☀' : '◑' }}</button>
       </div>
@@ -231,7 +233,13 @@ import { ref, reactive, onMounted, onBeforeUnmount, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import ParticleCanvas from '../components/ParticleCanvas.vue'
 import { useTheme } from '../composables/useTheme.js'
+import { supabase, signOut, getUser } from '../lib/supabase'
 const { isDark, toggle: toggleTheme } = useTheme()
+const authUser = ref(null)
+async function handleSignOut() {
+  await signOut()
+  authUser.value = null
+}
 
 const router = useRouter()
 const passportFile = ref(null)
@@ -325,6 +333,11 @@ onMounted(async () => {
     backendOk.value = r.ok
   } catch { backendOk.value = false }
 
+  authUser.value = await getUser()
+  if (supabase) {
+    supabase.auth.onAuthStateChange((_evt, session) => { authUser.value = session?.user || null })
+  }
+
   setTimeout(animateCounters, 400)
   sectorVisible.value = true
   rotateSector()
@@ -362,6 +375,8 @@ const startFlow = () => {
 .nav-links { display: flex; align-items: center; }
 .nav-inner-link { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.68rem; font-weight: 600; letter-spacing: 1px; padding: 0 16px; height: 56px; display: flex; align-items: center; border-right: 1px solid rgba(255,255,255,0.06); transition: color 0.15s, background 0.15s; }
 .nav-inner-link:hover { color: #fff; background: rgba(255,255,255,0.04); }
+.nav-cta { color: #7dd3fc; background: rgba(56, 189, 248, 0.08); border: 0; cursor: pointer; font-family: inherit; }
+.nav-cta:hover { color: #fff; background: rgba(56, 189, 248, 0.18); }
 .nav-inner-link.router-link-active { color: #fff; border-bottom: 2px solid #E8500A; }
 .nav-status-dot { width: 7px; height: 7px; border-radius: 50%; margin: 0 20px; }
 .dot-live { background: #6ee7b7; box-shadow: 0 0 8px #6ee7b7; animation: led-blink 2s ease infinite; }
