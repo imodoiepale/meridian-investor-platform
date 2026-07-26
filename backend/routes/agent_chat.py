@@ -66,6 +66,123 @@ def trickle_research():
     return jsonify({"session_id": session_id, "market_gaps": gap, "roadmap": roadmap})
 
 
+ATTENDED_PORTALS = {
+    # code:            (automations path,                 mapper key, needs eFNS login)
+    'eta':             ('/api/permit/eta-kenya',           'eta',          False),
+    'class-g':         ('/api/permit/class-g',             'class-g',      True),
+    'class-d':         ('/api/permit/class-d',             'class-d',      True),
+    'class-n':         ('/api/permit/class-n',             'class-n',      True),
+    'class-r':         ('/api/permit/class-r',             'class-r',      True),
+    'special-pass':    ('/api/permit/special-pass',        'special-pass', True),
+    'student-pass':    ('/api/permit/student-pass',        'class-g',      True),
+    'dependant-pass':  ('/api/permit/dependant-pass',      'dependant-pass', True),
+    'dual-citizenship': ('/api/permit/dual-citizenship',   'class-g',      True),
+    're-entry-pass':   ('/api/permit/re-entry-pass',       'class-g',      True),
+}
+
+REGISTRATION_PORTALS = {
+    'brs':  '/api/brs',
+    'nssf': '/api/nssf',
+    'sha':  '/api/sha',
+}
+
+KRA_PORTALS = {
+    'kra-credentials': '/api/kra/check-credentials',
+    'kra-register':    '/api/kra/register-pin',
+    'kra-nil-return':  '/api/kra/file-nil-return',
+}
+
+
+@agent_bp.route('/automations/catalog', methods=['GET'])
+def automations_catalog():
+    """Which portals the launcher can drive, and whether the runner is reachable."""
+    import requests
+    from backend.agent.tools import AUTOMATIONS_URL
+    try:
+        health = requests.get(f"{AUTOMATIONS_URL}/health", timeout=3).json()
+        online, headless = True, str(health.get('env', {}).get('headless', '')).lower()
+    except Exception:
+        online, headless = False, 'unknown'
+    return jsonify({
+        "online": online,
+        "browser_visible": headless == 'false',
+        "automations_url": AUTOMATIONS_URL,
+        "immigration": sorted(ATTENDED_PORTALS),
+        "registration": sorted(REGISTRATION_PORTALS),
+        "tax": sorted(KRA_PORTALS),
+    })
+
+
+@agent_bp.route('/automations/<portal>', methods=['POST'])
+def run_automation(portal):
+    """Launch one portal automation with the session profile already mapped in.
+
+    Credentials stay on the automations service (its own .env) — the browser
+    only ever sends a session_id.
+    """
+    import requests
+    from backend.agent.memory import memory
+    from backend.agent.field_map import map_profile
+    from backend.agent.tools import AUTOMATIONS_URL
+
+    data = request.json or {}
+    session_id = data.get('session_id') or str(uuid.uuid4())
+    profile = memory.get_session(session_id).get('profile', {})
+    overrides = data.get('overrides') or {}
+
+    if portal in ATTENDED_PORTALS:
+        path, mapper_key, needs_login = ATTENDED_PORTALS[portal]
+        mapped = map_profile(mapper_key, profile, overrides)
+        if mapped['missing_required']:
+            return jsonify({
+                "error": "profile_incomplete",
+                "missing_required": mapped['missing_required'],
+                "message": "Complete these profile fields before filing.",
+            }), 422
+        payload = {"formData": mapped['formData']}
+        if needs_login:
+            payload['login'] = _efns_login()
+            if not payload['login']:
+                return jsonify({
+                    "error": "efns_credentials_missing",
+                    "message": "Set EFNS_EMAIL, EFNS_ID_NUMBER and EFNS_PASSWORD in automations/.env.",
+                }), 503
+    elif portal in REGISTRATION_PORTALS:
+        path = REGISTRATION_PORTALS[portal]
+        payload = {"profile": profile, **overrides}
+    elif portal in KRA_PORTALS:
+        path = KRA_PORTALS[portal]
+        payload = {"profile": profile, "company_name": profile.get('company_name', ''), **overrides}
+    else:
+        return jsonify({"error": f"unknown portal '{portal}'"}), 404
+
+    try:
+        res = requests.post(f"{AUTOMATIONS_URL}{path}", json=payload, timeout=30)
+        body = res.json()
+    except requests.exceptions.ConnectionError:
+        return jsonify({
+            "error": "automations_offline",
+            "message": f"Automations service unreachable at {AUTOMATIONS_URL}. Start it: node automations/server.mjs",
+        }), 503
+    except Exception as e:
+        return jsonify({"error": str(e)}), 502
+
+    if res.ok and body.get('success'):
+        memory.log_journey(session_id, {"step": f"automation_{portal}", "job_id": body.get('jobId')})
+
+    return jsonify({"session_id": session_id, "portal": portal, **body}), res.status_code
+
+
+def _efns_login():
+    import os
+    email = os.environ.get('EFNS_EMAIL')
+    id_number = os.environ.get('EFNS_ID_NUMBER')
+    password = os.environ.get('EFNS_PASSWORD')
+    if not (email and id_number and password):
+        return None
+    return {"email": email, "idNumber": id_number, "password": password}
+
+
 @agent_bp.route('/applications/<session_id>', methods=['GET'])
 def get_applications(session_id):
     """Return automation jobs for this session from Supabase (if enabled), else empty list."""

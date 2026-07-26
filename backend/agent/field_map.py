@@ -95,6 +95,8 @@ def profile_to_eta(profile: dict, overrides: dict = None) -> dict:
             "nationality": p.get("nationality"),
             "passportNo": p.get("passport_no"),
             "passportExpiryDate": p.get("passportExpiryDate"),
+            # emailAddress is the key the eTA endpoint reads; email kept for logs.
+            "emailAddress": p.get("email"),
             "email": p.get("email"),
             "phone": p.get("phone"),
             "purposeOfVisit": "Business / Investment prospecting",

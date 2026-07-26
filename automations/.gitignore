@@ -44,3 +44,6 @@ next-env.d.ts
 /playwright/
 *.zip
 *.trace
+
+# e2e run artifacts
+scripts/e2e-report-*.json

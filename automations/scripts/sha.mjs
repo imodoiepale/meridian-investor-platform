@@ -279,6 +279,7 @@ export async function registerSha(company) {
 
     const isHeadless = process.env.HEADLESS?.trim().toLowerCase() !== 'false';
     const browser = await chromium.launch({
+        channel: process.env.BROWSER_CHANNEL || 'chrome',
         headless: isHeadless,
         slowMo: parseInt(process.env.SLOW_MO) || 0
     });
@@ -402,6 +403,7 @@ async function processRegistration() {
 
     if (validCompanies.length > 0) {
         const browser = await chromium.launch({
+            channel: process.env.BROWSER_CHANNEL || 'chrome',
             headless: false
         });
         const context = await browser.newContext();

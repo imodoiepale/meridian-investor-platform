@@ -30,6 +30,7 @@ const routes = [
       { path: 'profile', name: 'Profile', component: () => import('../views/ProfileWizard.vue'), meta: { title: 'My profile' } },
       { path: 'concierge', name: 'Concierge', component: () => import('../views/ConciergeView.vue'), meta: { title: 'Investor concierge' } },
       { path: 'licences', name: 'Licences', component: () => import('../views/LicenceExplorer.vue'), meta: { title: 'Licence explorer' } },
+      { path: 'automations', name: 'Automations', component: () => import('../views/AutomationsView.vue'), meta: { title: 'Live automations' } },
       { path: 'applications', name: 'Applications', component: () => import('../views/ApplicationsView.vue'), meta: { title: 'Applications' } },
       { path: 'experts', name: 'Experts', component: () => import('../views/ExpertsView.vue'), meta: { title: 'Trusted local experts' } },
       { path: 'documents', name: 'Documents', component: () => import('../views/DocumentsView.vue'), meta: { title: 'Documents' } },

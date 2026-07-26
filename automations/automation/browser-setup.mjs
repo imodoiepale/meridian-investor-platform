@@ -2,6 +2,11 @@ import { chromium } from 'playwright';
 import fs from 'fs';
 import path from 'path';
 
+// Real installed Chrome, not Playwright's bundled Chromium — government portals
+// fingerprint the browser build, and the demo is screen-shared. Docker images
+// without Chrome can set BROWSER_CHANNEL=chromium.
+export const BROWSER_CHANNEL = process.env.BROWSER_CHANNEL || 'chrome';
+
 const STEALTH_ARGS = [
   '--disable-blink-features=AutomationControlled',
   '--disable-features=IsolateOrigins,site-per-process',
@@ -56,6 +61,7 @@ export async function createStealthBrowser(options = {}) {
   const isHeadless = process.env.HEADLESS?.toLowerCase() === 'true';
 
   const context = await chromium.launchPersistentContext(profileDir, {
+    channel: BROWSER_CHANNEL,
     headless: isHeadless,
     slowMo: parseInt(process.env.SLOW_MO) || 100,
     args: STEALTH_ARGS,

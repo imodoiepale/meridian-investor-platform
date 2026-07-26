@@ -67,6 +67,8 @@ async function updateJob(jobId, patch) {
 // ── Common helpers ────────────────────────────────────────────────────────────
 function launchOpts() {
   return {
+    // Real installed Chrome — set BROWSER_CHANNEL=chromium in containers.
+    channel: process.env.BROWSER_CHANNEL || 'chrome',
     headless: process.env.HEADLESS?.trim().toLowerCase() !== 'false',
     slowMo: parseInt(process.env.SLOW_MO || '0', 10),
   };

@@ -207,6 +207,7 @@ export async function runEtaKenyaAutomation(requestData, jobId = null) {
     try {
         const isHeadless = process.env.HEADLESS?.trim().toLowerCase() !== 'false';
         browser = await chromium.launch({
+            channel: process.env.BROWSER_CHANNEL || 'chrome',
             headless: isHeadless,
             args: [
                 '--disable-setuid-sandbox',

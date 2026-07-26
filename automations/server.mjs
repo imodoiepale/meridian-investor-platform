@@ -1093,7 +1093,10 @@ app.post('/api/kra/register-pin', async (req, res) => {
 app.post('/api/kra/file-nil-return', async (req, res) => {
     try {
         console.log('📥 Received KRA nil-return request');
-        const { pin, password, kind = 'paye', company_name = '', returnPeriodYear } = req.body || {};
+        const { kind = 'paye', company_name = '', returnPeriodYear } = req.body || {};
+        // Falls back to .env so the browser never has to hold KRA credentials.
+        const pin = req.body?.pin || process.env.KRA_PIN;
+        const password = req.body?.password || process.env.KRA_PASSWORD;
         if (!pin || !password) {
             return res.status(400).json({ success: false, error: 'pin and password are required' });
         }
@@ -1117,7 +1120,10 @@ app.post('/api/kra/file-nil-return', async (req, res) => {
 app.post('/api/kra/check-credentials', async (req, res) => {
     try {
         console.log('📥 Received KRA credential-check request');
-        const { pin, password, company_name = '' } = req.body || {};
+        const { company_name = '' } = req.body || {};
+        // Falls back to .env so the browser never has to hold KRA credentials.
+        const pin = req.body?.pin || process.env.KRA_PIN;
+        const password = req.body?.password || process.env.KRA_PASSWORD;
         if (!pin || !password) {
             return res.status(400).json({ success: false, error: 'pin and password are required' });
         }

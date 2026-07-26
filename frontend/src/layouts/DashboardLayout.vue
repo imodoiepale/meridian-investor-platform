@@ -125,6 +125,7 @@ const icon = {
   chat:     '<svg viewBox="0 0 20 20" fill="none"><path d="M17 12.2a2 2 0 0 1-2 2H7l-4 3V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7.2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
   map:      '<svg viewBox="0 0 20 20" fill="none"><path d="m2.5 5 5-2 5 2 5-2v12l-5 2-5-2-5 2V5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7.5 3v12M12.5 5v12" stroke="currentColor" stroke-width="1.5"/></svg>',
   doc:      '<svg viewBox="0 0 20 20" fill="none"><path d="M5 2.5h6l4 4V17a.5.5 0 0 1-.5.5h-9A.5.5 0 0 1 5 17V2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M11 2.5v4h4M7.5 11h5M7.5 14h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  bolt:     '<svg viewBox="0 0 20 20" fill="none"><path d="M11 2 4.5 11h4.2l-.7 7L15 9h-4.2L11 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
   chart:    '<svg viewBox="0 0 20 20" fill="none"><path d="M3 17h14M6 14V8M10 14V4M14 14v-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
   folder:   '<svg viewBox="0 0 20 20" fill="none"><path d="M2.5 5.5A1.5 1.5 0 0 1 4 4h3.4l1.6 2H16a1.5 1.5 0 0 1 1.5 1.5v7A1.5 1.5 0 0 1 16 16H4a1.5 1.5 0 0 1-1.5-1.5v-9Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
   users:    '<svg viewBox="0 0 20 20" fill="none"><circle cx="7.6" cy="6.6" r="2.8" stroke="currentColor" stroke-width="1.5"/><path d="M2.4 16.4c.6-2.9 2.7-4.4 5.2-4.4s4.6 1.5 5.2 4.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13.6 4.2a2.8 2.8 0 0 1 0 5.2M15.2 12.4c1.4.6 2.3 1.9 2.6 3.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
@@ -144,6 +145,7 @@ const navGroups = [
     items: [
       { label: 'Roadmap', to: '/invest/roadmap', icon: icon.map },
       { label: 'Licences', to: '/licences', icon: icon.badge },
+      { label: 'Automations', to: '/automations', icon: icon.bolt },
       { label: 'Applications', to: '/applications', icon: icon.doc },
       { label: 'Documents', to: '/documents', icon: icon.folder },
     ],

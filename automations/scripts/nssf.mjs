@@ -56,6 +56,7 @@ export async function registerNssf(profile) {
 
   const isHeadless = process.env.HEADLESS?.trim().toLowerCase() !== 'false';
   const browser = await chromium.launch({
+    channel: process.env.BROWSER_CHANNEL || 'chrome',
     headless: isHeadless,
     slowMo: parseInt(process.env.SLOW_MO) || 0,
   });

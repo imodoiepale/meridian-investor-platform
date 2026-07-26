@@ -153,6 +153,9 @@ import {
 
 const DEMO_EMAIL = 'demo@meridian.app'
 const DEMO_PASSWORD = 'MeridianDemo2026!'
+// Matches DEMO_SESSION_ID in backend/scripts/seed_demo_user.py so the dashboard
+// loads the seeded profile instead of an empty session.
+const DEMO_SESSION_ID = 'demo-session'
 
 const asideImg = '/meridian-global-landing/assets/images/hero-global-investors.png'
 
@@ -187,6 +190,7 @@ async function signInAsDemo() {
   busy.value = true; demoBusy.value = true; error.value = ''
   try {
     await signInWithPassword(DEMO_EMAIL, DEMO_PASSWORD)
+    localStorage.setItem('meridian_session', DEMO_SESSION_ID)
     router.push('/dashboard')
   } catch (e) {
     error.value = `${e?.message || 'Demo sign-in failed.'} Run "python backend/scripts/seed_demo_user.py" to create the demo account.`
