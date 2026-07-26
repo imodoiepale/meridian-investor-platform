@@ -145,7 +145,7 @@ def run_automation(portal):
             if not payload['login']:
                 return jsonify({
                     "error": "efns_credentials_missing",
-                    "message": "Set EFNS_EMAIL, EFNS_ID_NUMBER and EFNS_PASSWORD in automations/.env.",
+                    "message": "Set EFNS_EMAIL, EFNS_ID_NUMBER and EFNS_PASSWORD in the root .env.",
                 }), 503
     elif portal in REGISTRATION_PORTALS:
         path = REGISTRATION_PORTALS[portal]
