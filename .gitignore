@@ -77,3 +77,6 @@ Thumbs.db
 #   git clone https://github.com/anthropics/skills vendor/anthropic-skills
 # ============================================================
 vendor/
+.vercel
+.env*
+!.env.example

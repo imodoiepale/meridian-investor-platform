@@ -5,7 +5,6 @@ import os
 from datetime import datetime
 from backend.research_agent.claude_researcher import research_agent
 from backend.routes.licences import resolve_for_sector
-from backend.vector_db.qdrant_client import vector_db
 
 ki_bp = Blueprint('kenya_invest', __name__, url_prefix='/api/invest')
 
@@ -118,10 +117,18 @@ def simulation_report(sim_id):
     return jsonify(sim.get('report', {}))
 
 
+# Imported lazily: qdrant-client and openai are only needed by these two
+# cache-admin endpoints, and pulling the ML stack into every cold start breaks
+# the serverless deploy.
+def _vector_db():
+    from backend.vector_db.qdrant_client import vector_db
+    return vector_db
+
+
 @ki_bp.route('/cache/stats', methods=['GET'])
 def cache_stats():
     """Show vector DB cache coverage and freshness."""
-    return jsonify(vector_db.get_cache_stats())
+    return jsonify(_vector_db().get_cache_stats())
 
 
 @ki_bp.route('/cache/invalidate', methods=['POST'])
@@ -129,7 +136,7 @@ def invalidate_cache():
     """Force-expire cache for a sector/county combination."""
     data = request.json
     for collection in ['fee_schedules', 'sla_benchmarks', 'regulations', 'risk_scores']:
-        vector_db.invalidate(
+        _vector_db().invalidate(
             sector=data.get('sector', ''),
             county=data.get('county', ''),
             nationality=data.get('nationality', ''),
