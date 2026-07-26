@@ -36,6 +36,49 @@
       </div>
     </section>
 
+    <section class="section how">
+      <div class="m-container">
+        <p class="m-eyebrow" v-reveal>How it works</p>
+        <h2 v-reveal="{ delay: 60 }">Four steps, in order.</h2>
+
+        <ol class="how-list">
+          <li v-for="(s, i) in steps" :key="s.title" v-reveal="{ delay: i * 70, y: 18 }">
+            <img
+              :src="img(s.image)"
+              :alt="s.alt"
+              loading="lazy"
+              decoding="async"
+              width="720"
+              height="480"
+            />
+            <div class="how-copy">
+              <span class="how-num">{{ String(i + 1).padStart(2, '0') }}</span>
+              <h3>{{ s.title }}</h3>
+              <p>{{ s.copy }}</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section metrics-band">
+      <div class="m-container">
+        <p class="m-eyebrow" v-reveal>What is actually in the product</p>
+        <h2 v-reveal="{ delay: 60 }">Numbers you can check.</h2>
+        <dl class="band" v-reveal="{ delay: 120 }">
+          <div v-for="m in bandMetrics" :key="m.label">
+            <dt>{{ m.value }}</dt>
+            <dd>{{ m.label }}</dd>
+          </div>
+        </dl>
+        <p class="band-note">
+          Counts come from the licence catalogue and the Kenya roadmap that generates
+          your plan. The statutory total is a typical Nairobi setup — the
+          <router-link to="/pricing">pricing page</router-link> itemises every line.
+        </p>
+      </div>
+    </section>
+
     <section class="section values">
       <div class="m-container">
         <p class="m-eyebrow" v-reveal>What we optimise for</p>
@@ -77,6 +120,56 @@
 </template>
 
 <script setup>
+import usePageMeta from './usePageMeta'
+
+usePageMeta({
+  description:
+    'Meridian maps 100 Kenya licences to their issuing agencies, sequences them into '
+    + 'one roadmap, and files them on the real government portals. Built in Nairobi.',
+  image: '/meridian-global-landing/assets/images/coordinated-requirements-roadmap.png',
+  imageAlt: 'A coordinated market entry roadmap showing sequenced licence requirements',
+})
+
+const img = (file) => `/meridian-global-landing/assets/images/${file}`
+
+const steps = [
+  {
+    title: 'Tell us where you are landing',
+    copy: 'Nationality, industry, target county, and how much you are putting in. That is enough to work out which of the 100 licences actually apply to you.',
+    image: 'market-selection-nairobi.png',
+    alt: 'Selecting Nairobi as a target market on the Meridian market picker',
+  },
+  {
+    title: 'Get one sequenced roadmap',
+    copy: 'Every requirement, the agency that issues it, what it costs, and what it depends on — ordered so you are never waiting on a document you could have started earlier.',
+    image: 'coordinated-requirements-roadmap.png',
+    alt: 'A roadmap of coordinated licence requirements grouped into phases',
+  },
+  {
+    title: 'We file on the real portals',
+    copy: 'Meridian drives the actual agency portal in a browser, fills the forms from your profile, and returns the reference number. You approve each submission before it goes.',
+    image: 'market-entry-command-center.png',
+    alt: 'The Meridian command centre tracking filing progress across agencies',
+  },
+  {
+    title: 'People handle the judgement calls',
+    copy: 'Automation is good at mechanical filings and bad at advice. Vetted advocates, tax advisors, and bankers pick up anything that needs a view rather than a form.',
+    image: 'local-expert-handshake.png',
+    alt: 'A Meridian client meeting a vetted local advisor in Nairobi',
+  },
+]
+
+// Every figure here is derived from the repo, not marketing rounding:
+// 100 and 18 from backend/data/kenya_licences.json (entries, distinct categories),
+// 32 from the `universal` flag in the same file, and KES 37,150 from summing
+// cost_kes across the base_phases roadmap in backend/routes/kenya_invest.py.
+const bandMetrics = [
+  { value: '100', label: 'Licences in the Kenya catalogue' },
+  { value: '18', label: 'Sectors covered' },
+  { value: '32', label: 'Permits that apply to every business' },
+  { value: 'KES 37,150', label: 'Typical statutory cost to register in Nairobi' },
+]
+
 const facts = [
   { value: '100', label: 'Kenya licences mapped' },
   { value: '30+', label: 'Issuing agencies' },
@@ -156,6 +249,72 @@ h2 { font-size: 36px; margin-bottom: 22px; }
 }
 .facts dd { margin-top: 4px; font-size: 12.5px; color: var(--text2); }
 
+/* ── How it works ─────────────────────────────────────────────────── */
+.how { border-top: 1px solid var(--border); }
+.how h2 { margin: 10px 0 40px; }
+
+.how-list { list-style: none; display: grid; gap: 56px; }
+.how-list li {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 52px;
+  align-items: center;
+}
+.how-list li:nth-child(even) > img { order: 2; }
+
+.how-list img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.how-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.how-copy h3 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+.how-copy p { color: var(--text2); font-size: 14.5px; line-height: 1.75; }
+
+/* ── Metrics band ─────────────────────────────────────────────────── */
+.metrics-band { background: var(--bg2); border-top: 1px solid var(--border); }
+.metrics-band h2 { margin: 10px 0 34px; }
+
+.band {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.band > div { padding: 28px 24px; background: var(--surface); }
+.band dt {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1.1;
+}
+.band dd { margin-top: 8px; font-size: 12.5px; line-height: 1.6; color: var(--text2); }
+
+.band-note {
+  margin-top: 18px;
+  max-width: 640px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--text3);
+}
+.band-note a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.band-note a:hover { text-decoration: underline; }
+
 .values { background: var(--bg2); border-block: 1px solid var(--border); }
 
 .value-grid {
@@ -215,5 +374,17 @@ h2 { font-size: 36px; margin-bottom: 22px; }
   .mk-hero h1 { font-size: 40px; }
   .split { grid-template-columns: 1fr; gap: 44px; }
   h2 { font-size: 30px; }
+
+  .how-list { gap: 40px; }
+  .how-list li { grid-template-columns: 1fr; gap: 22px; }
+  /* Image back above the copy once the row is a single column. */
+  .how-list li:nth-child(even) > img { order: 0; }
+  .how-copy h3 { font-size: 19px; }
+  .band dt { font-size: 28px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-grid li { transition: none; }
+  .team-grid li:hover { transform: none; }
 }
 </style>
