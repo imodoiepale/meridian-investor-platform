@@ -81,9 +81,10 @@ ATTENDED_PORTALS = {
 }
 
 REGISTRATION_PORTALS = {
-    'brs':  '/api/brs',
-    'nssf': '/api/nssf',
-    'sha':  '/api/sha',
+    'brs':          '/api/brs',
+    'brs-register': '/api/brs/private-ltd',
+    'nssf':         '/api/nssf',
+    'sha':          '/api/sha',
 }
 
 KRA_PORTALS = {
@@ -147,6 +148,11 @@ def run_automation(portal):
                     "error": "efns_credentials_missing",
                     "message": "Set EFNS_EMAIL, EFNS_ID_NUMBER and EFNS_PASSWORD in the root .env.",
                 }), 503
+    elif portal == 'brs-register':
+        # The BRS wizard keeps overrides nested so they can carry a whole
+        # director object; credentials stay on the automations service.
+        path = REGISTRATION_PORTALS[portal]
+        payload = {"profile": profile, "overrides": overrides}
     elif portal in REGISTRATION_PORTALS:
         path = REGISTRATION_PORTALS[portal]
         payload = {"profile": profile, **overrides}

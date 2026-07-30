@@ -32,6 +32,14 @@
         <div class="summary-actions">
           <button class="btn-outline" @click="$router.push('/invest')">← Edit profile</button>
           <button class="btn-outline" @click="$router.push('/invest/dashboard')" v-if="hasSim">Simulation dashboard →</button>
+          <button
+            class="btn-sweep"
+            :disabled="!runnerOnline || sweep.active || !sweepQueue.length"
+            :title="sweepButtonTitle"
+            @click="startSweep"
+          >
+            {{ sweep.active ? 'Sweep running…' : `Run automation sweep (${sweepQueue.length})` }}
+          </button>
         </div>
       </div>
 
@@ -195,6 +203,78 @@
             <div class="tip-icon">💡</div>
             <div>{{ drawer.node.tip }}</div>
           </div>
+
+          <!-- Run automation -->
+          <div class="drawer-section drawer-automation">
+            <div class="drawer-section-title">AUTOMATION</div>
+
+            <template v-if="!portalCodeFor(drawer.node)">
+              <p class="automation-note">Not yet automated — file this one manually on the agency portal.</p>
+            </template>
+
+            <template v-else>
+              <p v-if="!runnerOnline" class="automation-note automation-warn">
+                Runner offline — start it with <code>node automations/server.mjs</code>.
+              </p>
+              <p v-else-if="unmetPrereqs(drawer.node).length" class="automation-note automation-warn">
+                Complete first: {{ unmetPrereqs(drawer.node).join(', ') }}
+              </p>
+
+              <button
+                class="btn-automation"
+                :disabled="!runnerOnline || unmetPrereqs(drawer.node).length > 0 || runningNode === drawer.node.id || sweep.active"
+                @click="runNodeAutomation(drawer.node)"
+              >
+                <span v-if="runningNode === drawer.node.id" class="spinner"></span>
+                {{ automationButtonLabel(drawer.node) }}
+              </button>
+
+              <p v-if="automationResults[drawer.node.id]" class="automation-result" :class="automationResults[drawer.node.id].kind">
+                {{ automationResults[drawer.node.id].text }}
+              </p>
+            </template>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
+    <!-- Sweep progress panel -->
+    <Transition name="sweep-panel">
+      <div v-if="sweep.visible" class="sweep-panel" :class="{ collapsed: sweep.collapsed }">
+        <div class="sweep-head" @click="sweep.collapsed = !sweep.collapsed">
+          <div class="sweep-head-title">
+            <span class="sweep-dot" :class="sweepDotClass"></span>
+            {{ sweepHeadline }}
+          </div>
+          <div class="sweep-head-actions">
+            <button
+              v-if="sweep.active"
+              class="sweep-mini-btn"
+              @click.stop="pauseSweep"
+            >{{ sweep.paused ? 'Resume' : 'Pause' }}</button>
+            <button class="sweep-mini-btn" @click.stop="closeSweep">
+              {{ sweep.active ? 'Stop' : '✕' }}
+            </button>
+            <span class="sweep-chevron">{{ sweep.collapsed ? '▲' : '▼' }}</span>
+          </div>
+        </div>
+
+        <div v-if="!sweep.collapsed" class="sweep-body">
+          <div v-for="item in sweep.items" :key="item.portal" class="sweep-row" :class="`sweep-${item.status}`">
+            <span class="sweep-icon">
+              <span v-if="item.status === 'done'">✓</span>
+              <span v-else-if="item.status === 'error'">✕</span>
+              <span v-else-if="item.status === 'running'" class="spinner"></span>
+              <span v-else-if="item.status === 'skipped'">–</span>
+              <span v-else>○</span>
+            </span>
+            <span class="sweep-name">{{ item.label }}</span>
+            <span class="sweep-status-text">{{ item.statusText }}</span>
+          </div>
+
+          <div v-if="sweep.items.every(i => i.status === 'done' || i.status === 'error' || i.status === 'skipped')" class="sweep-done-note">
+            Sweep finished. {{ sweepSummaryLine }}
+          </div>
         </div>
       </div>
     </Transition>
@@ -204,6 +284,34 @@
 
 <script>
 import LoadingOverlay from '../components/LoadingOverlay.vue'
+
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001'
+
+// Node id -> the /api/agent/automations/<portal> code that files it. One BRS
+// script drives name search through incorporation in a single browser run
+// (fns.immigration-style attended automation), so all three pre-incorporation
+// nodes point at it — running from any of them (or having already run it)
+// covers the others. Nodes with no entry here have no working automation yet.
+const PORTAL_MAP = {
+  BRS_NAME_SEARCH: 'brs-register',
+  BRS_NAME_RESERVE: 'brs-register',
+  BRS_CR1: 'brs-register',
+  KRA_PIN: 'kra-register',
+  NSSF: 'nssf',
+  NHIF: 'sha', // NHIF was superseded by SHA; same automation
+}
+
+// Display label + a paced delay before the sweep opens the next portal's
+// browser. There is no completion callback from any of these scripts today
+// (they run fire-and-forget once launched), so "sequential" is enforced by
+// pacing rather than a true done-signal — long enough that the prior window
+// has visibly finished its own work before the next one opens.
+const PORTAL_INFO = {
+  'brs-register': { label: 'BRS — company registration', waitMs: 90000 },
+  'kra-register': { label: 'KRA — PIN registration', waitMs: 25000 },
+  'nssf': { label: 'NSSF — employer registration', waitMs: 20000 },
+  'sha': { label: 'SHA — employer registration', waitMs: 20000 },
+}
 
 export default {
   name: 'RoadmapView',
@@ -221,7 +329,26 @@ export default {
       drawer: null,
       nodePositions: {},
       svgHeight: 0,
-      connections: []
+      connections: [],
+      runnerOnline: false,
+      // Node ids whose automation has been launched (this session or a prior
+      // one, recovered from the journey log) — satisfies downstream
+      // prerequisites. "Launched" means the browser opened, not a confirmed
+      // portal submission, matching how AutomationsView already reports success.
+      launchedNodeIds: new Set(),
+      runningNode: null,
+      automationResults: {},
+
+      // Sweep = a single queue of portals run one at a time, in dependency
+      // order, so only one automation browser is ever open at once.
+      sweep: {
+        visible: false,
+        active: false,
+        paused: false,
+        collapsed: false,
+        items: [], // [{ portal, label, status: pending|running|done|error|skipped, statusText }]
+      },
+      sweepAbort: false,
     }
   },
 
@@ -258,14 +385,269 @@ export default {
         { label: 'Standard step', cls: 'dot-std' },
         { label: 'Free / no fee', cls: 'dot-free' }
       ]
+    },
+
+    allNodes() {
+      if (!this.roadmap?.phases) return []
+      return this.roadmap.phases.flatMap(p => p.nodes || [])
+    },
+
+    // Every automatable portal not yet launched, topologically ordered so a
+    // portal only appears after everything it depends on.
+    sweepQueue() {
+      const nodes = this.allNodes
+      if (!nodes.length) return []
+
+      const nodeById = Object.fromEntries(nodes.map(n => [n.id, n]))
+      const portals = [...new Set(Object.values(PORTAL_MAP))]
+
+      // portal -> set of other portals it depends on, derived from the
+      // prerequisites of every node that portal covers.
+      const deps = {}
+      for (const portal of portals) {
+        const covered = Object.entries(PORTAL_MAP).filter(([, p]) => p === portal).map(([id]) => id)
+        const depPortals = new Set()
+        for (const nodeId of covered) {
+          for (const prereqId of nodeById[nodeId]?.prerequisites || []) {
+            const prereqPortal = PORTAL_MAP[prereqId]
+            if (prereqPortal && prereqPortal !== portal) depPortals.add(prereqPortal)
+          }
+        }
+        deps[portal] = depPortals
+      }
+
+      // Drop portals whose nodes are all already launched.
+      const remaining = portals.filter(portal => {
+        const covered = Object.entries(PORTAL_MAP).filter(([, p]) => p === portal).map(([id]) => id)
+        return !covered.every(id => this.launchedNodeIds.has(id))
+      })
+
+      // Topological sort (Kahn's algorithm) over the remaining portals only.
+      const ordered = []
+      const visited = new Set()
+      const visiting = new Set()
+      const visit = (portal) => {
+        if (visited.has(portal) || !remaining.includes(portal)) return
+        if (visiting.has(portal)) return // dependency cycle guard — skip re-entry
+        visiting.add(portal)
+        for (const dep of deps[portal] || []) visit(dep)
+        visiting.delete(portal)
+        visited.add(portal)
+        ordered.push(portal)
+      }
+      remaining.forEach(visit)
+
+      return ordered.map(portal => ({
+        portal,
+        label: PORTAL_INFO[portal]?.label || portal,
+        waitMs: PORTAL_INFO[portal]?.waitMs || 20000,
+      }))
+    },
+
+    sweepButtonTitle() {
+      if (!this.runnerOnline) return 'Runner offline — start node automations/server.mjs'
+      if (!this.sweepQueue.length) return 'Everything automatable has already been launched'
+      return `Runs ${this.sweepQueue.length} portal(s) one at a time: ${this.sweepQueue.map(s => s.label).join(' → ')}`
+    },
+
+    sweepDotClass() {
+      if (this.sweep.items.some(i => i.status === 'error')) return 'sweep-dot-error'
+      if (this.sweep.active) return 'sweep-dot-running'
+      return 'sweep-dot-done'
+    },
+
+    sweepHeadline() {
+      if (this.sweep.paused) return 'Sweep paused'
+      if (this.sweep.active) {
+        const running = this.sweep.items.find(i => i.status === 'running')
+        return running ? `Running: ${running.label}` : 'Sweep running…'
+      }
+      return 'Automation sweep'
+    },
+
+    sweepSummaryLine() {
+      const done = this.sweep.items.filter(i => i.status === 'done').length
+      const errors = this.sweep.items.filter(i => i.status === 'error').length
+      if (errors) return `${done} launched, ${errors} need attention.`
+      return `${done} launched successfully.`
     }
   },
 
   async mounted() {
     await this.loadRoadmap()
+    await this.checkRunner()
+    await this.recoverLaunchedNodes()
   },
 
   methods: {
+    async checkRunner() {
+      try {
+        const res = await fetch(`${API_BASE}/api/agent/automations/catalog`)
+        const data = await res.json()
+        this.runnerOnline = Boolean(data.online)
+      } catch {
+        this.runnerOnline = false
+      }
+    },
+
+    // Recover "already launched" state from this session's journey log, so a
+    // page refresh doesn't re-block automations that already ran.
+    async recoverLaunchedNodes() {
+      const sessionId = localStorage.getItem('meridian_session')
+      if (!sessionId) return
+      try {
+        const res = await fetch(`${API_BASE}/api/agent/session/${sessionId}`)
+        if (!res.ok) return
+        const { journey } = await res.json()
+        const launchedPortals = new Set(
+          (journey || [])
+            .map(j => j.step || '')
+            .filter(s => s.startsWith('automation_'))
+            .map(s => s.replace('automation_', ''))
+        )
+        for (const [nodeId, portal] of Object.entries(PORTAL_MAP)) {
+          if (launchedPortals.has(portal)) this.launchedNodeIds.add(nodeId)
+        }
+      } catch {
+        // Non-fatal — buttons just start ungated by history.
+      }
+    },
+
+    portalCodeFor(node) {
+      return PORTAL_MAP[node.id] || null
+    },
+
+    // A node is blocked until every prerequisite has itself been launched.
+    unmetPrereqs(node) {
+      return (node.prerequisites || []).filter(id => !this.launchedNodeIds.has(id))
+    },
+
+    automationButtonLabel(node) {
+      if (this.runningNode === node.id) return 'Opening browser…'
+      if (this.launchedNodeIds.has(node.id)) return 'Run again'
+      return 'Run automation'
+    },
+
+    // Shared launcher: fires one portal's automation and reports a normalised
+    // {ok, text} result. Used by both the single-node button and the sweep.
+    async launchPortal(portal) {
+      const sessionId = localStorage.getItem('meridian_session')
+      try {
+        const res = await fetch(`${API_BASE}/api/agent/automations/${portal}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: sessionId }),
+        })
+        const data = await res.json()
+
+        if (res.status === 422) {
+          return { ok: false, text: `Missing profile fields: ${(data.missing_required || []).join(', ')}` }
+        }
+        if (!res.ok) {
+          return { ok: false, text: data.message || data.error || 'Launch failed.' }
+        }
+        for (const [nodeId, p] of Object.entries(PORTAL_MAP)) {
+          if (p === portal) this.launchedNodeIds.add(nodeId)
+        }
+        return { ok: true, text: `Browser opened — job ${data.jobId || 'started'}` }
+      } catch (e) {
+        return { ok: false, text: e.message || 'Could not reach the backend.' }
+      }
+    },
+
+    async runNodeAutomation(node) {
+      const portal = this.portalCodeFor(node)
+      if (!portal) return
+      this.runningNode = node.id
+      delete this.automationResults[node.id]
+
+      const result = await this.launchPortal(portal)
+      this.automationResults = {
+        ...this.automationResults,
+        [node.id]: { kind: result.ok ? 'ok' : 'err', text: result.text },
+      }
+      this.runningNode = null
+    },
+
+    // ── Automation sweep: run every unlaunched, unblocked portal one at a
+    // time, in dependency order, so the investor sees one browser window at
+    // a time instead of a barrage of unexplained popups. ──────────────────
+    startSweep() {
+      if (this.sweep.active || !this.sweepQueue.length) return
+      this.sweep = {
+        visible: true,
+        active: true,
+        paused: false,
+        collapsed: false,
+        items: this.sweepQueue.map(q => ({
+          portal: q.portal, label: q.label, status: 'pending', statusText: 'Waiting…',
+        })),
+      }
+      this.sweepAbort = false
+      this.runSweepLoop()
+    },
+
+    pauseSweep() {
+      this.sweep.paused = !this.sweep.paused
+    },
+
+    closeSweep() {
+      if (this.sweep.active) {
+        this.sweepAbort = true
+        this.sweep.active = false
+        this.sweep.paused = false
+      } else {
+        this.sweep.visible = false
+      }
+    },
+
+    // Cooperative sleep: wakes early on abort, sits still while paused.
+    async sweepSleep(ms) {
+      const step = 250
+      let waited = 0
+      while (waited < ms) {
+        if (this.sweepAbort) return
+        if (!this.sweep.paused) waited += step
+        await new Promise(r => setTimeout(r, step))
+      }
+    },
+
+    async runSweepLoop() {
+      for (const item of this.sweep.items) {
+        if (this.sweepAbort) break
+
+        while (this.sweep.paused && !this.sweepAbort) {
+          await new Promise(r => setTimeout(r, 250))
+        }
+        if (this.sweepAbort) break
+
+        item.status = 'running'
+        item.statusText = 'Opening browser…'
+
+        const result = await this.launchPortal(item.portal)
+        if (this.sweepAbort) break
+
+        if (result.ok) {
+          item.status = 'done'
+          item.statusText = result.text
+          const waitMs = PORTAL_INFO[item.portal]?.waitMs || 20000
+          item.statusText = `${result.text} — next step in ${Math.round(waitMs / 1000)}s`
+          await this.sweepSleep(waitMs)
+          item.statusText = result.text
+        } else {
+          item.status = 'error'
+          item.statusText = result.text
+          // A hard failure here almost always blocks everything after it
+          // (e.g. missing credentials, incomplete profile) — stop rather than
+          // launch downstream steps against a dependency that never landed.
+          this.sweep.items
+            .slice(this.sweep.items.indexOf(item) + 1)
+            .forEach(i => { i.status = 'skipped'; i.statusText = `Skipped — ${item.label} did not complete` })
+          break
+        }
+      }
+      if (!this.sweepAbort) this.sweep.active = false
+    },
     async loadRoadmap() {
       this.loading = true
       this.loadPct = 10
@@ -471,6 +853,10 @@ export default {
 .btn-outline { background: transparent; color: var(--text2); border: 1px solid var(--border); padding: 7px 14px; font-size: 0.72rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; letter-spacing: 0.5px; text-decoration: none; display: inline-flex; align-items: center; }
 .btn-outline:hover { color: var(--text); border-color: var(--text2); }
 
+.btn-sweep { background: var(--orange); color: #fff; border: none; padding: 7px 16px; font-size: 0.72rem; font-weight: 700; cursor: pointer; font-family: inherit; letter-spacing: 0.5px; transition: background 0.15s, opacity 0.15s; }
+.btn-sweep:hover:not(:disabled) { background: var(--orange-h); }
+.btn-sweep:disabled { opacity: 0.4; cursor: not-allowed; }
+
 /* ── Legend ── */
 .legend-bar { display: flex; gap: 1.5rem; padding: 0.75rem 2rem; background: var(--surface2); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
 .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.68rem; color: var(--text2); }
@@ -555,6 +941,29 @@ export default {
 .drawer-tip { display: flex; gap: 10px; padding: 1rem; background: var(--surface2); border-left: 3px solid var(--text3); font-size: 0.78rem; line-height: 1.6; color: var(--text2); }
 .tip-icon { flex-shrink: 0; }
 
+/* ── Drawer automation ── */
+.drawer-automation { border-top: 1px solid var(--border); padding-top: 1.25rem; margin-top: 1.25rem; }
+.automation-note { font-size: 0.75rem; color: var(--text2); line-height: 1.5; margin: 0 0 10px; }
+.automation-warn { color: var(--orange); }
+.automation-note code { background: var(--surface2); padding: 1px 5px; border-radius: 3px; font-size: 0.7rem; }
+.btn-automation {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--orange); color: #fff; border: none;
+  padding: 10px 18px; font-size: 0.78rem; font-weight: 700;
+  font-family: inherit; cursor: pointer; transition: background 0.15s, opacity 0.15s;
+}
+.btn-automation:hover:not(:disabled) { background: var(--orange-h); }
+.btn-automation:disabled { opacity: 0.4; cursor: not-allowed; }
+.automation-result { font-size: 0.75rem; margin: 10px 0 0; line-height: 1.5; }
+.automation-result.ok { color: #6ee7b7; }
+.automation-result.err { color: #ff6b6b; }
+.spinner {
+  width: 11px; height: 11px; border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff; border-radius: 50%; animation: automation-spin 0.7s linear infinite;
+}
+@keyframes automation-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+
 /* ── Empty state ── */
 .empty-state { max-width: 440px; margin: 6rem auto; text-align: center; padding: 2rem; }
 .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
@@ -562,6 +971,38 @@ export default {
 .empty-state p { font-size: 0.85rem; color: var(--text2); margin-bottom: 1.5rem; line-height: 1.6; }
 .btn-primary { background: var(--orange); color: #fff; padding: 12px 24px; font-size: 0.88rem; font-weight: 700; text-decoration: none; display: inline-block; transition: background 0.15s; font-family: inherit; }
 .btn-primary:hover { background: var(--orange-h); }
+
+/* ── Sweep panel ── */
+.sweep-panel {
+  position: fixed; right: 24px; bottom: 24px; width: 340px; max-width: calc(100vw - 32px);
+  background: var(--surface); border: 1px solid var(--border); box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  z-index: 400; font-family: inherit;
+}
+.sweep-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; cursor: pointer; user-select: none; }
+.sweep-head-title { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 700; color: var(--text); }
+.sweep-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.sweep-dot-running { background: #38bdf8; animation: dot-pulse 1.6s ease-in-out infinite; }
+.sweep-dot-done { background: #6ee7b7; }
+.sweep-dot-error { background: #ff6b6b; }
+@keyframes dot-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(56,189,248,0.45); } 50% { box-shadow: 0 0 0 5px transparent; } }
+.sweep-head-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.sweep-mini-btn { background: transparent; border: 1px solid var(--border); color: var(--text2); font-size: 0.62rem; font-weight: 700; padding: 3px 8px; cursor: pointer; font-family: inherit; letter-spacing: 0.3px; }
+.sweep-mini-btn:hover { color: var(--text); border-color: var(--text2); }
+.sweep-chevron { font-size: 0.55rem; color: var(--text3); }
+
+.sweep-body { padding: 4px 14px 14px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; max-height: 260px; overflow-y: auto; }
+.sweep-row { display: flex; align-items: flex-start; gap: 8px; font-size: 0.72rem; padding-top: 10px; }
+.sweep-icon { width: 14px; flex-shrink: 0; text-align: center; color: var(--text3); }
+.sweep-done .sweep-icon { color: #6ee7b7; }
+.sweep-error .sweep-icon { color: #ff6b6b; }
+.sweep-running .sweep-icon { color: #38bdf8; display: flex; align-items: center; justify-content: center; }
+.sweep-name { flex-shrink: 0; font-weight: 600; color: var(--text); min-width: 118px; }
+.sweep-status-text { color: var(--text2); word-break: break-word; }
+.sweep-skipped { opacity: 0.5; }
+.sweep-done-note { font-size: 0.68rem; color: var(--text2); padding-top: 10px; border-top: 1px solid var(--border); margin-top: 2px; }
+
+.sweep-panel-enter-active, .sweep-panel-leave-active { transition: transform 0.25s ease, opacity 0.25s ease; }
+.sweep-panel-enter-from, .sweep-panel-leave-to { transform: translateY(12px); opacity: 0; }
 
 /* ── Transitions ── */
 .drawer-enter-active, .drawer-leave-active { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }

@@ -93,7 +93,8 @@ const groups = [
     title: 'Company registration',
     sub: 'eCitizen and the statutory employer registrations that follow incorporation.',
     portals: [
-      { code: 'brs', agency: 'BRS', name: 'Business Registration Service', desc: 'Name search, reservation and company incorporation on eCitizen.' },
+      { code: 'brs-register', agency: 'BRS', name: 'Incorporate a private limited company', flagship: true, desc: 'Drives the full BRS v2 wizard — three name options, objects, share capital and the first director — then stops at the review screen.' },
+      { code: 'brs', agency: 'BRS', name: 'Business Registration Service', desc: 'Name search, reservation and company document download on eCitizen.' },
       { code: 'nssf', agency: 'NSSF', name: 'Social Security registration', desc: 'Registers the company and its first employee with NSSF.' },
       { code: 'sha', agency: 'SHA', name: 'Social Health Authority', desc: 'Employer registration with the SHA (formerly NHIF).' },
     ],

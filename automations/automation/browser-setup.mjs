@@ -43,11 +43,14 @@ export async function createStealthBrowser(options = {}) {
     grantClipboard = true,
     viewport = { width: 1920, height: 1080 },
     profileId = 'eta-kenya',
+    // Reuse one profile dir instead of a throwaway, so a portal session (and
+    // its login cookies) survives between runs.
+    persistProfile = false,
   } = options;
 
   // Create unique profile directory with timestamp to avoid conflicts
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-  const uniqueProfileId = `${profileId}-${timestamp}`;
+  const uniqueProfileId = persistProfile ? profileId : `${profileId}-${timestamp}`;
 
   const profileDir = path.join(
     process.env.LOCALAPPDATA,

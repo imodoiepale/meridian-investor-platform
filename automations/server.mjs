@@ -22,9 +22,11 @@ import { runRegularizationAutomation } from './automation/regularization.mjs';
 import { runRegistrationCitizenForm10Automation } from './automation/registration-citizen-form10.mjs';
 import { runEtaKenyaAutomation, getJobProgress, getLatestJobId, getAllJobs, stopJob } from './automation/eta-kenya.mjs';
 import { runBrsAutomation } from './scripts/brs.js';
+import { runBrsPrivateLtd } from './automation/brs-private-ltd.mjs';
 import { registerNssf } from './scripts/nssf.mjs';
 import { registerSha } from './scripts/sha.mjs';
 import { registerKraPin, fileNilReturn as fileKraNilReturn, checkKraCredentials } from './scripts/kra.mjs';
+import { DIRECTOR } from './automation/director.mjs';
 
 
 
@@ -948,9 +950,15 @@ app.get('/api/permit/eta-kenya/latest', (req, res) => {
 app.post('/api/brs', async (req, res) => {
     try {
         console.log('📥 Received BRS automation request');
-        const { ecitizenId, password, companyName } = req.body || {};
+        // Precedence: explicit request body -> the eCitizen credentials already
+        // configured in this service's .env (same ones brs-register uses) ->
+        // the legacy Supabase table (rarely populated, kept for compatibility).
+        const {
+            ecitizenId = process.env.ECITIZEN_ID,
+            password = process.env.ECITIZEN_PASSWORD,
+            companyName,
+        } = req.body || {};
 
-        // Direct credentials are preferred; Supabase (SUPABASE_URL/SUPABASE_ANON_KEY) is the fallback
         if ((ecitizenId && !password) || (!ecitizenId && password)) {
             return res.status(400).json({
                 success: false,
@@ -982,13 +990,65 @@ app.post('/api/brs', async (req, res) => {
     }
 });
 
+// Private Limited Company incorporation — fills the BRS v2 wizard end to end
+// and stops at the review screen. Credentials come from automations/.env unless
+// the caller passes them explicitly.
+app.post('/api/brs/private-ltd', async (req, res) => {
+    try {
+        console.log('📥 Received BRS private-ltd incorporation request');
+        const { login = {}, profile = {}, overrides = {} } = req.body || {};
+
+        const ecitizenId = login.ecitizenId || process.env.ECITIZEN_ID;
+        const password = login.password || process.env.ECITIZEN_PASSWORD;
+        if (!ecitizenId || !password) {
+            return res.status(503).json({
+                success: false,
+                error: 'ecitizen_credentials_missing',
+                message: 'Set ECITIZEN_ID and ECITIZEN_PASSWORD in automations/.env, or pass login.ecitizenId / login.password.'
+            });
+        }
+
+        const jobId = Date.now().toString() + Math.random().toString(36).substring(7);
+
+        res.json({
+            success: true,
+            message: 'BRS incorporation started. Browser will open shortly.',
+            jobId: jobId,
+            timestamp: new Date().toISOString()
+        });
+
+        runBrsPrivateLtd({ login: { ecitizenId, password }, profile, overrides })
+            .then(result => console.log('✅ BRS private-ltd completed:', result))
+            .catch(error => console.error('❌ BRS private-ltd failed:', error.message));
+
+    } catch (error) {
+        console.error('❌ Server error:', error);
+        if (!res.headersSent) {
+            res.status(500).json({ success: false, error: error.message });
+        }
+    }
+});
+
 // NSSF individual registration endpoint
 app.post('/api/nssf', async (req, res) => {
     try {
         console.log('📥 Received NSSF registration request');
-        const profile = req.body?.profile || req.body;
+        const body = req.body?.profile || req.body || {};
+        // NSSF registers the person who holds the eCitizen account this whole
+        // filing runs under — default to that identity (same one BRS uses)
+        // rather than requiring a National ID the investor's own profile
+        // (a foreign passport holder) was never going to have.
+        const profile = {
+            name: DIRECTOR.fullName,
+            idNumber: DIRECTOR.idNumber,
+            firstName: DIRECTOR.firstName,
+            surname: DIRECTOR.surname,
+            telephone: DIRECTOR.phone,
+            email: DIRECTOR.email,
+            ...body,
+        };
 
-        if (!profile || !profile.name || !profile.idNumber) {
+        if (!profile.name || !profile.idNumber) {
             return res.status(400).json({
                 success: false,
                 error: 'Profile is required with at least name and idNumber'
@@ -1025,7 +1085,29 @@ app.post('/api/nssf', async (req, res) => {
 app.post('/api/sha', async (req, res) => {
     try {
         console.log('📥 Received SHA employer registration request');
-        const company = req.body?.company || req.body;
+        const body = req.body?.company || req.body || {};
+        // Director identity defaults the same way as BRS/NSSF. companyName can
+        // come through as the investor profile's company_name field too.
+        const company = {
+            directorName: DIRECTOR.fullName,
+            mobile: DIRECTOR.phone,
+            email: DIRECTOR.email,
+            companyName: body.company_name,
+            code: process.env.SHA_EMPLOYER_CODE,
+            password: process.env.SHA_EMPLOYER_PASSWORD,
+            ...body,
+        };
+
+        // code/password are the SHA employer portal's own login, issued after
+        // registration — there is no sensible default, unlike the eCitizen
+        // identity fields above.
+        if (!company.code || !company.password) {
+            return res.status(503).json({
+                success: false,
+                error: 'sha_credentials_missing',
+                message: 'Set SHA_EMPLOYER_CODE and SHA_EMPLOYER_PASSWORD in automations/.env, or pass company.code / company.password.',
+            });
+        }
 
         const required = ['companyName', 'directorName', 'mobile', 'email', 'code', 'password'];
         const missing = required.filter(field => !company?.[field]);

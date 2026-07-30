@@ -11,6 +11,19 @@ ki_bp = Blueprint('kenya_invest', __name__, url_prefix='/api/invest')
 # In-memory simulation store (use Redis in production)
 simulations = {}
 
+
+def _lead_int(value, default=0):
+    """First integer out of a days value that may be "7", "3-7", or "" — the
+    seed pack's slas/fees entries are free-text from the research model, not
+    guaranteed plain ints."""
+    import re
+    match = re.search(r'\d+', str(value or ''))
+    return int(match.group()) if match else default
+
+# Qualitative -> rough numeric abandonment-risk mapping (risk_scores.abandonment_risk
+# in the seed pack is "low"/"medium"/"high", not a percentage).
+_RISK_LEVEL_PCT = {"low": 12, "medium": 28, "high": 45}
+
 @ki_bp.route('/research', methods=['POST'])
 def run_research():
     """
@@ -222,12 +235,20 @@ def save_session():
 
         seed = data.get('seed_pack', {})
         if seed:
-            meta = seed.get('seed_meta', {})
-            rmap = seed.get('regulatory_map', {})
+            meta = seed.get('meta', {}) or seed.get('seed_meta', {})
+            # regulatory_map is a list of {step, agency, requirement, portal}
+            # per the seed pack schema, not a dict — no estimated_total_days key.
+            regulatory_map = seed.get('regulatory_map') or []
+            slas_list = seed.get('slas') or []
+            agencies = {r.get('agency', '') for r in regulatory_map if isinstance(r, dict) and r.get('agency')}
+            est_days = sum(
+                _lead_int(s.get('realistic_days') or s.get('official_days'))
+                for s in slas_list if isinstance(s, dict)
+            ) or '?'
             confidence = meta.get('confidence_score', 0)
             parts.append(
-                f"Research result: estimated {rmap.get('estimated_total_days', '?')} days, "
-                f"{len(rmap.get('required_agencies', []))} agencies required, "
+                f"Research result: estimated {est_days} days, "
+                f"{len(agencies)} agencies required, "
                 f"confidence {confidence:.0%}. Session: {session_id}."
             )
 
@@ -248,13 +269,61 @@ def build_roadmap():
     and risk flags from sim_report (if provided).
     """
     data = request.json or {}
-    seed_pack = data.get('seed_pack', {})
-    sim_report = data.get('sim_report', {})
+    seed_pack = data.get('seed_pack') or {}
+    if not isinstance(seed_pack, dict):
+        seed_pack = {}
+    sim_report = data.get('sim_report') or {}
+    if not isinstance(sim_report, dict):
+        sim_report = {}
 
-    # Extract dynamic data from seed_pack
-    rmap = seed_pack.get('regulatory_map', {})
-    fee_schedule = seed_pack.get('fee_schedule', {})
-    bottleneck = seed_pack.get('bottleneck_forecast', {})
+    # regulatory_map, fees, and bottleneck_forecast are all LISTS in the seed
+    # pack schema (claude_researcher.SEED_SCHEMA_HINT: "regulatory_map [...]",
+    # "fees [...]", "bottleneck_forecast [...]") — never the {estimated_total_days,
+    # required_agencies}/{fee_schedule}/{abandonment_risk_pct} dicts this code
+    # used to assume.
+    regulatory_map = seed_pack.get('regulatory_map') or []
+    if not isinstance(regulatory_map, list):
+        regulatory_map = []
+    fees_list = seed_pack.get('fees') or []
+    if not isinstance(fees_list, list):
+        fees_list = []
+    forecast_list = seed_pack.get('bottleneck_forecast') or []
+    if not isinstance(forecast_list, list):
+        forecast_list = []
+    slas_list = seed_pack.get('slas') or []
+    if not isinstance(slas_list, list):
+        slas_list = []
+    risk_scores = seed_pack.get('risk_scores') or {}
+    if not isinstance(risk_scores, dict):
+        risk_scores = {}
+
+    required_agencies = sorted({
+        r.get('agency', '') for r in regulatory_map if r.get('agency')
+    })
+    estimated_total_days = sum(
+        _lead_int(s.get('realistic_days') or s.get('official_days'))
+        for s in slas_list if isinstance(s, dict)
+    ) or 60
+    # fee_schedule[key] used to look up {official_fee_kes, timeline_days,
+    # required_documents, tip} per agency — rebuild that shape from the flat
+    # fees list, keyed by both agency and item so either lookup style below hits.
+    fee_schedule = {}
+    for f in fees_list:
+        if not isinstance(f, dict):
+            continue
+        entry = {
+            "official_fee_kes": f.get('amount_kes', 0),
+            "timeline_days": 30,
+            "required_documents": [],
+            "tip": "",
+        }
+        for key in (f.get('agency'), f.get('item')):
+            if key:
+                fee_schedule.setdefault(key, entry)
+                fee_schedule.setdefault(key.lower().replace(' ', '_'), entry)
+    abandonment_risk_pct = _RISK_LEVEL_PCT.get(
+        str(risk_scores.get('abandonment_risk', 'medium')).lower(), 28
+    )
 
     # Build risk flag set from simulation bottlenecks
     risk_agencies = set()
@@ -393,7 +462,7 @@ def build_roadmap():
             "phase": 4,
             "name": "Sector-Specific Licenses",
             "icon": "📜",
-            "estimated_days": rmap.get('estimated_total_days', 60),
+            "estimated_days": estimated_total_days,
             "nodes": [],
             "dynamic": True
         },
@@ -441,7 +510,6 @@ def build_roadmap():
     for b in (sim_report.get('bottlenecks') or []):
         agency_risk_map[b.get('agency', '').lower()] = b
 
-    required_agencies = rmap.get('required_agencies', [])
     for i, agency_name in enumerate(required_agencies):
         agency_key = agency_name.lower().replace(' ', '_')
         fee_data = fee_schedule.get(agency_key, fee_schedule.get(agency_name, {}))
@@ -510,7 +578,7 @@ def build_roadmap():
         "summary": {
             "total_days": total_days,
             "total_cost_kes": total_cost,
-            "dropout_risk_pct": bottleneck.get('abandonment_risk_pct', 0),
+            "dropout_risk_pct": abandonment_risk_pct,
             "confidence": seed_pack.get('seed_meta', {}).get('confidence_score', 0.85),
             "sector": sector,
             "sector_licences_count": len(sector_licences),
@@ -537,8 +605,19 @@ def _run_simulation_async(sim_id: str, config: dict):
         # For now: return a structured mock report
         time.sleep(5)  # Simulate processing time
         
-        seed = config.get('seed', {})
-        bottleneck_forecast = seed.get('bottleneck_forecast', {})
+        seed = config.get('seed') or {}
+        if not isinstance(seed, dict):
+            seed = {}
+        # bottleneck_forecast is a list of {stage, likelihood, mitigation} per
+        # the seed pack schema (claude_researcher.SEED_SCHEMA_HINT) — it has
+        # never been the {abandonment_risk_pct, ...} dict this code expected.
+        forecast_list = seed.get('bottleneck_forecast') or []
+        if not isinstance(forecast_list, list):
+            forecast_list = []
+        primary_bottleneck = forecast_list[0] if forecast_list else {}
+        risk_scores = seed.get('risk_scores') or {}
+        if not isinstance(risk_scores, dict):
+            risk_scores = {}
         
         simulations[sim_id].update({
             "status": "complete",
@@ -568,9 +647,11 @@ def _run_simulation_async(sim_id: str, config: dict):
                     }
                 ],
                 "abandonment_risk": {
-                    "probability": bottleneck_forecast.get('abandonment_risk_pct', 28) / 100,
-                    "trigger_stage": bottleneck_forecast.get('abandonment_trigger_stage', 'NEMA_EIA_delay'),
-                    "trigger_day": bottleneck_forecast.get('abandonment_trigger_day', 75)
+                    "probability": _RISK_LEVEL_PCT.get(
+                        str(risk_scores.get('abandonment_risk', 'medium')).lower(), 28
+                    ) / 100,
+                    "trigger_stage": primary_bottleneck.get('stage', 'NEMA_EIA_delay'),
+                    "trigger_day": 75
                 },
                 "corruption_flags": [
                     {

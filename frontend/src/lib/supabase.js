@@ -11,6 +11,20 @@ export const supabase = supabaseEnabled
     })
   : null
 
+// The shared demo account always maps to the fixed session id the backend
+// seeds (backend/scripts/seed_demo_user.py) — never the Supabase auth UUID.
+// Signing in as the demo user through this app-specific mapping keeps this
+// mapping (rather than the raw UUID) as the source of truth regardless of
+// which form was used to sign in.
+const DEMO_EMAIL = 'demo@meridian.app'
+const DEMO_SESSION_ID = 'demo-session'
+
+function sessionIdFor(user) {
+  if (!user) return null
+  if ((user.email || '').toLowerCase() === DEMO_EMAIL) return DEMO_SESSION_ID
+  return user.id
+}
+
 export async function getSession() {
   if (!supabase) return null
   const { data } = await supabase.auth.getSession()
@@ -57,17 +71,23 @@ export async function signUpWithPassword(email, password, fullName = '') {
 }
 
 // When the user signs in, prefer the Supabase user id as the backend session key
-// so profile/journey data survives across browsers and devices.
+// so profile/journey data survives across browsers and devices — except the
+// demo account, which always maps to the fixed seeded session id. This listener
+// fires asynchronously and is the last writer, so it must be the single place
+// that decides the session id — a page-level override written before this
+// fires gets silently clobbered otherwise.
 if (supabase) {
   supabase.auth.onAuthStateChange((_evt, session) => {
     try {
-      if (session?.user?.id) localStorage.setItem('meridian_session', session.user.id)
+      const id = sessionIdFor(session?.user)
+      if (id) localStorage.setItem('meridian_session', id)
     } catch {}
   })
   // Also sync any pre-existing session on module load.
   supabase.auth.getSession().then(({ data }) => {
     try {
-      if (data.session?.user?.id) localStorage.setItem('meridian_session', data.session.user.id)
+      const id = sessionIdFor(data.session?.user)
+      if (id) localStorage.setItem('meridian_session', id)
     } catch {}
   })
 }
